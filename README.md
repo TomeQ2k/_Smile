@@ -12,8 +12,12 @@ Smile is a social portal like Facebook or Instagram providing a bunch of communi
 
 ## Images
 
-**DDL schema**: ![DDL](https://user-images.githubusercontent.com/48593674/116780668-67435800-aa7e-11eb-91d3-d5cd96e9481d.PNG)
-**Application**: ![home](https://user-images.githubusercontent.com/48593674/116780674-775b3780-aa7e-11eb-9206-1ebb252807fa.PNG)
+**DDL schema**: 
+
+![DDL](https://user-images.githubusercontent.com/48593674/116780668-67435800-aa7e-11eb-91d3-d5cd96e9481d.PNG)
+**Application**: 
+
+![home](https://user-images.githubusercontent.com/48593674/116780674-775b3780-aa7e-11eb-9206-1ebb252807fa.PNG)
 ![post](https://user-images.githubusercontent.com/48593674/116780675-79bd9180-aa7e-11eb-99ef-08f17fc1210a.PNG)
 ![postcreator](https://user-images.githubusercontent.com/48593674/116780676-7aeebe80-aa7e-11eb-80d8-cfac3cd48190.PNG)
 ![loginpage](https://user-images.githubusercontent.com/48593674/116780679-7e824580-aa7e-11eb-91d5-a53ab10fd7b2.png)
