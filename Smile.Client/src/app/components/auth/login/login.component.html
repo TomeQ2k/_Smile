@@ -1,0 +1,14 @@
+<section class="login-section">
+  <p class="header">Just sign in and start smiling to another users!</p>
+  <form class="login-form" [formGroup]="loginForm">
+    <mat-form-field appearance="outline">
+      <input matInput type="email" placeholder="Email address" formControlName="email" />
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <input matInput type="password" placeholder="Password" formControlName="password" />
+    </mat-form-field>
+    <p class="reset-password-text" (click)="resetPasswordToggled.emit(true)">Did you forget password? Just reset your
+      password!</p>
+    <button type="submit" class="primary-button" (click)="login()">Sign in</button>
+  </form>
+</section>

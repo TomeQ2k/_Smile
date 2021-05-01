@@ -1,0 +1,50 @@
+<section class="friends-wrapper">
+  <section class="filters-section">
+    <form class="filters-form" [formGroup]="filtersForm">
+      <i class="fa fa-users"></i>
+      <mat-form-field appearance="outline">
+        <input type="search" placeholder="Find friend..." matInput formControlName="friendName"
+          (blur)="onFiltersChanged()" />
+      </mat-form-field>
+      <i class="fa fa-users"></i>
+    </form>
+  </section>
+  <app-stories></app-stories>
+  <h1>Friends</h1>
+  <ng-container infiniteScroll [fromRoot]="true" [infiniteScrollContainer]="'.friends-section'"
+    [infiniteScrollUpDistance]="5" [infiniteScrollThrottle]="0" (scrolled)="onScroll()">
+    <section #friendsSection class="friends-section" *ngIf="friends?.length > 0; else emptyFriends">
+      <ng-container *ngFor="let friend of friends">
+        <section class="friend-card">
+          <div class="avatar-container"
+            [routerLink]="['/users', friend?.senderId === currentUserId ? friend?.recipientId : friend?.senderId]"
+            [ngStyle]="{'background-image':friend?.senderId === currentUserId ? (friend?.recipientPhotoUrl ? 'url('+friend.recipientPhotoUrl+')' :
+            'none') : (friend?.senderPhotoUrl ? 'url('+friend.senderPhotoUrl+')' : 'none') }"></div>
+          <p [routerLink]="['/users/', friend?.senderId === currentUserId ? friend?.recipientId : friend?.senderId]">
+            {{ friend?.senderId === currentUserId ? friend?.recipientName : friend?.senderName }}</p>
+          <section class="friend-buttons">
+            <div *ngIf="friend?.isAccepted" class="friend-button"
+              [routerLink]="['/messenger/', friend?.senderId === currentUserId ? friend?.recipientId : friend?.senderId]">
+              <i class="fas fa-envelope"></i>
+            </div>
+            <div *ngIf="friend?.isAccepted" class="friend-button"
+              (click)="deleteFriend(friend?.senderId === currentUserId ? friend?.recipientId : friend?.senderId)">
+              <i class="fas fa-user-minus"></i>
+            </div>
+            <div *ngIf="!friend?.isAccepted && friend?.senderId !== currentUserId" class="friend-button"
+              (click)="receiveFriend(friend?.senderId, friend?.recipientId, true)">
+              <i class="fas fa-check"></i>
+            </div>
+            <div *ngIf="!friend?.isAccepted" class="friend-button"
+              (click)="receiveFriend(friend?.senderId, friend?.recipientId, false)">
+              <i class="fas fa-user-times"></i>
+            </div>
+          </section>
+        </section>
+      </ng-container>
+    </section>
+  </ng-container>
+  <ng-template #emptyFriends>
+    <h2 class="empty-info">Any friends found... :(</h2>
+  </ng-template>
+</section>

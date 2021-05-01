@@ -1,0 +1,32 @@
+<section class="post-section">
+  <h2>{{ editMode ? 'Post editor' : 'Post creator'}}</h2>
+  <app-image-card [imageUrl]="post?.photoUrl" (imageChanged)="photoChanged($event)"></app-image-card>
+  <form class="post-form" [formGroup]="postForm">
+    <mat-form-field appearance="outline">
+      <input type="text" placeholder="Title" matInput formControlName="title" required
+        maxlength="{{constants.titleLength}}" />
+      <mat-error *ngIf="postForm.get('title').invalid">{{ formHelper.getErrorMessage(postForm, 'title') }}</mat-error>
+      <mat-hint align="end">{{ postForm.get('title').value?.length }}/{{constants.titleLength}}
+      </mat-hint>
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <textarea type="text" placeholder="Content..." matInput matTextareaAutosize rows="40" formControlName="content"
+        required maxlength="{{constants.contentLength}}"></textarea>
+      <mat-error *ngIf="postForm.get('content').invalid">{{ formHelper.getErrorMessage(postForm, 'content') }}
+      </mat-error>
+      <mat-hint align="end">{{ postForm.get('content').value?.length }}/{{constants.contentLength}}
+      </mat-hint>
+    </mat-form-field>
+    <section class="bottom-buttons" *ngIf="!editMode; else editButtons">
+      <button class="primary-button" (click)="putPost()" [disabled]="postForm.invalid || postForm.pristine">Create
+        post</button>
+    </section>
+    <ng-template #editButtons>
+      <section class="bottom-buttons">
+        <button class="primary-button" (click)="putPost()" [disabled]="postForm.invalid">Save</button>
+        <button class="destructive-button" [routerLink]="['']">Cancel</button>
+      </section>
+    </ng-template>
+  </form>
+  <app-host-listener [form]="postForm"></app-host-listener>
+</section>

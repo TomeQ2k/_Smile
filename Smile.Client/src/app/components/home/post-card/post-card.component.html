@@ -1,0 +1,45 @@
+<section class="post-container">
+  <section class="post-card">
+    <section class="left-card-section">
+      <div *ngIf="post?.photoUrl; else smileIcon" class="photo-container" [ngStyle]="{
+          'background-image': 'url(' + post?.photoUrl + ')'
+        }" [routerLink]="['/posts/', post?.id]"></div>
+      <section class="stats-section">
+        <div class="stats-field" (click)="likePost()">
+          <i class="fas fa-smile-beam"></i>
+          <span [ngStyle]="{'color': smilesCounterColor}">{{ post?.likesCount }}</span>
+        </div>
+        <div class="stats-field" [routerLink]="['/posts/', post?.id]">
+          <i class="fas fa-comments"></i>
+          <span>{{ post?.commentsCount }}</span>
+        </div>
+      </section>
+      <section class="details-section">
+        <p *ngIf="isLoggedIn && currentUserId !== post?.authorId; else notLoggedInAuthor"
+          [routerLink]="['/users/', post?.authorId]">
+          <span>Author:</span> {{ post?.authorName }}</p>
+        <ng-template #notLoggedInAuthor>
+          <p><span>Author:</span> {{ post?.authorName }}</p>
+        </ng-template>
+        <p [routerLink]="['/posts/', post?.id]"><span>Updated:</span> {{ post?.dateUpdated | date }}</p>
+      </section>
+    </section>
+    <section class="right-card-section" [routerLink]="['/posts/', post?.id]">
+      <h2 [routerLink]="['/posts/', post?.id]">{{ post?.title }}</h2>
+      <section class="description-section">
+        <p>{{ post?.content }}</p>
+      </section>
+    </section>
+  </section>
+  <section class="admin-buttons" *ngIf="isAdminMode(post?.authorId) || isGroupAdmin()">
+    <button class="primary-button" [routerLink]="['/post/edit', post?.id]" *ngIf="isAdminMode(post?.authorId)">
+      <i class="fas fa-edit"></i>
+    </button>
+    <button class="destructive-button" (click)="deletePost()">
+      <i class="fas fa-trash"></i>
+    </button>
+  </section>
+  <ng-template #smileIcon>
+    <i class="fas fa-smile-beam smile-icon" [routerLink]="['/posts/', post?.id]"></i>
+  </ng-template>
+</section>

@@ -1,0 +1,23 @@
+@import "../../../../const.scss";
+
+.profile-section {
+  display: flex;
+  justify-content: center;
+  max-width: $maxWidth;
+  padding: 2vh;
+
+  .logout-button {
+    position: fixed;
+    bottom: 6vh;
+    right: 2vh;
+    max-width: 200px;
+    z-index: 1;
+  }
+}
+
+@media (max-width: 768px) {
+  .profile-section .logout-button {
+    bottom: 5px;
+    left: 2vh;
+  }
+}

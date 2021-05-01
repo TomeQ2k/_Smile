@@ -1,0 +1,21 @@
+<section class="story-section">
+  <div class="story-image" [ngStyle]="{
+          'background-image': 'url(' + currentStory?.storyUrl + ')'
+        }"></div>
+  <section class="details-section">
+    <section class="info-section">
+      <p>Author: <span>{{ currentStory?.username }}</span></p>
+      <p><span>{{ currentStory?.dateCreated | timeAgo }}</span></p>
+      <p>Seen by: <span>{{ currentStory?.watchedByCount }}</span></p>
+    </section>
+    <section class="buttons-section">
+      <button *ngIf="isPermittedToDelete()" class="destructive-button" (click)="deleteStory()">Delete</button>
+      <section class="change-index-buttons">
+        <div *ngIf="storyWrapper?.stories?.length > 1" class="change-index-button left-rotated"
+          (click)="changeIndex(direction.previous)"></div>
+        <div *ngIf="storyWrapper?.stories?.length > 1" class="change-index-button"
+          (click)="changeIndex(direction.next)"></div>
+      </section>
+    </section>
+  </section>
+</section>

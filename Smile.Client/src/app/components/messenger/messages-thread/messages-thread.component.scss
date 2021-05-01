@@ -1,0 +1,101 @@
+@import "../../../../const.scss";
+
+.messages-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  max-width: $maxWidth;
+  height: 100%;
+
+  .messages-header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    width: 80%;
+    height: 12vh;
+    border: 1px solid $primaryColor;
+    border-radius: $borderRadius;
+    margin-top: 3vh;
+
+    cursor: pointer;
+
+    h2 {
+      font-size: 26px;
+      font-weight: bold;
+    }
+
+    .user-image {
+      width: 70px;
+      height: 70px;
+      background-position: center;
+      background-size: cover;
+      border: 1px solid $primaryColor;
+      border-radius: 50%;
+    }
+
+    i {
+      font-size: 70px;
+    }
+  }
+
+  .messages-container {
+    flex-grow: 1;
+    width: 80%;
+    height: $scrollSectionHeight - 10vh;
+    margin-top: 3vh;
+    border: 1px solid $thirdColor;
+    border-radius: $borderRadius;
+    padding: 15px;
+    overflow-y: scroll;
+
+    app-message-card {
+      width: 100%;
+    }
+  }
+
+  .message-form {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 80%;
+    margin-top: 2vh;
+
+    mat-form-field {
+      width: 94%;
+    }
+
+    .send-button {
+      width: 45px;
+      height: 45px;
+      padding-bottom: -1.34375em;
+      border: none;
+      background-color: $secondaryColor;
+      background-position: center;
+      background-size: cover;
+      margin-bottom: 20px;
+      margin-left: 10px;
+      background-image: url("../../../../assets/icons/send.svg");
+      transform: rotate(15deg);
+
+      &:hover {
+        opacity: 0.6;
+      }
+
+      &:focus {
+        border: none;
+        outline: none;
+      }
+
+      &:disabled {
+        opacity: 0.2;
+      }
+    }
+  }
+
+  .empty-info {
+    margin-top: 40px;
+  }
+}

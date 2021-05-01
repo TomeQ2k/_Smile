@@ -1,0 +1,83 @@
+<section class="group-section">
+  <section class="left-side">
+    <img *ngIf="group?.isAccepted && group?.imageUrl" [routerLink]="['/group', group?.id]" src="{{group?.imageUrl}}" />
+    <img *ngIf="group?.isMember && group?.imageUrl && !group?.isAccepted" src="{{group?.imageUrl}}" />
+    <img *ngIf="!group?.isMember && group?.imageUrl" src="{{group?.imageUrl}}" />
+    <i *ngIf="group?.isAccepted && !group?.imageUrl" [routerLink]="['/group', group?.id]"
+      class="fas fa-layer-group"></i>
+    <i *ngIf="group?.isMember && !group?.imageUrl && !group?.isAccepted" class="fas fa-layer-group"></i>
+    <i *ngIf="!group?.isMember && !group?.imageUrl" class="fas fa-layer-group"></i>
+    <div *ngIf="currentUserId === group?.adminId || authService.checkPermissions(adminRoles)" class="admin-buttons">
+      <button class="destructive-button" (click)="deleteGroup()">
+        <i class="fas fa-trash"></i>
+      </button>
+    </div>
+  </section>
+  <section class="right-side">
+    <h2 *ngIf="group?.isAccepted" [routerLink]="['/group', group?.id]">{{group?.name}}</h2>
+    <h2 *ngIf="group?.isMember && !group.isAccepted">{{group?.name}}</h2>
+    <h2 *ngIf="!group?.isMember">{{group?.name}}</h2>
+    <div *ngIf="group?.isAccepted" class="group-info" [routerLink]="['/group', group?.id]">
+      <div class="icon-block" *ngIf="!group?.isPrivate">
+        <i class="fas fa-unlock"></i>
+        <span>Public</span>
+      </div>
+      <div class="icon-block" *ngIf="group?.isPrivate">
+        <i class="fas fa-lock"></i>
+        <span>Private</span>
+      </div>
+      <div class="icon-block">
+        <i class="fas fa-users"></i>
+        <span>{{ group?.membersCount }}</span>
+      </div>
+    </div>
+    <div *ngIf="group?.isMember && !group?.isAccepted" class="group-info">
+      <div class="icon-block" *ngIf="!group?.isPrivate">
+        <i class="fas fa-unlock"></i>
+        <span>Public</span>
+      </div>
+      <div class="icon-block" *ngIf="group?.isPrivate">
+        <i class="fas fa-lock"></i>
+        <span>Private</span>
+      </div>
+      <div class="icon-block">
+        <i class="fas fa-users"></i>
+        <span>{{ group?.membersCount }}</span>
+      </div>
+    </div>
+    <div *ngIf="!group?.isMember" class="group-info">
+      <div class="icon-block" *ngIf="!group?.isPrivate">
+        <i class="fas fa-unlock"></i>
+        <span>Public</span>
+      </div>
+      <div class="icon-block" *ngIf="group?.isPrivate">
+        <i class="fas fa-lock"></i>
+        <span>Private</span>
+      </div>
+      <div class="icon-block">
+        <i class="fas fa-users"></i>
+        <span>{{ group?.membersCount }}</span>
+      </div>
+    </div>
+    <ng-container *ngIf="!group?.isMember && !enterCodeMode">
+      <p class="requested-text" *ngIf="group?.joinRequested">REQUESTED</p>
+      <button *ngIf="canJoin()" class="secondary-button" (click)="joinGroup()">Join</button>
+      <button *ngIf="canAccept()" class="secondary-button" (click)="acceptInvite(true)">Accept</button>
+      <button *ngIf="canAccept()" class="destructive-button" (click)="acceptInvite(false)">Deny</button>
+    </ng-container>
+    <button *ngIf="enterCodeMode" class="secondary-button" (click)="enterCodeMode = false">Close</button>
+    <ng-container *ngIf="enterCodeMode">
+      <form class="join-form" [formGroup]="joinForm">
+        <mat-form-field appareance="outline">
+          <mat-label>Join code</mat-label>
+          <input type="search" matInput required maxlength="{{groupCodeLength}}" formControlName="joinCode" />
+          <mat-error *ngIf="joinForm.get('joinCode').invalid">{{formHelper.getErrorMessage(joinForm, 'joinCode')}}
+          </mat-error>
+          <mat-hint align="end">{{ joinForm.get('joinCode').value?.length }}/{{groupCodeLength}}
+          </mat-hint>
+        </mat-form-field>
+      </form>
+      <button class="primary-button" [disabled]="joinForm.invalid" (click)="enterCode()">Enter code</button>
+    </ng-container>
+  </section>
+</section>

@@ -1,0 +1,31 @@
+  <section *ngIf="!report?.isAnonymous; else anonymousReportCard" class="report-card"
+    [ngStyle]="{'color': !report?.isClosed ? 'black' : 'red'}">
+    <section class="report-card-details" [routerLink]="['/support', report?.id]">
+      <i class="fas fa-headset"></i>
+      <p>{{ report?.subject }}</p>
+    </section>
+    <section class="report-card-footer">
+      <span [routerLink]="['/support', report?.id]">{{ report?.dateUpdated | date: 'shortDate' }}</span>
+      <div *ngIf="isAdmin" class="admin-buttons">
+        <i *ngIf="report?.isClosed" class="fas fa-lock-open" (click)="toggleReportStatus()"></i>
+        <i *ngIf="!report?.isClosed" class="fas fa-lock" (click)="toggleReportStatus()"></i>
+        <i *ngIf="isHeadAdmin" class="fa fa-trash" (click)="deleteReport()"></i>
+      </div>
+      <span>{{ report?.reporterName }}</span>
+    </section>
+  </section>
+  <ng-template #anonymousReportCard>
+    <section class="report-card">
+      <section class="report-card-details" [routerLink]="['/support', report?.id]">
+        <i class="fas fa-user-secret"></i>
+        <p>{{ report?.subject }}</p>
+      </section>
+      <section class="report-card-footer">
+        <span [routerLink]="['/support', report?.id]">{{ report?.dateUpdated | date: 'shortDate' }}</span>
+        <div *ngIf="isHeadAdmin" class="admin-buttons">
+          <i class="fa fa-trash" (click)="deleteReport()"></i>
+        </div>
+        <span>{{ report?.email }}</span>
+      </section>
+    </section>
+  </ng-template>

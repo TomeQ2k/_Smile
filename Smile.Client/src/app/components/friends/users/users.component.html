@@ -1,0 +1,46 @@
+<section class="users-wrapper">
+  <section class="filters-section">
+    <form class="filters-form" [formGroup]="filtersForm">
+      <mat-form-field appearance="outline">
+        <input type="search" placeholder="Find user..." matInput formControlName="username"
+          (blur)="onFiltersChanged()" />
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-select aria-placeholder="Sort by" formControlName="sortType" (selectionChange)="onFiltersChanged()">
+          <mat-option [value]="sortType.Descending">Newest</mat-option>
+          <mat-option [value]="sortType.Ascending">Oldest</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Users type</mat-label>
+        <mat-select aria-placeholder="Admins only" formControlName="onlyAdmin" (selectionChange)="onFiltersChanged()">
+          <mat-option [value]="false">All</mat-option>
+          <mat-option [value]="true">Admins only</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <button class="clear-filters-button" (click)="resetFilters()">Clear</button>
+    </form>
+  </section>
+  <app-stories></app-stories>
+  <h1>Users</h1>
+  <ng-container infiniteScroll [fromRoot]="true" [infiniteScrollContainer]="'.users-section'"
+    [infiniteScrollUpDistance]="5" [infiniteScrollThrottle]="0" (scrolled)="onScroll()">
+    <section #usersSection class="users-section" *ngIf="users?.length > 0; else emptyUsers">
+      <ng-container *ngFor="let user of users">
+        <section class="user-card">
+          <div class="avatar-container" [routerLink]="['/users', user?.id]"
+            [ngStyle]="{'background-image': user?.photoUrl ? 'url('+user?.photoUrl+')' : 'none'}"></div>
+          <p [ngStyle]="{'color' : (user?.isFriend ? colors.greenColor : 'black')}"
+            [routerLink]="['/users/', user?.id]">
+            {{ user?.username }}</p>
+          <app-friend-buttons [user]="user" (friendInvited)="onFriendInvited($event)"
+            (friendAccepted)="onFriendAccepted($event)" (friendDenied)="onFriendDenied($event)"
+            (friendDeleted)="onFriendDeleted($event)"></app-friend-buttons>
+        </section>
+      </ng-container>
+    </section>
+  </ng-container>
+  <ng-template #emptyUsers>
+    <h2 class="empty-info">Any users found... :(</h2>
+  </ng-template>
+</section>

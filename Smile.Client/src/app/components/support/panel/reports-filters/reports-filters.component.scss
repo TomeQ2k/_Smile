@@ -1,0 +1,18 @@
+.filters-form {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  width: 100%;
+
+  mat-form-field {
+    width: 40%;
+    margin: 0 7px;
+  }
+
+  button {
+    width: 40%;
+    margin-bottom: 3vh;
+  }
+}

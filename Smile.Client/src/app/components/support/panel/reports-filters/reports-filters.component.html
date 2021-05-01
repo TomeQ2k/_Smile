@@ -1,0 +1,29 @@
+ <form class="filters-form" [formGroup]="filtersForm">
+   <mat-form-field appearance="outline">
+     <mat-label>Report status</mat-label>
+     <mat-select aria-placeholder="Report status" formControlName="reportStatus" (selectionChange)="onFiltersChanged()">
+       <mat-option [value]="0">All</mat-option>
+       <mat-option [value]="1">Closed</mat-option>
+       <mat-option [value]="2">Not closed</mat-option>
+     </mat-select>
+   </mat-form-field>
+   <mat-form-field appearance="outline">
+     <mat-select aria-placeholder="Sort by" formControlName="sortType" (selectionChange)="onFiltersChanged()">
+       <mat-option [value]="sortType.Descending">Newest</mat-option>
+       <mat-option [value]="sortType.Ascending">Oldest</mat-option>
+     </mat-select>
+   </mat-form-field>
+   <mat-form-field appearance="outline" *ngIf="isAdmin">
+     <mat-label>Report type</mat-label>
+     <mat-select aria-placeholder="Report type" formControlName="reportType" (selectionChange)="onFiltersChanged()">
+       <mat-option [value]="0">All</mat-option>
+       <mat-option [value]="1">Authorized</mat-option>
+       <mat-option [value]="2">Anonymous</mat-option>
+     </mat-select>
+   </mat-form-field>
+   <mat-form-field appearance="outline" *ngIf="isAdmin">
+     <mat-label>Reporter</mat-label>
+     <input type="search" matInput formControlName="reporterName" (blur)="onFiltersChanged()" />
+   </mat-form-field>
+   <button class="clear-filters-button" (click)="resetFilters()">Clear</button>
+ </form>

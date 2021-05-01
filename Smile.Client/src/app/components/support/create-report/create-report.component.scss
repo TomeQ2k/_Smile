@@ -1,0 +1,35 @@
+@import "../../../../const.scss";
+
+.creator-section {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  max-width: $maxWidth;
+  margin-top: 3vh;
+
+  h2 {
+    font-size: 26px;
+  }
+
+  h3 {
+    font-size: 20px;
+    text-align: center;
+    font-weight: bold;
+  }
+
+  h4 {
+    font-size: 18px;
+    text-align: center;
+    font-style: italic;
+  }
+
+  .report-form {
+    width: 80%;
+
+    app-attachments {
+      width: 100%;
+    }
+  }
+}

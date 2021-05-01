@@ -1,0 +1,76 @@
+@import "../../../const.scss";
+
+.notifications-section {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  max-width: $maxWidth;
+  margin-top: 3vh;
+
+  h1 {
+    font-weight: bold;
+  }
+
+  .notifications-options {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 80%;
+    margin-top: 10px;
+    height: 15%;
+
+    p {
+      font-size: 18px;
+      font-weight: bold;
+
+      cursor: pointer;
+
+      &:hover {
+        opacity: 0.6;
+      }
+    }
+  }
+
+  .notifications-list {
+    flex-grow: 1;
+    width: 100%;
+    height: $scrollSectionHeight;
+    overflow-y: scroll;
+    margin-top: 2vh;
+
+    .notification-card {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-around;
+      flex-wrap: wrap;
+      width: 90%;
+      border: 1px solid $primaryColor;
+      border-radius: $borderRadius;
+      padding: 10px;
+      margin: 5px auto;
+
+      .main-info {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        width: 80%;
+
+        p {
+          font-size: 14px;
+        }
+
+        span {
+          font-size: 12px;
+          color: grey;
+        }
+      }
+
+      i {
+        font-size: xx-large;
+      }
+    }
+  }
+}

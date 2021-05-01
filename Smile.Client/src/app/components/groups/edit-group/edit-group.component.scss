@@ -1,0 +1,66 @@
+@import "../../../../const.scss";
+
+.group-section {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 3vh;
+  max-width: $maxWidth;
+
+  h2 {
+    font-size: 26px;
+    font-weight: bold;
+  }
+
+  button {
+    width: 100%;
+    margin-top: 10px;
+  }
+
+  .img-container {
+    width: 800px;
+    height: 400px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    border: 1px dashed $primaryColor;
+    border-radius: $borderRadius;
+    margin: 0 auto;
+    padding: 10px;
+
+    &:hover {
+      opacity: 0.4;
+      background-color: $thirdColor;
+    }
+  }
+
+  .group-form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 80%;
+    margin: 3vh auto;
+
+    .row-section {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      width: 100%;
+
+      mat-form-field {
+        width: 48%;
+      }
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .group-section .img-container {
+    width: 350px;
+    height: 250px;
+  }
+}

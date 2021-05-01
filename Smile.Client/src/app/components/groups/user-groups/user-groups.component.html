@@ -1,0 +1,24 @@
+<section class="user-groups-section">
+  <ng-container class="groups-section" *ngIf="!isProfile">
+    <ng-container *ngFor="let group of groups">
+      <app-group-card [group]="group"></app-group-card>
+    </ng-container>
+  </ng-container>
+  <section *ngIf="isProfile">
+    <h2>Own groups</h2>
+    <section *ngIf="ownGroups?.length > 0; else emptyGroups" class="groups-section">
+      <ng-container *ngFor="let group of ownGroups">
+        <app-group-card [group]="group" (groupDeleted)="onGroupDeleted($event)"></app-group-card>
+      </ng-container>
+    </section>
+    <h2>My groups</h2>
+    <section *ngIf="myGroups?.length > 0; else emptyGroups" class="groups-section">
+      <ng-container *ngFor="let group of myGroups">
+        <app-group-card [group]="group"></app-group-card>
+      </ng-container>
+    </section>
+  </section>
+  <ng-template #emptyGroups>
+    <h2 class="empty-info">Any groups found...</h2>
+  </ng-template>
+</section>

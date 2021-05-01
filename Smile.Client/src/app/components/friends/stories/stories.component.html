@@ -1,0 +1,26 @@
+<section class="stories-wrapper">
+  <section class="stories-section" *ngIf="storyWrappers?.length !== 0; else emptyStories">
+    <ng-container *ngFor="let storyWrapper of storyWrappers">
+      <section class="story-card" (click)="displayStory(storyWrapper)">
+        <div class="story-image" *ngIf="storyWrapper?.userPhotoUrl" [ngStyle]="{
+            'background-image': 'url(' + storyWrapper?.userPhotoUrl + ')'
+          }" [ngClass]="{ 'story-image-watched': storyWrapper?.isWatched }"></div>
+        <div class="story-image" *ngIf="!storyWrapper?.userPhotoUrl" [ngStyle]="{
+            'background-image':
+              'url(' + '../../../../assets/icons/smile.svg' + ')'
+          }" [ngClass]="{ 'story-image-watched': storyWrapper?.isWatched }"></div>
+        <p>{{ storyWrapper?.username }}</p>
+      </section>
+    </ng-container>
+  </section>
+  <div class="add-story-button" (click)="fileInput.click()">
+    <i class="fa fa-plus"></i>
+    <input #fileInput type="file" (change)="addStory(fileInput.files[0])" accept=".img,.png,.jpg,.jpeg,.tiff,.ico,.svg"
+      style="display: none;" />
+  </div>
+  <ng-template #emptyStories>
+    <h2 class="empty-info">There are no your friends' stories :(</h2>
+  </ng-template>
+</section>
+<app-story *ngIf="isStoryDisplayed" [storyWrapper]="currentStoryWrapper" (storyClosed)="closeStory()"></app-story>
+<div class="blur" @blurToggle *ngIf="isStoryDisplayed" (click)="closeStory()"></div>

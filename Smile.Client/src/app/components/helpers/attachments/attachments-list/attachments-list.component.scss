@@ -1,0 +1,53 @@
+@import "../../../../../const.scss";
+
+.attachments-list {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  margin: 10px auto;
+
+  h3 {
+    font-size: 18px;
+    text-align: center;
+    font-weight: bold;
+  }
+
+  h4 {
+    font-size: 16px;
+    text-align: center;
+    font-style: italic;
+  }
+
+  .attachments-section {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+
+    .attachment-data {
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+
+      p {
+        color: $thirdColor;
+        font-style: italic;
+      }
+
+      a {
+        text-decoration: none;
+        color: $thirdColor;
+      }
+
+      i {
+        font-size: 26px;
+        margin: 0 10px;
+      }
+    }
+  }
+}

@@ -1,0 +1,17 @@
+@import "../../../../const.scss";
+
+.user-groups-section {
+  display: flex;
+  flex-direction: column;
+  width: 96%;
+  max-width: $maxWidth;
+  margin-top: 3vh;
+
+  h2 {
+    font-weight: bold;
+  }
+
+  .empty-info {
+    font-style: italic;
+  }
+}

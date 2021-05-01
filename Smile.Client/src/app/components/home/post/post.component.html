@@ -1,0 +1,5 @@
+<section class="post-section">
+  <app-post-card [post]="post" (postDeleted)="onPostDeleted($event)"></app-post-card>
+  <app-comments [comments]="post?.comments" [postId]="post?.id" (commentPut)="onCommentPut($event)"
+    (commentDeleted)="onCommentDeleted($event)"></app-comments>
+</section>

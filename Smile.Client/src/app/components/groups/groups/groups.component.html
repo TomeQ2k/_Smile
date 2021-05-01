@@ -1,0 +1,59 @@
+<section class="groups-wrapper">
+  <section class="filters-section">
+    <form class="filters-form" [formGroup]="filtersForm">
+      <mat-form-field appearance="outline">
+        <input type="search" placeholder="Find group..." matInput formControlName="name" (blur)="onFiltersChanged()" />
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-select aria-placeholder="Sort by" formControlName="sortType" (selectionChange)="onFiltersChanged()">
+          <mat-option [value]="0">Newest</mat-option>
+          <mat-option [value]="1">Oldest</mat-option>
+          <mat-option [value]="2">Most members</mat-option>
+          <mat-option [value]="3">Least members</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Access status</mat-label>
+        <mat-select aria-placeholder="Access status" formControlName="accessStatus"
+          (selectionChange)="onFiltersChanged()">
+          <mat-option [value]="0">All</mat-option>
+          <mat-option [value]="1">Private</mat-option>
+          <mat-option [value]="2">Public</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Join status</mat-label>
+        <mat-select aria-placeholder="Join status" formControlName="joinStatus" (selectionChange)="onFiltersChanged()">
+          <mat-option [value]="0">All</mat-option>
+          <mat-option [value]="1">My groups</mat-option>
+          <mat-option [value]="2">Own groups</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Invite status</mat-label>
+        <mat-select aria-placeholder="Invite status" formControlName="isInvited" (selectionChange)="onFiltersChanged()">
+          <mat-option [value]="false">All</mat-option>
+          <mat-option [value]="true">Invited</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <button class="clear-filters-button" (click)="resetFilters()">Clear</button>
+    </form>
+  </section>
+  <section class="groups-section" *ngIf="groups?.length > 0; else emptyGroups">
+    <h1>Groups</h1>
+    <ng-container infiniteScroll [fromRoot]="true" [infiniteScrollContainer]="'.groups-list'"
+      [infiniteScrollUpDistance]="5" [infiniteScrollThrottle]="0" (scrolled)="onScroll()">
+      <section #groupsSection class="groups-list">
+        <ng-container *ngFor="let group of groups">
+          <app-group-card [group]="group" (groupDeleted)="onGroupDeleted($event)"></app-group-card>
+        </ng-container>
+      </section>
+    </ng-container>
+  </section>
+  <ng-template #emptyGroups>
+    <h2 class="empty-info">Any groups found...</h2>
+  </ng-template>
+  <div [routerLink]="['/groups/create']" [queryParams]="{ createMode: true }" class="plus-fixed-button">
+    <i class="fa fa-plus"></i>
+  </div>
+</section>

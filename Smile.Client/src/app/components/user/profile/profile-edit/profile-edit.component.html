@@ -1,0 +1,91 @@
+<section class="main-profile-section">
+  <h2 class="header">User Profile - {{ currentUser?.email }} / {{ currentUser?.username }}</h2>
+  <section class="profile-section">
+    <section class="avatar-section">
+      <ng-container *ngIf="currentUser?.photoUrl; else profileIcon">
+        <div class="avatar-container" [ngStyle]="{
+          'background-image': 'url(' + currentUser?.photoUrl + ')'
+        }">
+        </div>
+      </ng-container>
+      <ng-template #profileIcon>
+        <i class="fa fa-user"></i>
+      </ng-template>
+      <div class="photo-buttons-section">
+        <button class="primary-button" type="button" (click)="fileInput.click()">
+          <input #fileInput type="file" (change)="loadAvatar(fileInput.files[0])"
+            accept=".img,.png,.jpg,.jpeg,.tiff,.ico,.svg" style="display: none;" />
+          <i class="fas fa-user-edit"></i>
+        </button>
+        <button class="destructive-button" (click)="deleteAvatar()" [disabled]="!currentUser?.photoUrl">
+          <i class="fas fa-user-slash"></i>
+        </button>
+      </div>
+    </section>
+    <section class="account-section">
+      <section class="user-data-section">
+        <h3>Change username</h3>
+        <form class="user-data-form" [formGroup]="changeUsernameForm">
+          <mat-form-field appearance="outline">
+            <input matInput placeholder="New username" required minLength="{{ constants.minUsernameLength }}"
+              maxLength="{{ constants.maxUsernameLength }}" formControlName="newUsername" />
+            <mat-error *ngIf="changeUsernameForm.get('newUsername').invalid">{{
+              formHelper.getErrorMessage(changeUsernameForm, "newUsername")
+            }}</mat-error>
+            <mat-hint align="end">
+              {{ changeUsernameForm.get('newUsername').value?.length }}/{{constants.maxUsernameLength}}
+            </mat-hint>
+          </mat-form-field>
+          <button class="secondary-button" (click)="changeUsername()"
+            [disabled]="changeUsernameForm.invalid || changeUsernameForm.pristine">
+            Change username
+          </button>
+        </form>
+      </section>
+      <section class="change-password-section">
+        <h3>Change password</h3>
+        <form class="change-password-form" [formGroup]="changePasswordForm">
+          <mat-form-field appearance="outline">
+            <input matInput type="password" placeholder="Old password" required formControlName="oldPassword" />
+            <mat-error *ngIf="changePasswordForm.get('oldPassword').invalid">{{
+              formHelper.getErrorMessage(changePasswordForm, "oldPassword")
+            }}</mat-error>
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <input matInput type="password" placeholder="New password" required
+              minLength="{{ constants.minPasswordLength }}" maxLength="{{ constants.maxPasswordLength }}"
+              formControlName="newPassword" />
+            <mat-error *ngIf="changePasswordForm.get('newPassword').invalid">{{
+              formHelper.getErrorMessage(changePasswordForm, "newPassword")
+            }}</mat-error>
+            <mat-hint align="end">
+              {{ changePasswordForm.get('newPassword').value?.length }}/{{constants.maxPasswordLength}}
+            </mat-hint>
+          </mat-form-field>
+          <button class="secondary-button" (click)="changePassword()"
+            [disabled]="changePasswordForm.invalid || changePasswordForm.pristine">
+            Change password
+          </button>
+        </form>
+      </section>
+      <section class="user-data-section">
+        <h3>Change email</h3>
+        <form class="user-data-form" [formGroup]="changeEmailForm">
+          <mat-form-field appearance="outline">
+            <input matInput type="email" placeholder="New email address" required email formControlName="newEmail" />
+            <mat-error *ngIf="changeEmailForm.get('newEmail').invalid">{{
+              formHelper.getErrorMessage(changeEmailForm, "newEmail")
+            }}</mat-error>
+          </mat-form-field>
+          <button class="secondary-button" (click)="sendChangeEmailCallback()"
+            [disabled]="changeEmailForm.invalid || changeEmailForm.pristine">
+            Send change email token
+          </button>
+        </form>
+      </section>
+    </section>
+  </section>
+  <app-host-listener [form]="changeUsernameForm"></app-host-listener>
+  <app-host-listener [form]="changePasswordForm"></app-host-listener>
+  <app-host-listener [form]="changeEmailForm"></app-host-listener>
+</section>

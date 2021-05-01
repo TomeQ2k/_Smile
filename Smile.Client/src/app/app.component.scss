@@ -1,0 +1,6 @@
+@import "../const.scss";
+
+router-outlet {
+  margin: 0 auto;
+  max-width: $maxWidth;
+}

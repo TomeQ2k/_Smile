@@ -1,0 +1,44 @@
+<section class="comments-wrapper">
+  <section class="comments-section" *ngIf="comments?.length > 0">
+    <h2>Comments</h2>
+    <ng-container *ngFor="let comment of comments">
+      <section class="comment-card">
+        <section class="comment-data">
+          <div *ngIf="comment?.avatarUrl" class="avatar-container" [ngStyle]="{
+              'background-image': 'url(' + comment?.avatarUrl + ')'
+            }"></div>
+          <i *ngIf="!comment?.avatarUrl" class="fa fa-smile-beam"></i>
+          <p>{{ comment?.content }}</p>
+        </section>
+        <section class="comment-details">
+          <p>
+            Updated at: <span>{{ comment?.dateUpdated | date }}</span>
+          </p>
+          <section
+            *ngIf="authService.currentUser?.id === comment?.userId || authService.checkPermissions(roles.adminRoles)"
+            class="author-buttons">
+            <i *ngIf="!editMode" class="fa fa-edit" (click)="toggleEditMode(comment)"></i>
+            <i *ngIf="editMode" class="fas fa-times" (click)="toggleEditMode(comment)"></i>
+            <i class="fa fa-trash" (click)="deleteComment(comment?.id)"></i>
+          </section>
+          <p style="text-align: right;">
+            Author: <span>{{ comment?.username }}</span>
+          </p>
+        </section>
+      </section>
+    </ng-container>
+  </section>
+  <form class="comment-form" [formGroup]="commentForm" *ngIf="authService.isLoggedIn()">
+    <mat-form-field appearance="outline">
+      <input type="text" placeholder="Add comment..." matInput formControlName="content" />
+      <mat-error *ngIf="commentForm.get('content').invalid">{{
+        formHelper.getErrorMessage(commentForm, "content")
+      }}</mat-error>
+    </mat-form-field>
+    <button type="submit" class="secondary-button" (click)="putComment()"
+      [disabled]="commentForm.invalid || commentForm.pristine">
+      {{ !editMode ? 'Comment' : 'Update' }}
+    </button>
+  </form>
+  <app-host-listener [form]="commentForm"></app-host-listener>
+</section>

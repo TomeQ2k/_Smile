@@ -1,0 +1,65 @@
+@import "../../../../const.scss";
+
+.admin-section {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  max-width: $maxWidth;
+
+  .header-section {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+    margin: 3vh auto;
+
+    i {
+      font-size: 50px;
+      margin: 0 8px;
+    }
+
+    h1 {
+      font-size: 30px;
+      font-weight: bold;
+      margin-top: 3vh;
+      text-align: center;
+    }
+  }
+
+  .tiles-section {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+
+    .tile {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: center;
+      width: 35%;
+      border: 1px solid $primaryColor;
+      border-radius: $borderRadius;
+      margin: 10px;
+
+      cursor: pointer;
+
+      i {
+        margin-bottom: 15px;
+      }
+
+      h3 {
+        font-size: 22px;
+        font-weight: bold;
+      }
+
+      &:hover {
+        background-color: $thirdColor;
+      }
+    }
+  }
+}

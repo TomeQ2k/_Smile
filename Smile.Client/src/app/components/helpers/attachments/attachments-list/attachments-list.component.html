@@ -1,0 +1,14 @@
+<section class="attachments-list" *ngIf="attachments?.length > 0">
+  <h3>Attachments</h3>
+  <h4>Count: {{ attachments?.length }}</h4>
+  <section class="attachments-section">
+    <ng-container *ngFor="let attachment of attachments">
+      <div class="attachment-data">
+        <i class="fas fa-paperclip"></i>
+        <a href="{{ attachment?.url }}">
+          <p>{{ attachment?.name }}</p>
+        </a>
+      </div>
+    </ng-container>
+  </section>
+</section>

@@ -1,0 +1,26 @@
+<section class="creator-section">
+  <h2>Report creator</h2>
+  <form class="report-form" [formGroup]="reportForm">
+    <mat-form-field appearance="outline">
+      <mat-label>Subject</mat-label>
+      <input type="text" matInput formControlName="subject" maxlength="{{constants.titleLength}}" />
+      <mat-error *ngIf="reportForm.get('subject').invalid">{{formHelper.getErrorMessage(reportForm, 'subject')}}
+      </mat-error>
+      <mat-hint align="end">{{ reportForm.get('subject').value?.length }}/{{constants.titleLength}}
+      </mat-hint>
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Type your report here</mat-label>
+      <textarea type="text" placeholder="Type your report here" matInput formControlName="content" matTextareaAutosize
+        rows="40" maxlength="{{constants.contentLength}}"></textarea>
+      <mat-error *ngIf="reportForm.get('content').invalid">{{formHelper.getErrorMessage(reportForm, 'content')}}
+      </mat-error>
+      <mat-hint align="end">{{ reportForm.get('content').value?.length }}/{{constants.contentLength}}
+      </mat-hint>
+    </mat-form-field>
+    <app-attachments (attachmentsChanged)="onChangeAttachments($event)"></app-attachments>
+    <button class="primary-button" [disabled]="reportForm.invalid || reportForm.pristine" (click)="sendReport()">Send
+      report</button>
+  </form>
+  <app-host-listener [form]="reportForm"></app-host-listener>
+</section>

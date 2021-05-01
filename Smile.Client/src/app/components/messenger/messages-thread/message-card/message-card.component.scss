@@ -1,0 +1,117 @@
+@import "../../../../../const.scss";
+
+.message-card {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  width: 100%;
+  border: 1px solid $thirdColor;
+  border-radius: $borderRadius;
+  padding: 5px;
+  margin-top: 10px;
+
+  .left-side {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 30%;
+    padding: 10px;
+    margin-left: 5px;
+
+    .recipient-image {
+      width: 40px;
+      height: 40px;
+      border: 1px solid $primaryColor;
+      border-radius: 50%;
+      background-position: center;
+      background-size: cover;
+      margin-bottom: 10px;
+    }
+
+    i {
+      font-size: 40px;
+      margin-bottom: 10px;
+    }
+
+    span {
+      font-size: 13px;
+      color: $thirdColor;
+      text-align: center;
+    }
+  }
+
+  .right-side {
+    width: 70%;
+    margin: 5 15px;
+
+    p {
+      font-size: 14px;
+      margin-top: 10px;
+    }
+  }
+}
+
+.current-user-message-card {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  width: 100%;
+  border: 1px solid $primaryColor;
+  border-radius: $borderRadius;
+  padding: 5px;
+  margin-top: 10px;
+
+  .left-side {
+    width: 70%;
+    margin: 5 15px;
+
+    p {
+      font-size: 14px;
+      margin-top: 10px;
+      margin-left: 10px;
+    }
+  }
+
+  .right-side {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 30%;
+    padding: 10px;
+    margin-left: 10px;
+
+    .header-right-side {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      width: 100%;
+      margin-right: 10px;
+
+      h3 {
+        font-size: 18px;
+        font-weight: bold;
+        color: $primaryColor;
+      }
+
+      i {
+        font-size: 25px;
+        align-self: center;
+        margin-right: 10px;
+        margin-left: 10px;
+        margin-bottom: 15px;
+
+        &:hover {
+          opacity: 0.6;
+        }
+      }
+    }
+
+    span {
+      font-size: 13px;
+      color: $thirdColor;
+      text-align: center;
+    }
+  }
+}

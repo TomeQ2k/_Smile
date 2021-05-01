@@ -1,0 +1,51 @@
+<section class="user-section">
+  <h2>{{ user?.username }}</h2>
+  <section class="data-section">
+    <section class="left-side">
+      <h3 *ngIf="!user?.isBlocked">User data</h3>
+      <h3 *ngIf="user?.isBlocked" class="block-text">User is blocked</h3>
+      <div *ngIf="user?.photoUrl" class="photo-container" [ngStyle]="{'background-image': 'url('+ user?.photoUrl +')'}">
+      </div>
+      <app-friend-buttons [user]="user" (friendInvited)="onFriendInvited($event)"
+        (friendAccepted)="onFriendAccepted($event)" (friendDenied)="onFriendDenied($event)"
+        (friendDeleted)="onFriendDeleted($event)"></app-friend-buttons>
+      <p>Account created: <span>{{ user?.dateRegistered | timeAgo }}</span></p>
+      <span *ngIf="user?.isAdmin">
+        <i class="fas fa-star"></i>
+        Admin
+        <i class="fas fa-star"></i>
+      </span>
+      <section *ngIf="isAdmin()" class="admin-buttons">
+        <button class="primary-button" (click)="changeRole()">
+          {{ !user?.isAdmin ? 'Admit admin' : 'Revoke admin' }}
+        </button>
+        <button class="secondary-button" (click)="blockUser()">
+          {{ !user?.isBlocked ? 'Block' : 'Unblock' }}
+        </button>
+        <button *ngIf="isHeadAdmin()" class="destructive-button" (click)="deleteUser()">
+          Delete
+        </button>
+        <button *ngIf="!user?.emailConfirmed" class="secondary-button" (click)="confirmAccount()">
+          Confirm
+        </button>
+      </section>
+    </section>
+    <section class="right-side">
+      <mat-tab-group animationDuration="0ms">
+        <mat-tab label="Posts">
+          <section class="posts-section" *ngIf="user?.posts?.length >0; else emptyPosts">
+            <ng-container *ngFor="let post of user?.posts">
+              <app-post-card [post]="post"></app-post-card>
+            </ng-container>
+          </section>
+        </mat-tab>
+        <mat-tab label="Groups" *ngIf="user?.groups?.length > 0">
+          <app-user-groups [groups]="user?.groups"></app-user-groups>
+        </mat-tab>
+      </mat-tab-group>
+    </section>
+  </section>
+  <ng-template #emptyPosts>
+    <h2 class="empty-info">Any posts found...</h2>
+  </ng-template>
+</section>

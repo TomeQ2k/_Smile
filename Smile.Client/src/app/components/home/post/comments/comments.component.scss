@@ -1,0 +1,122 @@
+@import "../../../../../const.scss";
+
+.comments-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  max-width: $maxWidth;
+
+  .comments-section {
+    border: 2px solid $thirdColor;
+    border-radius: $borderRadius;
+    width: 100%;
+
+    h2 {
+      margin-top: 10px;
+    }
+
+    .comment-card {
+      display: flex;
+      flex-direction: column;
+      width: 80%;
+      border: 1px solid $primaryColor;
+      border-radius: $borderRadius;
+      margin: 0 auto;
+      padding: 10px;
+      margin-bottom: 10px;
+
+      .comment-data {
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-start;
+
+        p {
+          font-size: 14px;
+          margin-left: 30px;
+          max-width: 70%;
+        }
+
+        .avatar-container {
+          width: 30px;
+          height: 30px;
+          align-self: center;
+          padding: 10px;
+        }
+
+        i {
+          font-size: 30px;
+        }
+      }
+
+      .comment-details {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+
+        p {
+          width: 30%;
+          font-size: 13px;
+          margin: 0;
+
+          span {
+            font-weight: bold;
+          }
+        }
+
+        .author-buttons {
+          width: 40%;
+          text-align: center;
+
+          i {
+            font-size: large;
+            margin: 0 10px;
+          }
+        }
+      }
+    }
+  }
+
+  .comment-form {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    align-self: center;
+    width: 100%;
+    margin-top: 15px;
+
+    button {
+      margin-bottom: 1.34375em;
+      margin-left: 10px;
+      max-width: 30%;
+      word-wrap: break-word;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .comments-wrapper {
+    .comments-section .comment-card {
+      .comment-data {
+        p {
+          font-size: 12px;
+        }
+      }
+      .comment-details {
+        p {
+          font-size: 11px;
+        }
+      }
+    }
+
+    .comment-form {
+      flex-direction: column;
+
+      button {
+        max-width: 100%;
+      }
+    }
+  }
+}

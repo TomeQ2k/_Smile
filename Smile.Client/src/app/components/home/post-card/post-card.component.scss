@@ -1,0 +1,155 @@
+@import "../../../../const.scss";
+
+.post-container {
+  display: flex;
+  flex-direction: column;
+  align-self: center;
+  border: 1px solid $primaryColor;
+  border-radius: $borderRadius;
+  margin-bottom: 3vh;
+  padding: 15px;
+
+  cursor: pointer;
+
+  .post-card {
+    display: flex;
+    flex-direction: row;
+    justify-content: stretch;
+    align-items: center;
+    padding: 10px;
+
+    .left-card-section {
+      max-width: 50%;
+      align-self: center;
+
+      .photo-container {
+        width: 300px;
+        height: 300px;
+        max-width: 80%;
+        background-position: center;
+        background-size: cover;
+        border: 1px solid $primaryColor;
+        border-radius: 10%;
+        padding: 5px;
+      }
+
+      .stats-section {
+        display: flex;
+        flex-direction: row;
+        width: 80%;
+
+        .stats-field {
+          display: flex;
+          flex-direction: row;
+          justify-content: center;
+          align-items: center;
+          width: 50%;
+          margin: 15px 0;
+
+          i {
+            font-size: xx-large;
+            margin: 0 5px;
+          }
+        }
+      }
+
+      .details-section {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-top: 10px;
+        border: 1px solid $thirdColor;
+        width: 80%;
+        padding: 5px;
+        border-radius: $borderRadius;
+
+        p span {
+          font-weight: bold;
+          text-align: center;
+        }
+      }
+    }
+
+    .right-card-section {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+      height: 250px;
+    }
+  }
+
+  .admin-buttons {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 15px;
+
+    button {
+      margin-right: 5px;
+      margin-left: 5px;
+    }
+  }
+
+  .smile-icon {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 300px;
+    height: 300px;
+    max-width: 80%;
+    border: 1px solid $primaryColor;
+    border-radius: 10%;
+  }
+}
+
+@media (max-width: 768px) {
+  .post-container {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+
+    .post-card {
+      flex-direction: column;
+      justify-content: center;
+      max-width: 100%;
+
+      .left-card-section {
+        max-width: 100%;
+        margin-bottom: 10px;
+
+        .photo-container {
+          min-width: 200px;
+          min-height: 200px;
+          max-width: 100%;
+        }
+
+        .stats-section {
+          width: 100%;
+        }
+
+        .details-section {
+          width: 100%;
+        }
+      }
+
+      .right-card-section {
+        width: 100%;
+
+        h2 {
+          width: 100%;
+        }
+      }
+    }
+  }
+
+  .smile-icon {
+    min-width: 200px;
+    min-height: 200px;
+    width: 80%;
+    margin: 0 auto;
+  }
+}

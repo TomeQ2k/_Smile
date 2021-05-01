@@ -1,0 +1,18 @@
+@import "../../../../const.scss";
+
+.post-section {
+  display: flex;
+  flex-direction: column;
+  max-width: $maxWidth;
+  margin-top: 5vh;
+
+  app-post-card {
+    width: 75%;
+    align-self: center;
+  }
+
+  app-comments {
+    width: 75%;
+    align-self: center;
+  }
+}

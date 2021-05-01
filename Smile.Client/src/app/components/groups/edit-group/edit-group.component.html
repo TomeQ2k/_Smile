@@ -1,0 +1,57 @@
+<section class="group-section">
+  <h2>{{createMode ?  'Group creator' : 'Group editor'}}</h2>
+  <app-image-card [imageUrl]="group?.imageUrl" (imageChanged)="imageChanged($event)"></app-image-card>
+  <form class="group-form" [formGroup]="groupForm">
+    <mat-form-field appearance="outline">
+      <mat-label>Group name</mat-label>
+      <input type="text" matInput required maxlength="{{constants.titleLength}}" formControlName="name" />
+      <mat-error *ngIf="groupForm.get('name').invalid">{{formHelper.getErrorMessage(groupForm, 'name')}}</mat-error>
+      <mat-hint align="end">{{ groupForm.get('name').value?.length }}/{{constants.titleLength}}
+      </mat-hint>
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <textarea type="text" placeholder="Description..." matInput matTextareaAutosize rows="40"
+        formControlName="description" maxlength="{{constants.contentLength}}"></textarea>
+      <mat-error *ngIf="groupForm.get('description').invalid">
+        {{ formHelper.getErrorMessage(groupForm, 'description') }}
+      </mat-error>
+      <mat-hint align="end">{{ groupForm.get('description').value?.length }}/{{constants.contentLength}}
+      </mat-hint>
+    </mat-form-field>
+    <div class="row-section">
+      <div class="check-box">
+        <input type="checkbox" formControlName="isPrivate" (change)="toggleIsPrivate()" />
+        <span>Private</span>
+      </div>
+      <mat-form-field appearance="outline" *ngIf="isPrivate">
+        <mat-label>Join code</mat-label>
+        <input type="text" matInput maxlength="{{constants.groupCodeLength}}" formControlName="joinCode" />
+        <mat-error *ngIf="groupForm.get('joinCode').invalid">{{formHelper.getErrorMessage(groupForm, 'joinCode')}}
+        </mat-error>
+        <mat-hint align="end">{{ groupForm.get('joinCode').value?.length }}/{{constants.groupCodeLength}}
+        </mat-hint>
+      </mat-form-field>
+    </div>
+    <div class="row-section">
+      <mat-form-field appearance="outline">
+        <mat-label>Invite permission</mat-label>
+        <mat-select aria-placeholder="Permission" formControlName="inviteMemberPermission">
+          <mat-option [value]="0">ADMIN</mat-option>
+          <mat-option [value]="1">MODERATOR</mat-option>
+          <mat-option [value]="2">ALL</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Kick permission</mat-label>
+        <mat-select aria-placeholder="Permission" formControlName="removeMemberPermission">
+          <mat-option [value]="0">ADMIN</mat-option>
+          <mat-option [value]="1">MODERATOR</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <button class="primary-button" [disabled]="groupForm.invalid || groupForm.pristine"
+      (click)="createMode ? createGroup() : updateGroup()">{{createMode ? 'Create group' : 'Save changes'}}</button>
+    <button *ngIf="!createMode" class="destructive-button" (click)="deleteGroup()">Delete group</button>
+  </form>
+</section>
+<app-host-listener [form]="groupForm"></app-host-listener>

@@ -1,0 +1,19 @@
+<section class="notifications-section">
+  <h1>Notifications</h1>
+  <div class="notifications-options">
+    <p (click)="markAsRead()">Mark as read</p>
+    <p (click)="clearAll()" [ngStyle]="{'color': destructiveColor}">Clear all</p>
+  </div>
+  <section *ngIf="notifications?.length > 0; else emptyList" class="notifications-list">
+    <section class="notification-card" *ngFor="let notification of notifications">
+      <div class="main-info">
+        <p [ngStyle]="{'color': !notification?.isRead ? greenColor : 'black'}">{{notification?.message}}</p>
+        <span>{{notification.dateSent | timeAgo}}</span>
+      </div>
+      <i (click)="removeNotification(notification?.id)" class="fas fa-times"></i>
+    </section>
+  </section>
+  <ng-template #emptyList>
+    <h2 class="empty-info">Any notifications found...</h2>
+  </ng-template>
+</section>

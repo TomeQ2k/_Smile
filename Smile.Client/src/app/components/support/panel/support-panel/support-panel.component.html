@@ -1,0 +1,19 @@
+<section class="support-section">
+  <app-reports-filters [isAdmin]="isAdmin" (filtersChanged)="onFiltersChanged($event)"></app-reports-filters>
+  <h2>Reports</h2>
+  <section class="reports-section" *ngIf="reports?.length > 0; else emptyList">
+    <ng-container *ngFor="let report of reports">
+      <app-report-card [report]="report" [isAdmin]="isAdmin" [isHeadAdmin]="isHeadAdmin"
+        (reportDeleted)="onDeleteReport($event)"></app-report-card>
+    </ng-container>
+  </section>
+  <ng-template #emptyList>
+    <h2 class="empty-info">Any reports found...</h2>
+  </ng-template>
+  <div [routerLink]="['/report/create']" class="plus-fixed-button">
+    <i class="fa fa-plus"></i>
+  </div>
+</section>
+<mat-paginator *ngIf="pagination?.totalPages > 1" [length]="pagination?.totalItems"
+  [pageSize]="pagination?.itemsPerPage" [pageIndex]="pagination?.currentPage - 1" (page)="nextPage($event)"
+  [hidePageSize]="true"></mat-paginator>

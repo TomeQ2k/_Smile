@@ -1,0 +1,74 @@
+@import "../../../../../const.scss";
+
+.story-section {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 600px;
+  height: 600px;
+  max-width: 80%;
+  border: 2px solid $primaryColor;
+  border-radius: $borderRadius;
+  padding: 15px;
+  z-index: 3;
+  background-color: $secondaryColor;
+
+  .story-image {
+    width: 500px;
+    height: 500px;
+    max-width: 100%;
+    max-height: 100%;
+    background-position: center;
+    background-size: cover;
+  }
+
+  .details-section {
+    width: 100%;
+    margin-top: 2vh;
+
+    .info-section {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-around;
+      align-items: center;
+
+      span {
+        font-weight: bold;
+      }
+    }
+
+    .buttons-section {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+
+      .change-index-buttons {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        width: 50%;
+
+        .change-index-button {
+          width: 30px;
+          height: 30px;
+          background-image: url("../../../../../assets/icons/next.svg");
+          background-size: contain;
+          background-repeat: no-repeat;
+          background-position: center;
+
+          &.left-rotated {
+            transform: rotateY(180deg);
+          }
+        }
+      }
+    }
+  }
+}

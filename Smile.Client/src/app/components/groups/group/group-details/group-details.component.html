@@ -1,0 +1,60 @@
+<section class="group-details">
+  <h2>Group details</h2>
+  <div class="row-info">
+    <span>Name</span>
+    <p>{{group?.name}}</p>
+  </div>
+  <div class="row-info">
+    <span>Private</span>
+    <p>{{group?.isPrivate ? 'YES' : 'NO'}}</p>
+  </div>
+  <div class="row-info">
+    <span>Created</span>
+    <p>{{group?.dateCreated | date: 'dd-MM-yyyy'}}</p>
+  </div>
+  <div class="row-info">
+    <span>Admin</span>
+    <p [routerLink]="group?.adminId !== currentUserId ? ['/users', group?.adminId] : ['/group/', group?.id]">
+      {{group?.adminName}}</p>
+  </div>
+  <div class="row-info">
+    <span>Can invite</span>
+    <span [ngSwitch]="group?.inviteMemberPermission">
+      <p *ngSwitchCase="0">
+        ADMIN
+      </p>
+      <p *ngSwitchCase="1">
+        MODERATOR
+      </p>
+      <p *ngSwitchCase="2">
+        ALL
+      </p>
+      <p *ngSwitchDefault>
+        ADMIN
+      </p>
+    </span>
+  </div>
+  <div class="row-info">
+    <span>Can kick</span>
+    <span [ngSwitch]="group?.removeMemberPermission">
+      <p *ngSwitchCase="0">
+        ADMIN
+      </p>
+      <p *ngSwitchCase="1">
+        MODERATOR
+      </p>
+      <p *ngSwitchDefault>
+        ADMIN
+      </p>
+    </span>
+  </div>
+  <div *ngIf="group?.adminId === currentUserId && group?.joinCode" class="row-info">
+    <span>Join code</span>
+    <p>{{group?.joinCode}}</p>
+  </div>
+  <div class="row-info" *ngIf="group?.description">
+    <span>Description</span>
+    <p>{{group?.description}}</p>
+  </div>
+  <app-edit-group *ngIf="currentUserId === group?.adminId" [group]="group"></app-edit-group>
+</section>

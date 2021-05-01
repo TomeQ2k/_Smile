@@ -1,0 +1,57 @@
+@import "../../../../../../const.scss";
+
+.report-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  border: 1px solid $primaryColor;
+  border-radius: $borderRadius;
+
+  .report-card-details {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+    border-bottom: 1px solid $primaryColor;
+    padding: 15px;
+
+    p {
+      font-size: 14px;
+    }
+  }
+
+  .report-card-footer {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+    padding: 15px;
+
+    span {
+      font-size: 15px;
+      text-align: center;
+      word-break: break-all;
+      font-weight: bold;
+      width: 33%;
+    }
+
+    .admin-buttons {
+      width: 33%;
+
+      i {
+        font-size: 30px;
+        margin: 0 10px;
+      }
+    }
+
+    img.admin-button {
+      &:hover {
+        opacity: 0.6;
+      }
+    }
+  }
+}

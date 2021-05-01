@@ -1,0 +1,68 @@
+<section class="users-section">
+  <section class="header-section">
+    <i class="fa fa-users"></i>
+    <h1>Users - {{ pagination?.totalItems }}</h1>
+    <i class="fa fa-users"></i>
+  </section>
+  <section class="filters-section">
+    <form class="filters-form" [formGroup]="filtersForm">
+      <mat-form-field appearance="outline">
+        <input type="search" placeholder="Find user..." matInput formControlName="username"
+          (blur)="onFiltersChanged()" />
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-select aria-placeholder="Sort by" formControlName="sortType" (selectionChange)="onFiltersChanged()">
+          <mat-option [value]="sortType.Descending">Newest</mat-option>
+          <mat-option [value]="sortType.Ascending">Oldest</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Users type</mat-label>
+        <mat-select aria-placeholder="Admins only" formControlName="onlyAdmin" (selectionChange)="onFiltersChanged()">
+          <mat-option [value]="false">All</mat-option>
+          <mat-option [value]="true">Admins only</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Confirm status</mat-label>
+        <mat-select aria-placeholder="All" formControlName="emailConfirmedStatus"
+          (selectionChange)="onFiltersChanged()">
+          <mat-option [value]="0">All</mat-option>
+          <mat-option [value]="1">Confirmed</mat-option>
+          <mat-option [value]="2">Not confirmed</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Block status</mat-label>
+        <mat-select aria-placeholder="All" formControlName="blockStatus" (selectionChange)="onFiltersChanged()">
+          <mat-option [value]="0">All</mat-option>
+          <mat-option [value]="1">Not blocked</mat-option>
+          <mat-option [value]="2">Blocked</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <button class="clear-filters-button" (click)="resetFilters()">Clear</button>
+    </form>
+  </section>
+  <section class="users-list" *ngIf="users?.length > 0; else emptyUsers">
+    <ng-container *ngFor="let user of users">
+      <section class="user-card" [routerLink]="['/users/', user?.id]">
+        <div class="left-side">
+          <div class="avatar-container" [routerLink]="['/users', user?.id]"
+            [ngStyle]="{'background-image': user?.photoUrl ? 'url('+user?.photoUrl+')' : 'none'}"></div>
+        </div>
+        <p>{{ user?.username }}</p>
+        <div class="right-side">
+          <i *ngIf="user?.isAdmin" class="fas fa-star"></i>
+          <i *ngIf="user?.emailConfirmed" class="fas fa-user-check"></i>
+          <i *ngIf="user?.isBlocked" class="fas fa-ban"></i>
+        </div>
+      </section>
+    </ng-container>
+  </section>
+  <ng-template #emptyUsers>
+    <h2 class="empty-info">Any users found... :(</h2>
+  </ng-template>
+</section>
+<mat-paginator *ngIf="pagination?.totalPages > 1" [length]="pagination?.totalItems"
+  [pageSize]="pagination?.itemsPerPage" [pageIndex]="pagination?.currentPage - 1" (page)="nextPage($event)"
+  [hidePageSize]="true"></mat-paginator>

@@ -1,0 +1,23 @@
+<section class="conversation-card"
+  [ngStyle]="{'background-color':
+    conversation?.lastMessage?.senderId !== currentUserId && !conversation?.lastMessage?.isRead ? colors.blueColor : colors.secondaryColor}">
+  <section class="left-side"
+    [routerLink]="['/messenger', conversation?.senderId === currentUserId ? conversation?.recipientId : conversation?.senderId]">
+    <div *ngIf="conversation?.avatarUrl" class="avatar-container"
+      [ngStyle]="{'background-image': 'url('+ conversation?.avatarUrl +')'}"></div>
+    <i *ngIf="!conversation?.avatarUrl" class="fa fa-smile-beam"></i>
+  </section>
+  <section class="data-container">
+    <section class="center-side"
+      [routerLink]="['/messenger', conversation?.senderId === currentUserId ? conversation?.recipientId : conversation?.senderId]">
+      <h3>{{ conversation?.username }}</h3>
+      <p><span>{{ conversation?.lastMessage?.senderId === currentUserId
+        ? 'YOU' : conversation?.lastMessage?.senderName }}: </span> {{ conversation?.lastMessage?.text }}</p>
+    </section>
+    <section class="right-side">
+      <i class="fa fa-trash"
+        (click)="deleteConversation(conversation?.senderId === currentUserId ? conversation?.recipientId : conversation?.senderId)"></i>
+      <span>{{ conversation?.lastMessage?.dateSent | timeAgo }}</span>
+    </section>
+  </section>
+</section>

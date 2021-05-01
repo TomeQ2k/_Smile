@@ -1,0 +1,288 @@
+@import "~@angular/material/theming";
+@import "~angular-notifier/styles";
+@import "src/const.scss";
+
+@include mat-core();
+
+$Smile-SPA-primary: mat-palette($mat-indigo, $primaryColor);
+$Smile-SPA-accent: mat-palette($mat-pink, $secondaryColor);
+
+$Smile-SPA-warn: mat-palette($mat-custom, destructiveColor);
+
+$Smile-SPA-theme: mat-light-theme(
+  $Smile-SPA-primary,
+  $Smile-SPA-accent,
+  $Smile-SPA-warn
+);
+
+@include angular-material-theme($Smile-SPA-theme);
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  min-width: 320px;
+  height: 100%;
+
+  &.noscroll {
+    overflow: hidden;
+  }
+}
+
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  background-color: $secondaryColor;
+}
+
+main {
+  width: 100%;
+  max-width: $maxWidth;
+  margin: 0 auto;
+  min-height: 50vh;
+  max-height: 50vh;
+  margin-top: 0;
+}
+
+ul {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+p,
+span,
+h2 {
+  word-wrap: break-word;
+  word-break: normal;
+}
+
+li {
+  list-style-type: none;
+
+  cursor: pointer;
+}
+
+mat-form-field {
+  width: 100%;
+}
+
+p {
+  font-size: 16px;
+  line-height: 26px;
+}
+
+a {
+  text-decoration: none;
+
+  i {
+    font-size: x-large;
+    color: $secondaryColor;
+  }
+}
+
+i {
+  font-size: 80px;
+
+  &:hover {
+    opacity: 0.6;
+  }
+
+  &:disabled {
+    opacity: 0.6;
+  }
+
+  cursor: pointer;
+}
+
+*:focus {
+  border: none;
+  outline: none;
+}
+
+.header {
+  font-size: 20px;
+  font-weight: bold;
+  text-align: center;
+  word-wrap: none;
+  word-break: normal;
+}
+
+button {
+  &:disabled {
+    opacity: 0.6;
+  }
+
+  &:focus {
+    border: 1px solid $primaryColor;
+    outline: 1px solid $primaryColor;
+  }
+
+  i {
+    font-size: xx-large;
+  }
+}
+
+.primary-button {
+  font-size: 20px;
+  font-weight: bold;
+  width: 100%;
+  padding: 15px;
+  border-radius: $borderRadius;
+  background-color: $secondaryColor;
+
+  &:hover {
+    background-color: $thirdColor;
+    border-color: $primaryColor;
+  }
+}
+
+.secondary-button {
+  font-size: 18px;
+  font-weight: bold;
+  width: 100%;
+  padding: 15px;
+  border-radius: $borderRadius;
+  background-color: $thirdColor;
+  color: $secondaryColor;
+
+  &:hover {
+    background-color: $thirdColor;
+    border-color: $primaryColor;
+  }
+
+  &:disabled {
+    color: $primaryColor;
+  }
+}
+
+.destructive-button {
+  font-size: 18px;
+  font-weight: bold;
+  width: 100%;
+  padding: 15px;
+  border-radius: $borderRadius;
+  background-color: $destructiveColor;
+
+  &:hover {
+    background-color: $destructiveColor;
+    border-color: $primaryColor;
+  }
+}
+
+.clear-filters-button {
+  font-size: 16px;
+  padding: 15px;
+  border-radius: $borderRadius;
+  background-color: transparent;
+  border: 2px solid $destructiveColor;
+  margin: 0 5px;
+
+  &:hover {
+    background-color: $destructiveColor;
+    border-color: $primaryColor;
+  }
+}
+
+mat-tab-group {
+  width: 100%;
+  height: 100%;
+}
+
+h2 {
+  text-align: center;
+
+  .empty-info {
+    font-size: 26px;
+    font-weight: bold;
+  }
+}
+
+span {
+  cursor: pointer;
+}
+
+.blur {
+  position: fixed;
+  z-index: 2;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  backdrop-filter: blur(5px);
+}
+
+.mat-paginator {
+  color: $secondaryColor;
+  background-color: $thirdColor;
+  font-size: 15px;
+  font-weight: bold;
+  margin-top: 3vh;
+}
+
+.plus-fixed-button {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  bottom: 2vh;
+  right: 2vh;
+  width: 60px;
+  height: 60px;
+  z-index: 1;
+  background-position: center;
+  background-size: cover;
+  border: 1px solid $primaryColor;
+  border-radius: 50%;
+
+  i {
+    font-size: xx-large;
+  }
+
+  &:hover {
+    opacity: 0.6;
+  }
+}
+
+.avatar-container {
+  width: 60px;
+  height: 60px;
+  background-size: cover;
+  background-position: center;
+  background-color: $thirdColor;
+  border-radius: 50%;
+}
+
+.check-box {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0 auto;
+  margin-bottom: 1.34375em;
+
+  input[type="checkbox"] {
+    transform: scale(2);
+  }
+
+  span {
+    font-size: 16px;
+    margin-left: 10px;
+  }
+}
+
+@media (min-width: 768px) {
+  main {
+    min-height: calc(100% - 412px);
+    margin-top: 0;
+  }
+
+  a {
+    i {
+      font-size: xx-large;
+    }
+  }
+}

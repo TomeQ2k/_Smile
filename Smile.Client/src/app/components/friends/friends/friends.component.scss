@@ -1,0 +1,100 @@
+@import "../../../../const.scss";
+
+.friends-wrapper {
+  max-width: $maxWidth;
+
+  .filters-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 2vh 0;
+    width: 100%;
+
+    h1 {
+      text-align: center;
+      font-weight: bold;
+    }
+
+    i {
+      font-size: 50px;
+      margin-bottom: 10px;
+    }
+
+    .filters-form {
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+      width: 80%;
+
+      mat-form-field {
+        width: 80%;
+        margin: 0 15px;
+      }
+
+      .filter-buttons {
+        display: flex;
+        flex-direction: row;
+        padding-bottom: 1.34375em;
+      }
+    }
+  }
+
+  h1 {
+    text-align: center;
+    font-weight: bold;
+  }
+
+  .friends-section {
+    flex-grow: 1;
+    max-width: 100%;
+    padding: 15px;
+    height: $scrollSectionHeight;
+    overflow-y: scroll;
+
+    .friend-card {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+      margin: 15px;
+
+      p {
+        font-size: 26px;
+        font-weight: bold;
+        margin-left: 10px;
+        width: 50%;
+        text-align: center;
+
+        cursor: pointer;
+      }
+
+      .friend-buttons {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        flex-wrap: wrap;
+        width: 30%;
+
+        i {
+          font-size: x-large;
+        }
+
+        .friend-button {
+          padding: 10px;
+          margin: 5px 0;
+
+          &:hover {
+            opacity: 0.6;
+          }
+        }
+      }
+    }
+  }
+
+  .empty-info {
+    margin-top: 40px;
+  }
+}

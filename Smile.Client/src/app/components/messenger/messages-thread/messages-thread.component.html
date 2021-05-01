@@ -1,0 +1,34 @@
+<section class="messages-wrapper">
+  <section class="messages-header" [routerLink]="['/users/', messagesRequest.recipientId]">
+    <h2>{{ recipient?.username }}</h2>
+    <div *ngIf="recipient?.photoUrl" class="user-image"
+      [ngStyle]="{'background-image': 'url(' + recipient?.photoUrl +')'}">
+    </div>
+    <i *ngIf="!recipient?.photoUrl" class="fa fa-user-circle"></i>
+  </section>
+  <ng-container infiniteScroll [fromRoot]="true" [infiniteScrollContainer]="'.messages-container'"
+    [infiniteScrollUpDistance]="5" [infiniteScrollThrottle]="0" (scrolledUp)="onScroll()">
+    <section #chatSection class="messages-container" *ngIf="messagesThread?.length > 0; else emptyMessages">
+      <ng-container *ngFor="let message of messagesThread">
+        <app-message-card [message]="message" (messageDeleted)="onMessageDeleted($event)"></app-message-card>
+      </ng-container>
+    </section>
+  </ng-container>
+  <form class="message-form" [formGroup]="messageForm">
+    <mat-form-field appearance="outline">
+      <input type="text" placeholder="Type your message..." matInput required maxLength="{{ constants.messageLength }}"
+        formControlName="text" />
+      <mat-error *ngIf="messageForm.get('text').invalid">{{ formHelper.getErrorMessage(messageForm, 'text') }}
+      </mat-error>
+      <mat-hint align="end">
+        {{ messageForm.get('text').value ? messageForm.get('text').value?.length : '0' }}/{{constants.messageLength}}
+      </mat-hint>
+    </mat-form-field>
+    <button class="send-button" [disabled]="messageForm.invalid || messageForm.pristine"
+      (click)="sendMessage()"></button>
+  </form>
+  <ng-template #emptyMessages>
+    <h2 class="empty-info">Any messages found...</h2>
+  </ng-template>
+  <app-host-listener [form]="messageForm"></app-host-listener>
+</section>

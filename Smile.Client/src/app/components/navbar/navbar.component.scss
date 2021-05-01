@@ -1,0 +1,48 @@
+@import "../../../const.scss";
+
+.navbar-section {
+  background-color: $primaryColor;
+  height: 8vh;
+  border-bottom: 1px solid $primaryColor;
+
+  .menu-list {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+
+    .notification-tab {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+
+      span {
+        font-size: 18px;
+        align-self: flex-end;
+      }
+    }
+
+    li {
+      display: flex;
+      flex-direction: row-reverse;
+      justify-content: flex-start;
+      align-items: center;
+      height: 80%;
+
+      &:hover {
+        opacity: 0.6;
+      }
+
+      a {
+        display: flex;
+        align-items: center;
+        height: 100%;
+
+        .avatar-container {
+          align-self: center;
+        }
+      }
+    }
+  }
+}

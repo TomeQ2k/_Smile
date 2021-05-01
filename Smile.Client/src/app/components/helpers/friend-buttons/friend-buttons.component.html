@@ -1,0 +1,21 @@
+<section class="friend-buttons">
+  <div *ngIf="user?.isFriendAccepted && currentUserId !== user?.id" class="friend-button"
+    [routerLink]="['/messenger/', user?.id]">
+    <i class="fas fa-envelope"></i>
+  </div>
+  <div *ngIf="user?.id !== currentUserId && user?.isFriend && user?.isFriendAccepted" class="friend-button"
+    (click)="deleteFriend(user?.id)">
+    <i class="fas fa-user-minus"></i>
+  </div>
+  <div *ngIf="!user?.isFriend" class="friend-button" (click)="inviteFriend(user?.id)">
+    <i class="fas fa-user-plus"></i>
+  </div>
+  <div *ngIf="user?.isFriend && !user?.isFriendAccepted && !user?.isCurrentUserSender" class="friend-button"
+    (click)="receiveFriend(user?.id, currentUserId, true)">
+    <i class="fas fa-check"></i>
+  </div>
+  <div *ngIf="user?.isFriend && !user?.isFriendAccepted" class="friend-button"
+    (click)="receiveFriend(user?.id, currentUserId, false)">
+    <i class="fas fa-user-times"></i>
+  </div>
+</section>

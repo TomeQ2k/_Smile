@@ -1,0 +1,61 @@
+<section class="navbar-section">
+  <ul class="menu-list">
+    <li *ngIf="isLoggedIn">
+      <a [routerLink]="['/friends']" class="notification-tab">
+        <i class="fas fa-users"></i>
+        <span matBadge="{{ friendInvitesCount > 0 ? friendInvitesCount : '' }}" matBadgeOverlap="false"></span>
+      </a>
+    </li>
+    <li *ngIf="isLoggedIn">
+      <a [routerLink]="['/messenger']" class="notification-tab">
+        <i class="fab fa-facebook-messenger"></i>
+        <span matBadge="{{ unreadMessagesCount > 0 ? unreadMessagesCount : '' }}" matBadgeOverlap="false"></span>
+      </a>
+    </li>
+    <li *ngIf="isLoggedIn">
+      <a [routerLink]="['notifications']" class="notification-tab">
+        <i class="fa fa-bell"></i>
+        <span matBadge="{{ unreadNotificationsCount > 0 ? unreadNotificationsCount : '' }}"
+          matBadgeOverlap="false"></span>
+      </a>
+    </li>
+    <li *ngIf="isLoggedIn">
+      <a [routerLink]="['']"><i class="fas fa-smile-beam"></i>
+      </a>
+    </li>
+    <li *ngIf="isLoggedIn">
+      <a [routerLink]="['groups']">
+        <i class="fas fa-layer-group"></i>
+      </a>
+    </li>
+    <li *ngIf="isLoggedIn && !isAdmin">
+      <a [routerLink]="['support']">
+        <i class="fas fa-headset"></i>
+      </a>
+    </li>
+    <li *ngIf="!isLoggedIn">
+      <a [routerLink]="['report/createAnonymous']">
+        <i class="fas fa-headset"></i>
+      </a>
+    </li>
+    <li *ngIf="!isLoggedIn">
+      <a [routerLink]="['']"><i class="fas fa-smile-beam"></i>
+      </a>
+    </li>
+    <li *ngIf="isLoggedIn && isAdmin">
+      <a [routerLink]="['/admin/support']">
+        <i class="fas fa-headset"></i>
+      </a>
+    </li>
+    <li>
+      <a *ngIf="isLoggedIn && !currentUser?.photoUrl" [routerLink]="['/profile']"><i class="fas fa-user-cog"></i></a>
+      <a *ngIf="isLoggedIn && currentUser?.photoUrl" [routerLink]="['/profile']">
+        <div class="avatar-container" [ngStyle]="{
+          'background-image': 'url(' + currentUser?.photoUrl + ')'
+        }">
+        </div>
+      </a>
+      <a *ngIf="!isLoggedIn" [routerLink]="['/auth']"><i class="fas fa-user"></i></a>
+    </li>
+  </ul>
+</section>

@@ -1,0 +1,19 @@
+<section class="profile-section">
+  <mat-tab-group animationDuration="0ms">
+    <mat-tab label="Profile">
+      <app-profile-edit></app-profile-edit>
+    </mat-tab>
+    <mat-tab label="My posts">
+      <app-my-posts></app-my-posts>
+    </mat-tab>
+    <mat-tab label="Groups">
+      <app-user-groups [isProfile]="true"></app-user-groups>
+    </mat-tab>
+    <mat-tab *appRequiredRoles="roles.adminRoles" label="Admin panel">
+      <app-redirect-admin-panel></app-redirect-admin-panel>
+    </mat-tab>
+  </mat-tab-group>
+  <button class="destructive-button logout-button" (click)="logout()">
+    Log out
+  </button>
+</section>

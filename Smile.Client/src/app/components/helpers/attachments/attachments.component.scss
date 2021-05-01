@@ -1,0 +1,73 @@
+@import "../../../../const.scss";
+
+.attachments-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+
+  h3 {
+    font-size: 18px;
+    text-align: center;
+    font-weight: bold;
+  }
+
+  h4 {
+    font-size: 16px;
+    text-align: center;
+    font-style: italic;
+  }
+
+  .attachments-section {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 3vh;
+    width: 100%;
+
+    .attachment-input {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      width: 40%;
+      height: 50px;
+      border: 1px solid $primaryColor;
+      border-radius: $borderRadius;
+
+      &:hover {
+        background-color: $thirdColor;
+      }
+    }
+
+    .attachments-list {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      margin-top: 2vh;
+      width: 100%;
+
+      .attachment-data {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+
+        span {
+          font-weight: bold;
+          font-style: italic;
+          word-break: break-all;
+          margin: 8px 0;
+        }
+
+        i {
+          font-size: 25px;
+        }
+      }
+    }
+  }
+}

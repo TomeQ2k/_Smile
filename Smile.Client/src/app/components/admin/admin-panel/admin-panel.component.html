@@ -1,0 +1,15 @@
+<section class="admin-section">
+  <section class="header-section">
+    <i class="fas fa-user-shield"></i>
+    <h1>Admin Panel - {{ currentUsername }}</h1>
+    <i class="fas fa-user-shield"></i>
+  </section>
+  <section class="tiles-section">
+    <ng-container *ngFor="let tile of tiles">
+      <section class="tile" [routerLink]="tile.routerLink">
+        <i class="{{ tile.imageUrl }}"></i>
+        <h3>{{ tile.title | uppercase }}</h3>
+      </section>
+    </ng-container>
+  </section>
+</section>

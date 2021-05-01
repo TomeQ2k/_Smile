@@ -1,0 +1,22 @@
+@import "../../../../const.scss";
+
+.register-section {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-right: 20px;
+  margin-left: 20px;
+  height: 100%;
+
+  .header {
+    padding: 20px;
+  }
+
+  .register-form {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+  }
+}

@@ -1,0 +1,71 @@
+<section class="logs-section">
+  <section class="header-section">
+    <i class="fas fa-list-ol"></i>
+    <h1>Logs - {{ pagination?.totalItems }}</h1>
+    <i class="fas fa-list-ol"></i>
+  </section>
+  <section class="filters-section">
+    <form class="filters-form" [formGroup]="filtersForm">
+      <mat-form-field appearance="outline">
+        <mat-label>Min Date</mat-label>
+        <input matInput [matDatepicker]="dateMinPicker" formControlName="minDate" placeholder="Logs after..."
+          min="{{ minDate }}" max="{{ maxDate }}" />
+        <mat-datepicker-toggle matSuffix [for]="dateMinPicker"></mat-datepicker-toggle>
+        <mat-datepicker #dateMinPicker></mat-datepicker>
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Max Date</mat-label>
+        <input matInput [matDatepicker]="dateMaxPicker" formControlName="maxDate" placeholder="Logs before..."
+          min="{{ minDate }}" max="{{ maxDate }}" />
+        <mat-datepicker-toggle matSuffix [for]="dateMaxPicker"></mat-datepicker-toggle>
+        <mat-datepicker #dateMaxPicker></mat-datepicker>
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-select aria-placeholder="Level" formControlName="level">
+          <mat-option [value]="''">ALL</mat-option>
+          <mat-option [value]="'INFO'">INFO</mat-option>
+          <mat-option [value]="'DEBUG'">DEBUG</mat-option>
+          <mat-option [value]="'ERROR'">ERROR</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <input type="search" placeholder="Message" matInput formControlName="message" />
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <input type="search" placeholder="Url" matInput formControlName="url" />
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-select aria-placeholder="Sort descending" formControlName="sortType">
+          <mat-option [value]="sortType.Descending">Newest</mat-option>
+          <mat-option [value]="sortType.Ascending">Oldest</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <button class="primary-button" (click)="filterLogs()">Filter</button>
+      <button class="clear-filters-button" (click)="resetFilters()">Clear</button>
+    </form>
+  </section>
+  <section class="logs-list" *ngIf="logs?.length > 0; else emptyLogs">
+    <ng-container *ngFor="let log of logs">
+      <section class="log-card">
+        <div class="log-info">
+          <h4>#ID: {{log?.id}}</h4>
+          <h4
+            [ngStyle]="{'color': log?.level === 'ERROR' ? colors.destructiveColor : (log?.level === 'WARNING' ? 'gold' : 'black')}">
+            {{log?.level}}
+          </h4>
+          <span>{{ log?.date | date: 'medium' }}</span>
+        </div>
+        <div class="log-info">
+          <p>{{log?.message}}</p>
+          <span>{{ shortenStr(log?.url, log?.url?.length, localHostLength) }} | {{log?.action}}</span>
+        </div>
+      </section>
+    </ng-container>
+  </section>
+  <ng-template #emptyLogs>
+    <h2 class="empty-info">Any logs found...</h2>
+  </ng-template>
+</section>
+<mat-paginator *ngIf="pagination?.totalPages > 1" [length]="pagination?.totalItems"
+  [pageSize]="pagination?.itemsPerPage" [pageIndex]="pagination?.currentPage - 1" (page)="nextPage($event)"
+  [hidePageSize]="true"></mat-paginator>

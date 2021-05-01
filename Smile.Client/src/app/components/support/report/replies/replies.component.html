@@ -1,0 +1,16 @@
+<section class="replies-section">
+  <ng-container *ngFor="let reply of replies">
+    <section class="reply-card">
+      <section class="left-container">
+        <i *ngIf="reply?.isAdmin" class="fa fa-headset"></i>
+        <img *ngIf="!reply?.isAdmin && reporterPhotoUrl" src="{{reporterPhotoUrl}}" />
+        <i *ngIf="!reply?.isAdmin && !reporterPhotoUrl" class="fa fa-user-circle"></i>
+        <span>{{ reply?.dateSent | date: 'dd-MM-yy, h:mm a' }}</span>
+        <app-attachments-list [files]="reply?.replyFiles"></app-attachments-list>
+      </section>
+      <section class="right-container">
+        <p>{{reply?.content}}</p>
+      </section>
+    </section>
+  </ng-container>
+</section>

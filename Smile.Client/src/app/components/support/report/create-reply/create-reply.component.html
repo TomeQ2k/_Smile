@@ -1,0 +1,15 @@
+<form class="reply-form" [formGroup]="replyForm">
+  <mat-form-field appearance="outline">
+    <mat-label>Type your reply here</mat-label>
+    <textarea type="text" placeholder="Type your reply here" matInput formControlName="content" matTextareaAutosize
+      rows="30" maxlength="{{constants.contentLength}}"></textarea>
+    <mat-error *ngIf="replyForm.get('content').invalid">{{formHelper.getErrorMessage(replyForm, 'content')}}
+    </mat-error>
+    <mat-hint align="end">{{ replyForm.get('content').value?.length }}/{{constants.contentLength}}
+    </mat-hint>
+  </mat-form-field>
+  <app-attachments [attachments]="attachments" (attachmentsChanged)="onChangeAttachments($event)"></app-attachments>
+  <button class="primary-button" [disabled]="replyForm.invalid || replyForm.pristine" (click)="sendReply()">Send
+    reply</button>
+  <app-host-listener [form]="replyForm"></app-host-listener>
+</form>

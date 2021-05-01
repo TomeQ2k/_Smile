@@ -1,0 +1,22 @@
+<section class="group-wrapper">
+  <div *ngIf="group?.imageUrl" class="group-header-with-image">
+    <div (click)="openBackgroundImage()" class="background-container"
+      [ngStyle]="{'background-image': 'url('+ group?.imageUrl +')'}"></div>
+    <h2>{{group?.name}}</h2>
+  </div>
+  <div *ngIf="!group?.imageUrl" class="group-header">
+    <div class="background-container"></div>
+    <h2>{{group?.name}}</h2>
+  </div>
+  <mat-tab-group animationDuration="0ms">
+    <mat-tab label="Dashboard">
+      <app-group-dashboard [group]="group"></app-group-dashboard>
+    </mat-tab>
+    <mat-tab label="Details" *ngIf="group?.isMember">
+      <app-group-details [group]="group"></app-group-details>
+    </mat-tab>
+    <mat-tab label="Members" *ngIf="group?.isMember">
+      <app-group-members [group]="group"></app-group-members>
+    </mat-tab>
+  </mat-tab-group>
+</section>

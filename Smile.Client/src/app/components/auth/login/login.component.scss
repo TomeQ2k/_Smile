@@ -1,0 +1,33 @@
+@import "../../../../const.scss";
+
+.login-section {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-right: 20px;
+  margin-left: 20px;
+  height: 100%;
+
+  .header {
+    padding: 20px;
+  }
+
+  .login-form {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+
+    .reset-password-text {
+      color: $thirdColor;
+      text-align: center;
+
+      cursor: pointer;
+
+      &:hover {
+        color: $blueColor;
+      }
+    }
+  }
+}

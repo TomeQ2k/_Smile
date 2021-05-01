@@ -1,0 +1,17 @@
+<section class="auth-section">
+  <section class="header-section">
+    <i class="fa fa-smile-beam"></i>
+    <h1>Smile - very happy application</h1>
+    <i class="fa fa-smile-beam"></i>
+  </section>
+  <section class="auth-wrapper">
+    <section class="form-section">
+      <app-login *ngIf="!resetPasswordMode" (resetPasswordToggled)="resetPasswordToggle($event)"></app-login>
+      <app-send-reset-password *ngIf="resetPasswordMode" (resetPasswordToggled)="resetPasswordToggle($event)">
+      </app-send-reset-password>
+    </section>
+    <section class="form-section">
+      <app-register></app-register>
+    </section>
+  </section>
+</section>

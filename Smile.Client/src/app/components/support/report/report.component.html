@@ -1,0 +1,27 @@
+<section class="report-wrapper">
+  <h2>Report #{{ report?.id }}</h2>
+  <h3 [routerLink]="['/users', report?.reporterId]">Reporter:
+    {{ !report?.isAnonymous ? report?.reporterName : report?.email}}</h3>
+  <h3 *ngIf="report?.isClosed" class="close-header">Closed</h3>
+  <section class="report-section">
+    <section class="left-container">
+      <section class="report-card">
+        <h3>{{ report?.subject }}</h3>
+        <span>Created: <strong>{{ report?.dateUpdated | date: 'dd-MM-yy, h:mm a' }}</strong></span>
+        <div class="content-wrapper">
+          <p>{{ report?.content }}</p>
+        </div>
+        <app-attachments-list [files]="report?.reportFiles">
+        </app-attachments-list>
+      </section>
+      <h3 *ngIf="!report?.isClosed">Reply creator</h3>
+      <section class="reply-creator" *ngIf="!report?.isClosed">
+        <app-create-reply [reportId]="report?.id" (replySent)="onSendReply($event)"></app-create-reply>
+      </section>
+    </section>
+    <section class="replies-list">
+      <h3>Replies - {{ report?.replies?.length }}</h3>
+      <app-replies [replies]="report?.replies" [reporterPhotoUrl]="report?.reporterPhotoUrl"></app-replies>
+    </section>
+  </section>
+</section>

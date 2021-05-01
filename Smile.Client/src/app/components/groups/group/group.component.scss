@@ -1,0 +1,61 @@
+@import "../../../../const.scss";
+
+.group-wrapper {
+  max-width: $maxWidth;
+
+  .group-header {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    width: 100%;
+    height: 30vh;
+
+    cursor: pointer;
+
+    h2 {
+      font-size: 28px;
+      z-index: 1;
+    }
+
+    .background-container {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background-color: $thirdColor;
+      z-index: -1;
+
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center;
+    }
+  }
+
+  .group-header-with-image {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 30vh;
+
+    cursor: pointer;
+
+    h2 {
+      font-size: 28px;
+      font-weight: bold;
+      margin-top: 3vh;
+    }
+
+    .background-container {
+      width: 100%;
+      height: 100%;
+      background-color: $thirdColor;
+
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center;
+    }
+  }
+}

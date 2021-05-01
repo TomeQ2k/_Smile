@@ -1,0 +1,25 @@
+  <section class="message-card" *ngIf="message?.senderId !== authService.currentUser?.id; else currentUserCard">
+    <section class="left-side">
+      <div *ngIf="message?.senderPhotoUrl" class="recipient-image"
+        [ngStyle]="{'background-image': 'url('+ message?.senderPhotoUrl + ')'}"></div>
+      <i *ngIf="!message?.senderPhotoUrl" class="fa fa-user-circle"></i>
+      <span>{{ message?.dateSent | date: 'dd-MM-yy, h:mm a' }}</span>
+    </section>
+    <section class="right-side">
+      <p>{{ message?.text }}</p>
+    </section>
+  </section>
+  <ng-template #currentUserCard>
+    <section class="current-user-message-card">
+      <section class="left-side">
+        <p>{{ message?.text }}</p>
+      </section>
+      <section class="right-side">
+        <section class="header-right-side">
+          <h3>YOU</h3>
+          <i class="fa fa-trash" (click)="deleteMessage(message?.id)"></i>
+        </section>
+        <span>{{ message?.dateSent | date: 'dd-MM-yy, h:mm a' }}</span>
+      </section>
+    </section>
+  </ng-template>

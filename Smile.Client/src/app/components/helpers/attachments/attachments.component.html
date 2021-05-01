@@ -1,0 +1,19 @@
+<section class="attachments-wrapper">
+  <h3>Attachments</h3>
+  <h4>Count: {{ attachments.length }} / {{ constants.maxFilesCount }}</h4>
+  <section class="attachments-section">
+    <div class="attachment-input" (click)="fileInput.click()" *ngIf="attachments.length < constants.maxFilesCount">
+      <span>Attach files</span>
+      <input #fileInput type="file" multiple (change)="onAttachmentsChange(fileInput.files)" style="display: none;" />
+    </div>
+    <section class="attachments-list">
+      <ng-container *ngFor="let attachment of attachments">
+        <div class="attachment-data">
+          <i class="fas fa-paperclip"></i>
+          <span>{{attachment.name}}</span>
+          <i class="fa fa-trash" (click)="deleteAttachment(attachment)"></i>
+        </div>
+      </ng-container>
+    </section>
+  </section>
+</section>

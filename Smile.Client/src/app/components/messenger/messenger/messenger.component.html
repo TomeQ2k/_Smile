@@ -1,0 +1,24 @@
+<section class="messenger-section">
+  <h1>Messenger</h1>
+  <form class="search-form" [formGroup]="filtersForm">
+    <i class="fab fa-facebook-messenger"></i>
+    <mat-form-field appearance="outline">
+      <input type="search" placeholder="Search by username..." matInput formControlName="username"
+        (blur)="onFiltersChanged()" />
+    </mat-form-field>
+    <i class="fab fa-facebook-messenger"></i>
+  </form>
+  <h2>Conversations</h2>
+  <ng-container infiniteScroll [fromRoot]="true" [infiniteScrollContainer]="'.conversations-section'"
+    [infiniteScrollUpDistance]="5" [infiniteScrollThrottle]="0" (scrolled)="onScroll()">
+    <section #conversationsSection class="conversations-section" *ngIf="conversations?.length > 0; else emptyList;">
+      <ng-container *ngFor="let conversation of conversations">
+        <app-conversation-card [conversation]="conversation" (conversationDeleted)="onDeleteConversation($event)">
+        </app-conversation-card>
+      </ng-container>
+    </section>
+  </ng-container>
+  <ng-template #emptyList>
+    <h2 class="empty-info">Any conversations found...Maybe text to someone?</h2>
+  </ng-template>
+</section>

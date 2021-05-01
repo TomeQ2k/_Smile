@@ -1,0 +1,10 @@
+ <div *ngIf="imageUrl" class="img-container" (click)="fileInput.click()"
+   [ngStyle]="{'background-image': 'url('+ imageUrl +')'}">
+   <input #fileInput type="file" accept=".img,.png,.jpg,.jpeg,.tiff,.ico,.svg" style="display: none;"
+     (change)="setImage(fileInput.files[0])" />
+ </div>
+ <div *ngIf="!imageUrl" class="img-container" (click)="fileInput.click()">
+   <input #fileInput type="file" accept=".img,.png,.jpg,.jpeg,.tiff,.ico,.svg" style="display: none;"
+     (change)="setImage(fileInput.files[0])" />
+ </div>
+ <button class="destructive-button" [disabled]="!image && !imageUrl" (click)="resetImage()">Reset image</button>

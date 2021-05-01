@@ -1,0 +1,106 @@
+@import "../../../../const.scss";
+
+.user-section {
+  margin-top: 3vh;
+
+  h2 {
+    font-size: 26px;
+  }
+
+  .data-section {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    max-width: $maxWidth;
+    height: $scrollSectionHeight;
+
+    h3 {
+      font-size: 22px;
+      text-align: center;
+      font-style: italic;
+    }
+
+    .block-text {
+      color: $destructiveColor;
+      font-weight: bold;
+    }
+
+    .left-side {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 30%;
+      height: 100%;
+      padding: 5px;
+
+      .photo-container {
+        width: 100%;
+        height: 25vh;
+        background-position: center;
+        background-size: contain;
+        background-repeat: no-repeat;
+        border: 1px solid $primaryColor;
+        border-radius: $borderRadius;
+        margin-bottom: 15px;
+      }
+
+      p {
+        font-weight: bold;
+        text-align: center;
+
+        span {
+          font-weight: normal;
+          color: $thirdColor;
+        }
+      }
+
+      i {
+        font-size: 20px;
+      }
+
+      span {
+        font-size: 16px;
+        font-weight: bold;
+      }
+
+      .admin-buttons {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+
+        button {
+          margin-top: 10px;
+        }
+      }
+    }
+
+    .right-side {
+      display: flex;
+      flex-direction: column;
+      max-width: 70%;
+      height: 100%;
+
+      .posts-section {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 5px;
+        margin-top: 2vh;
+        width: 100%;
+
+        app-post-card {
+          width: 100%;
+        }
+      }
+    }
+  }
+
+  .empty-info {
+    font-size: 20px;
+    margin-top: 40px;
+  }
+}

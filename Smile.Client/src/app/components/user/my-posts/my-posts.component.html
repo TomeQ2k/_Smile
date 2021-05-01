@@ -1,0 +1,11 @@
+<section class="my-posts-section">
+  <h2 class="header">My Posts - {{ pagination?.totalItems }}</h2>
+  <section class="posts-section">
+    <ng-container *ngFor="let post of posts">
+      <app-post-card [post]="post" (postDeleted)="onPostDeleted($event)"></app-post-card>
+    </ng-container>
+  </section>
+</section>
+<mat-paginator *ngIf="pagination?.totalPages > 1" [length]="pagination?.totalItems"
+  [pageSize]="pagination?.itemsPerPage" [pageIndex]="pagination?.currentPage - 1" (page)="nextPage($event)"
+  [hidePageSize]="true"></mat-paginator>

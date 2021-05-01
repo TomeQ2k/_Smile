@@ -1,0 +1,79 @@
+<section class="members-wrapper">
+  <section class="header-section">
+    <form *ngIf="userInvitePermission <= invitePermission" [formGroup]="inviteForm">
+      <mat-form-field appearance="outline">
+        <mat-label>Invite user</mat-label>
+        <input type="text" placeholder="Username..." matInput required formControlName="username">
+        <mat-error *ngIf="inviteForm.get('username').invalid">{{ formHelper.getErrorMessage(inviteForm, 'username') }}
+        </mat-error>
+      </mat-form-field>
+      <button class="invite-button" [disabled]="inviteForm.invalid || inviteForm.pristine" (click)="inviteMember()">
+        <i class="fa fa-user-plus"></i>
+      </button>
+    </form>
+    <button *ngIf="currentUserId !== group?.adminId" class="destructive-button" (click)="leaveGroup()">Leave
+      group</button>
+  </section>
+  <section class="members-section">
+    <h2>Admin</h2>
+    <section class="member-card"
+      [routerLink]="group?.adminId !== currentUserId ? ['/users', group?.adminId] : ['/group/', group?.id]">
+      <div class="img-container"
+        [ngStyle]="{'background-image': group?.adminPhotoUrl ? 'url('+group?.adminPhotoUrl+')' : 'none'}"></div>
+      <p>{{group?.adminName}}</p>
+    </section>
+    <h2>Moderators - {{moderators?.length}}</h2>
+    <ng-container *ngIf="moderators?.length > 0; else emptyModerators">
+      <section class="member-card" *ngFor="let moderator of moderators">
+        <div [routerLink]="moderator?.userId !== currentUserId ? ['/users', moderator?.userId] : ['/group/', group?.id]"
+          class="img-container"
+          [ngStyle]="{'background-image': moderator?.userPhotoUrl ? 'url('+moderator?.userPhotoUrl+')' : 'none'}"></div>
+        <div class="options" *ngIf="currentUserId !== moderator?.userId">
+          <button *ngIf="currentUserId === group?.adminId" (click)="setModerator(moderator?.userId, false)">
+            <i class="fas fa-user-minus"></i>
+          </button>
+          <button *ngIf="userKickPermission <= kickPermission" (click)="kickMember(moderator?.userId)">
+            <i class="fas fa-user-slash"></i>
+          </button>
+        </div>
+        <p [routerLink]="moderator?.userId !== currentUserId ? ['/users', moderator?.userId] : ['/group/', group?.id]">
+          {{moderator?.username}}</p>
+      </section>
+    </ng-container>
+    <ng-template #emptyModerators>
+      <h2 class="empty-info">Any moderators found...</h2>
+    </ng-template>
+    <h2>Members - {{members?.length}}</h2>
+    <ng-container *ngIf="members?.length > 0; else emptyMembers">
+      <section class="member-card" *ngFor="let member of members">
+        <div class="img-container"
+          [routerLink]="member?.userId !== currentUserId ? ['/users', member?.userId] : ['/group/', group?.id]"
+          [ngStyle]="{'background-image': member?.userPhotoUrl ? 'url('+member?.userPhotoUrl+')' : 'none'}"></div>
+        <p *ngIf="!member?.isJoining && !member.isAccepted">INVITED</p>
+        <div class="options" *ngIf="currentUserId !== member?.userId">
+          <button *ngIf="currentUserId === group?.adminId && member?.isJoining"
+            (click)="acceptMember(member?.userId, true)">
+            <i class="fas fa-user-check"></i>
+          </button>
+          <button *ngIf="currentUserId === group?.adminId && member?.isJoining"
+            (click)="acceptMember(member?.userId, false)">
+            <i class="fas fa-user-times"></i>
+          </button>
+          <button *ngIf="currentUserId === group?.adminId && member?.isAccepted"
+            (click)="setModerator(member?.userId, true)">
+            <i class="fas fa-user-shield"></i>
+          </button>
+          <button *ngIf="userKickPermission <= kickPermission && member?.isAccepted"
+            (click)="kickMember(member?.userId)">
+            <i class="fas fa-user-slash"></i>
+          </button>
+        </div>
+        <p [routerLink]="member?.userId !== currentUserId ? ['/users', member?.userId] : ['/group/', group?.id]">
+          {{member?.username}}</p>
+      </section>
+    </ng-container>
+    <ng-template #emptyMembers>
+      <h2 class="empty-info">Any members found...</h2>
+    </ng-template>
+  </section>
+</section>

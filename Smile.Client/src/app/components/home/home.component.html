@@ -1,0 +1,41 @@
+<section class="home-section">
+  <section class="filters-section">
+    <h1>Filters</h1>
+    <form class="filters-form" [formGroup]="filtersForm">
+      <mat-form-field appearance="outline">
+        <input type="search" placeholder="Title" matInput formControlName="title" />
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-select aria-placeholder="Sort by" formControlName="sortType">
+          <mat-option [value]="0">Newest</mat-option>
+          <mat-option [value]="1">Oldest</mat-option>
+          <mat-option [value]="2">Smiles descending</mat-option>
+          <mat-option [value]="3">Smiles ascending</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <section class="filter-buttons">
+        <button type="submit" class="primary-button" (click)="filterPosts()">Filter</button>
+        <button class="clear-filters-button" (click)="clearFilters()">Clear</button>
+      </section>
+    </form>
+  </section>
+  <section class="main-section" *ngIf="posts?.length > 0; else emptyPosts">
+    <h1>Posts</h1>
+    <ng-container infiniteScroll [fromRoot]="true" [infiniteScrollContainer]="'.posts-list'"
+      [infiniteScrollUpDistance]="5" [infiniteScrollThrottle]="0" (scrolled)="onScroll()">
+      <section #postsSection class="posts-list">
+        <ng-container *ngFor="let post of posts">
+          <app-post-card [post]="post" [groupAdminId]="groupAdminId" (postDeleted)="onPostDeleted($event)">
+          </app-post-card>
+        </ng-container>
+      </section>
+    </ng-container>
+  </section>
+  <ng-template #emptyPosts>
+    <h2 class="empty-info">Any posts found... :(</h2>
+  </ng-template>
+  <div *ngIf="(isMember && groupId) || !groupId" [routerLink]="['/post/create']"
+    [queryParams]="{ createMode: true, groupId: groupId ? groupId : null }" class="plus-fixed-button">
+    <i class="fa fa-plus"></i>
+  </div>
+</section>

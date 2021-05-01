@@ -1,0 +1,123 @@
+@import "../../../../../const.scss";
+
+.members-wrapper {
+  max-width: $maxWidth;
+  margin-top: 3vh;
+
+  button {
+    &:focus {
+      outline: none;
+    }
+  }
+
+  .header-section {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 2vh;
+
+    form {
+      text-align: center;
+      width: 70%;
+
+      mat-form-field {
+        width: 70%;
+      }
+
+      button {
+        width: fit-content;
+        border: none;
+        margin-left: 10px;
+
+        &:focus {
+          outline: none;
+        }
+      }
+    }
+
+    button {
+      width: 60%;
+    }
+
+    .invite-button {
+      border: none;
+      background-color: $secondaryColor;
+    }
+  }
+
+  .members-section {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    margin: 0 auto;
+    overflow-y: scroll;
+
+    .member-card {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      width: 90%;
+      margin: 10px;
+
+      p {
+        width: 40%;
+        text-align: right;
+      }
+
+      .img-container {
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        background-size: cover;
+        background-position: center;
+        background-color: $thirdColor;
+      }
+
+      cursor: pointer;
+
+      .options {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        margin-left: 10px;
+
+        button {
+          margin: 0 5px;
+          border: none;
+          background-color: $secondaryColor;
+
+          i {
+            font-size: 32px;
+          }
+        }
+      }
+
+      &:hover {
+        opacity: 0.6;
+      }
+    }
+  }
+
+  .empty-info {
+    font-weight: normal;
+    font-style: italic;
+  }
+}
+
+@media (max-width: 768px) {
+  .members-wrapper .members-section .member-card {
+    p {
+      width: 25%;
+    }
+
+    .options button i {
+      font-size: large;
+    }
+  }
+}

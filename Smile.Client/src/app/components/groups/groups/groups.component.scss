@@ -1,0 +1,48 @@
+@import "../../../../const.scss";
+
+.groups-wrapper {
+  max-width: $maxWidth;
+
+  .filters-section {
+    width: 70%;
+    margin: 2vh auto;
+
+    .filters-form {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      align-items: center;
+      width: 100%;
+
+      .mat-form-field {
+        width: 45%;
+        margin: 5px;
+      }
+
+      button {
+        width: 40%;
+        margin: 0 auto;
+      }
+    }
+  }
+
+  h1 {
+    text-align: center;
+    font-weight: bold;
+  }
+
+  .groups-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+
+    .groups-list {
+      flex-grow: 1;
+      width: 80%;
+      height: $scrollSectionHeight;
+      overflow-y: scroll;
+    }
+  }
+}
