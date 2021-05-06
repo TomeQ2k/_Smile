@@ -3,6 +3,9 @@ using System.Linq;
 using Smile.Core.Application.SmartEnums;
 using Smile.Core.Domain.Data.Repositories.Params;
 using Smile.Core.Domain.Entities.Main;
+using System.Threading.Tasks;
+using Smile.Core.Domain.Data.Models;
+using Smile.Core.Application.Extensions;
 
 namespace Smile.Infrastructure.Persistence.Database.Repositories
 {
@@ -12,7 +15,7 @@ namespace Smile.Infrastructure.Persistence.Database.Repositories
         {
         }
 
-        public IQueryable<Post> GetFilteredPosts(IPostFiltersParams filters)
+        public async Task<IPagedList<Post>> GetFilteredPosts(IPostFiltersParams filters, (int PageNumber, int PageSize) pagination)
         {
             var posts = context.Posts.Where(p => string.IsNullOrEmpty(filters.Title)
                 ? true
@@ -24,9 +27,9 @@ namespace Smile.Infrastructure.Persistence.Database.Repositories
                     ? posts.Where(p => p.GroupId == null)
                     : posts.Where(p => p.GroupId == filters.GroupId));
 
-            posts = PostSortTypeSmartEnum.FromValue((int) filters.SortType).Sort(posts);
+            posts = PostSortTypeSmartEnum.FromValue((int)filters.SortType).Sort(posts);
 
-            return posts;
+            return await posts.ToPagedList<Post>(pagination.PageNumber, pagination.PageSize);
         }
     }
 }

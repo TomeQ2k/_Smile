@@ -2,13 +2,12 @@ using Smile.Core.Domain.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using Smile.Core.Application.Exceptions;
-using Smile.Core.Application.Extensions;
 using Smile.Core.Application.Logic.Requests.Query.Community;
-using Smile.Core.Application.Models.Pagination;
 using Smile.Core.Application.Results;
 using Smile.Core.Application.Services;
 using Smile.Core.Application.Services.ReadOnly;
 using Smile.Core.Domain.Entities.Community;
+using Smile.Core.Domain.Data.Models;
 
 namespace Smile.Infrastructure.Shared.Services
 {
@@ -23,10 +22,9 @@ namespace Smile.Infrastructure.Shared.Services
             this.profileService = profileService;
         }
 
-        public async Task<PagedList<Friend>> GetFriends(GetFriendsPaginationRequest paginationRequest)
+        public async Task<IPagedList<Friend>> GetFriends(GetFriendsPaginationRequest paginationRequest)
             => await database.FriendRepository
-                .GetFilteredFriends(paginationRequest.UserId, paginationRequest.FriendName)
-                .ToPagedList<Friend>(paginationRequest.PageNumber, paginationRequest.PageSize);
+                .GetFilteredFriends(paginationRequest.UserId, paginationRequest.FriendName, (paginationRequest.PageNumber, paginationRequest.PageSize));
 
         public async Task<Friend> Invite(string recipientId)
         {

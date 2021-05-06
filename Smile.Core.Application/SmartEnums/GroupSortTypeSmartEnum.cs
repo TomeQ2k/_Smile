@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using System.Linq;
 using Ardalis.SmartEnum;
 using Smile.Core.Common.Enums;
@@ -15,13 +14,13 @@ namespace Smile.Core.Application.SmartEnums
         public static readonly GroupSortTypeSmartEnum MembersCountDescending = new MembersCountDescendingType();
         public static readonly GroupSortTypeSmartEnum MembersCountAscending = new MembersCountAscendingType();
 
-        public abstract IEnumerable<Group> Sort(IEnumerable<Group> groups);
+        public abstract IQueryable<Group> Sort(IQueryable<Group> groups);
 
         private sealed class CreatedDescendingType : GroupSortTypeSmartEnum
         {
             public CreatedDescendingType() : base(nameof(CreatedDescending), (int)GroupSortType.CreatedDescending) { }
 
-            public override IEnumerable<Group> Sort(IEnumerable<Group> groups)
+            public override IQueryable<Group> Sort(IQueryable<Group> groups)
                 => groups.OrderByDescending(g => g.DateCreated);
         }
 
@@ -29,7 +28,7 @@ namespace Smile.Core.Application.SmartEnums
         {
             public CreatedAscendingType() : base(nameof(CreatedAscending), (int)GroupSortType.CreatedAscending) { }
 
-            public override IEnumerable<Group> Sort(IEnumerable<Group> groups)
+            public override IQueryable<Group> Sort(IQueryable<Group> groups)
                 => groups.OrderBy(g => g.DateCreated);
         }
 
@@ -37,7 +36,7 @@ namespace Smile.Core.Application.SmartEnums
         {
             public MembersCountDescendingType() : base(nameof(MembersCountDescending), (int)GroupSortType.MembersCountDescending) { }
 
-            public override IEnumerable<Group> Sort(IEnumerable<Group> groups)
+            public override IQueryable<Group> Sort(IQueryable<Group> groups)
                 => groups.OrderByDescending(g => g.GetMembersCount());
         }
 
@@ -45,7 +44,7 @@ namespace Smile.Core.Application.SmartEnums
         {
             public MembersCountAscendingType() : base(nameof(MembersCountAscending), (int)GroupSortType.MembersCountAscending) { }
 
-            public override IEnumerable<Group> Sort(IEnumerable<Group> groups)
+            public override IQueryable<Group> Sort(IQueryable<Group> groups)
                 => groups.OrderBy(g => g.GetMembersCount());
         }
     }

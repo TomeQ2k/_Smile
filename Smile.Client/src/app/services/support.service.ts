@@ -33,7 +33,7 @@ export class SupportService {
 
     httpParams = httpParams.append('sortType', reportsRequest.sortType.toString());
 
-    return this.httpClient.get<ReportsResponse>(this.supportApiUrl + 'reports', { observe: 'response', params: httpParams })
+    return this.httpClient.get<ReportsResponse>(this.supportApiUrl + 'reports/user', { observe: 'response', params: httpParams })
       .pipe(
         map(response => {
           paginatedResult.result = response.body;

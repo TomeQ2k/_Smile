@@ -10,20 +10,20 @@ using Smile.Core.Application.Services;
 
 namespace Smile.Core.Application.Logic.Handlers.Query.Support
 {
-    public class FetchReportsQuery : IRequestHandler<FetchReportsPaginationRequest, FetchReportsPaginationResponse>
+    public class FetchUserReportsQuery : IRequestHandler<FetchUserReportsPaginationRequest, FetchUserReportsPaginationResponse>
     {
         private readonly ISupportService supportService;
         private readonly IMapper mapper;
         private readonly IHttpContextService httpContextService;
 
-        public FetchReportsQuery(ISupportService supportService, IMapper mapper, IHttpContextService httpContextService)
+        public FetchUserReportsQuery(ISupportService supportService, IMapper mapper, IHttpContextService httpContextService)
         {
             this.supportService = supportService;
             this.mapper = mapper;
             this.httpContextService = httpContextService;
         }
 
-        public async Task<FetchReportsPaginationResponse> Handle(FetchReportsPaginationRequest request,
+        public async Task<FetchUserReportsPaginationResponse> Handle(FetchUserReportsPaginationRequest request,
             CancellationToken cancellationToken)
         {
             request.UserId = httpContextService.CurrentUserId;
@@ -33,7 +33,7 @@ namespace Smile.Core.Application.Logic.Handlers.Query.Support
             httpContextService.AddPagination(reports.CurrentPage, reports.PageSize, reports.TotalCount,
                 reports.TotalPages);
 
-            return new FetchReportsPaginationResponse {Reports = mapper.Map<List<ReportListDto>>(reports)};
+            return new FetchUserReportsPaginationResponse { Reports = mapper.Map<List<ReportListDto>>(reports) };
         }
     }
 }

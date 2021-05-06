@@ -2,13 +2,11 @@ using Smile.Core.Common.Helpers;
 using Smile.Core.Domain.Data;
 using System.Threading.Tasks;
 using Smile.Core.Application.Exceptions;
-using Smile.Core.Application.Extensions;
 using Smile.Core.Application.Logic.Requests.Query.Support;
-using Smile.Core.Application.Models.Pagination;
 using Smile.Core.Application.Services;
 using Smile.Core.Application.Services.ReadOnly;
-using Smile.Core.Application.SmartEnums;
 using Smile.Core.Domain.Entities.Support;
+using Smile.Core.Domain.Data.Models;
 
 namespace Smile.Infrastructure.Shared.Services
 {
@@ -34,23 +32,16 @@ namespace Smile.Infrastructure.Shared.Services
             return report;
         }
 
-        public async Task<PagedList<Report>> FetchReports(FetchReportsPaginationRequest paginationRequest)
-            => await database.ReportRepository
-                .GetFilteredReports(paginationRequest)
-                .ToPagedList(paginationRequest.PageNumber, paginationRequest.PageSize);
+        public async Task<IPagedList<Report>> FetchReports(FetchUserReportsPaginationRequest paginationRequest)
+            => await database.ReportRepository.GetFilteredUserReports(paginationRequest.UserId, paginationRequest, (paginationRequest.PageNumber, paginationRequest.PageSize));
 
-        public async Task<PagedList<Report>> FetchAllReports(FetchAllReportsPaginationRequest paginationRequest)
+        public async Task<IPagedList<Report>> FetchAllReports(FetchAllReportsPaginationRequest paginationRequest)
         {
             if (!await rolesService.IsPermitted(paginationRequest.CurrentUserId, Constants.SupportRoles))
                 throw new NoPermissionsException("You are not allowed to perform this action");
 
-            var reports =
-                database.ReportRepository.GetFilteredReportsWithReporterName(paginationRequest.ReporterName,
-                    paginationRequest);
-
-            reports = ReportTypeSmartEnum.FromValue((int) paginationRequest.ReportType).Filter(reports);
-
-            return await reports.ToPagedList<Report>(paginationRequest.PageNumber, paginationRequest.PageSize);
+            return await database.ReportRepository.GetFilteredReportsWithReporterName(paginationRequest.ReporterName, paginationRequest.ReportType,
+                    paginationRequest, (paginationRequest.PageNumber, paginationRequest.PageSize));
         }
     }
 }

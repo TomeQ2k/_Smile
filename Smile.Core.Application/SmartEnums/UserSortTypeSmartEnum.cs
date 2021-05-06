@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using System.Linq;
 using Ardalis.SmartEnum;
 using Smile.Core.Common.Enums;
@@ -13,13 +12,13 @@ namespace Smile.Core.Application.SmartEnums
         public static readonly UserSortTypeSmartEnum Descending = new DescendingType();
         public static readonly UserSortTypeSmartEnum Ascending = new AscendingType();
 
-        public abstract IEnumerable<User> Sort(IEnumerable<User> users);
+        public abstract IQueryable<User> Sort(IQueryable<User> users);
 
         private sealed class DescendingType : UserSortTypeSmartEnum
         {
             public DescendingType() : base(nameof(Descending), (int)SortType.Descending) { }
 
-            public override IEnumerable<User> Sort(IEnumerable<User> users)
+            public override IQueryable<User> Sort(IQueryable<User> users)
                 => users.OrderByDescending(u => u.DateRegistered);
         }
 
@@ -27,7 +26,7 @@ namespace Smile.Core.Application.SmartEnums
         {
             public AscendingType() : base(nameof(Ascending), (int)SortType.Ascending) { }
 
-            public override IEnumerable<User> Sort(IEnumerable<User> users)
+            public override IQueryable<User> Sort(IQueryable<User> users)
                 => users.OrderBy(u => u.DateRegistered);
         }
     }

@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using Smile.Core.Domain.Data.Models;
 
 namespace Smile.Core.Application.Models.Pagination
 {
-    public class PagedList<T> : List<T>
+    public class PagedList<T> : List<T>, IPagedList<T>
     {
         public int CurrentPage { get; }
         public int TotalPages { get; }
@@ -18,7 +19,7 @@ namespace Smile.Core.Application.Models.Pagination
             CurrentPage = pageNumber;
             TotalCount = count;
             PageSize = pageSize;
-            TotalPages = (int) Math.Ceiling(count / (double) pageSize);
+            TotalPages = (int)Math.Ceiling(count / (double)pageSize);
             this.AddRange(items);
         }
 

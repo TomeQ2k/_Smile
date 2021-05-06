@@ -1,4 +1,5 @@
-using System.Linq;
+using System.Threading.Tasks;
+using Smile.Core.Domain.Data.Models;
 using Smile.Core.Domain.Data.Repositories.Params;
 using Smile.Core.Domain.Entities.Main;
 
@@ -6,6 +7,6 @@ namespace Smile.Core.Domain.Data.Repositories
 {
     public interface IPostRepository : IRepository<Post>
     {
-        IQueryable<Post> GetFilteredPosts(IPostFiltersParams filters);
+        Task<IPagedList<Post>> GetFilteredPosts(IPostFiltersParams filters, (int PageNumber, int PageSize) pagination);
     }
 }

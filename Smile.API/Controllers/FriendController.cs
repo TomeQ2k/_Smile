@@ -8,13 +8,13 @@ using Smile.Core.Application.Logic.Requests.Query.Community;
 
 namespace Smile.API.Controllers
 {
-    public class CommunityController : BaseController
+    public class FriendController : BaseController
     {
-        public CommunityController(IMediator mediator, INLogger logger) : base(mediator, logger)
+        public FriendController(IMediator mediator, INLogger logger) : base(mediator, logger)
         {
         }
 
-        [HttpGet("friends")]
+        [HttpGet("filter")]
         public async Task<IActionResult> GetFriends([FromQuery] GetFriendsPaginationRequest request)
         {
             var response = await mediator.Send(request);
@@ -24,7 +24,7 @@ namespace Smile.API.Controllers
             return this.CreateResponse(response);
         }
 
-        [HttpPost("friend/invite")]
+        [HttpPost("invite")]
         public async Task<IActionResult> InviteFriend(InviteFriendRequest request)
         {
             var response = await mediator.Send(request);
@@ -35,7 +35,7 @@ namespace Smile.API.Controllers
             return this.CreateResponse(response);
         }
 
-        [HttpPut("friend/receive")]
+        [HttpPut("receive")]
         public async Task<IActionResult> ReceiveFriend(ReceiveFriendRequest request)
         {
             var response = await mediator.Send(request);
@@ -47,7 +47,7 @@ namespace Smile.API.Controllers
             return this.CreateResponse(response);
         }
 
-        [HttpDelete("friend/delete")]
+        [HttpDelete("delete")]
         public async Task<IActionResult> DeleteFriend([FromQuery] DeleteFriendRequest request)
         {
             var response = await mediator.Send(request);
@@ -58,7 +58,7 @@ namespace Smile.API.Controllers
             return this.CreateResponse(response);
         }
 
-        [HttpGet("friends/invites/count")]
+        [HttpGet("invites/count")]
         public async Task<IActionResult> CountFriendInvites([FromQuery] CountFriendInvitesRequest request)
         {
             var response = await mediator.Send(request);

@@ -1,6 +1,6 @@
 using System.Threading.Tasks;
 using Smile.Core.Application.Logic.Requests.Query.Support;
-using Smile.Core.Application.Models.Pagination;
+using Smile.Core.Domain.Data.Models;
 using Smile.Core.Domain.Entities.Support;
 
 namespace Smile.Core.Application.Services
@@ -9,7 +9,7 @@ namespace Smile.Core.Application.Services
     {
         Task<Report> GetReport(string reportId, string userId);
 
-        Task<PagedList<Report>> FetchReports(FetchReportsPaginationRequest paginationRequest);
-        Task<PagedList<Report>> FetchAllReports(FetchAllReportsPaginationRequest paginationRequest);
+        Task<IPagedList<Report>> FetchReports(FetchUserReportsPaginationRequest paginationRequest);
+        Task<IPagedList<Report>> FetchAllReports(FetchAllReportsPaginationRequest paginationRequest);
     }
 }

@@ -3,6 +3,10 @@ using System.Linq;
 using Smile.Core.Application.SmartEnums;
 using Smile.Core.Domain.Data.Repositories.Params;
 using Smile.Core.Domain.Entities.Support;
+using System.Threading.Tasks;
+using Smile.Core.Domain.Data.Models;
+using Smile.Core.Application.Extensions;
+using Smile.Core.Common.Enums;
 
 namespace Smile.Infrastructure.Persistence.Database.Repositories
 {
@@ -12,18 +16,18 @@ namespace Smile.Infrastructure.Persistence.Database.Repositories
         {
         }
 
-        public IQueryable<Report> GetFilteredReports(IReportFiltersParams filters)
+        public async Task<IPagedList<Report>> GetFilteredUserReports(string currentUserId, IReportFiltersParams filters, (int PageNumber, int PageSize) pagination)
         {
-            var reports = context.Reports.AsQueryable();
+            var reports = context.Reports.Where(r => r.ReporterId == currentUserId);
 
-            reports = ReportStatusSmartEnum.FromValue((int) filters.ReportStatus).Filter(reports);
+            reports = ReportStatusSmartEnum.FromValue((int)filters.ReportStatus).Filter(reports);
 
-            reports = ReportSortTypeSmartEnum.FromValue((int) filters.SortType).Sort(reports);
+            reports = ReportSortTypeSmartEnum.FromValue((int)filters.SortType).Sort(reports);
 
-            return reports;
+            return await reports.ToPagedList<Report>(pagination.PageNumber, pagination.PageSize);
         }
 
-        public IQueryable<Report> GetFilteredReportsWithReporterName(string reporterName, IReportFiltersParams filters)
+        public async Task<IPagedList<Report>> GetFilteredReportsWithReporterName(string reporterName, ReportType reportType, IReportFiltersParams filters, (int PageNumber, int PageSize) pagination)
         {
             var reports = context.Reports.AsQueryable();
 
@@ -32,11 +36,12 @@ namespace Smile.Infrastructure.Persistence.Database.Repositories
                     ? r.Email.ToLower().Contains(reporterName.ToLower())
                     : r.Reporter.Username.ToLower().Contains(reporterName.ToLower()));
 
-            reports = ReportStatusSmartEnum.FromValue((int) filters.ReportStatus).Filter(reports);
+            reports = ReportTypeSmartEnum.FromValue((int)reportType).Filter(reports);
+            reports = ReportStatusSmartEnum.FromValue((int)filters.ReportStatus).Filter(reports);
 
-            reports = ReportSortTypeSmartEnum.FromValue((int) filters.SortType).Sort(reports);
+            reports = ReportSortTypeSmartEnum.FromValue((int)filters.SortType).Sort(reports);
 
-            return reports;
+            return await reports.ToPagedList<Report>(pagination.PageNumber, pagination.PageSize);
         }
     }
 }

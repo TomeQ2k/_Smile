@@ -1,10 +1,11 @@
-using System.Linq;
+using System.Threading.Tasks;
+using Smile.Core.Domain.Data.Models;
 using Smile.Core.Domain.Entities.Community;
 
 namespace Smile.Core.Domain.Data.Repositories
 {
     public interface IFriendRepository : IRepository<Friend>
     {
-        IQueryable<Friend> GetFilteredFriends(string userId, string friendName);
+        Task<IPagedList<Friend>> GetFilteredFriends(string userId, string friendName, (int PageNumber, int PageSize) pagination);
     }
 }

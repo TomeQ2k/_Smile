@@ -1,10 +1,11 @@
-using Microsoft.EntityFrameworkCore;
 using Smile.Core.Domain.Data.Repositories;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Smile.Core.Domain.Data.Repositories.Params;
 using Smile.Core.Domain.Entities.Group;
+using Smile.Core.Domain.Data.Models;
+using Smile.Core.Application.SmartEnums;
+using Smile.Core.Application.Extensions;
 
 namespace Smile.Infrastructure.Persistence.Database.Repositories
 {
@@ -14,7 +15,7 @@ namespace Smile.Infrastructure.Persistence.Database.Repositories
         {
         }
 
-        public async Task<IEnumerable<Group>> GetFilteredGroups(IGroupFiltersParams filters)
+        public async Task<IPagedList<Group>> GetFilteredGroups(IGroupFiltersParams filters, (int PageNumber, int PageSize) pagination)
         {
             var groups = context.Groups.AsQueryable();
 
@@ -24,7 +25,12 @@ namespace Smile.Infrastructure.Persistence.Database.Repositories
             if (filters.IsInvited)
                 groups = groups.Where(g => g.GroupInvites.Any(i => i.UserId == filters.UserId && i.IsInvited));
 
-            return await groups.ToListAsync();
+            groups = GroupAccessStatusSmartEnum.FromValue((int)filters.AccessStatus).Filter(groups);
+            groups = GroupJoinStatusSmartEnum.FromValue((int)filters.JoinStatus).Filter(groups, filters.UserId);
+
+            groups = GroupSortTypeSmartEnum.FromValue((int)filters.SortType).Sort(groups);
+
+            return await groups.ToPagedList<Group>(pagination.PageNumber, pagination.PageSize);
         }
     }
 }

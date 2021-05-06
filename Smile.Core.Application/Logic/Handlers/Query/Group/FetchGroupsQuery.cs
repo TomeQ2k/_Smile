@@ -6,6 +6,7 @@ using MediatR;
 using Smile.Core.Application.Dtos.Group;
 using Smile.Core.Application.Logic.Requests.Query.Group;
 using Smile.Core.Application.Logic.Responses.Query.Group;
+using Smile.Core.Application.Models.Pagination;
 using Smile.Core.Application.Services;
 using Smile.Core.Application.Services.ReadOnly;
 using Smile.Core.Application.ServiceUtils;
@@ -37,11 +38,11 @@ namespace Smile.Core.Application.Logic.Handlers.Query.Group
 
             var groupsToReturn = mapper.Map<List<GroupListDto>>(groups);
 
-            GroupUtils.SetGroupMemberParams(groupsToReturn, groups, currentUserId);
+            GroupUtils.SetGroupMemberParams(groupsToReturn, groups as PagedList<Domain.Entities.Group.Group>, currentUserId);
 
             httpContextService.AddPagination(groups.CurrentPage, groups.PageSize, groups.TotalCount, groups.TotalPages);
 
-            return new FetchGroupsPaginationResponse {Groups = groupsToReturn};
+            return new FetchGroupsPaginationResponse { Groups = groupsToReturn };
         }
     }
 }

@@ -27,8 +27,8 @@ namespace Smile.API.Controllers
             return this.CreateResponse(response);
         }
 
-        [HttpGet("reports")]
-        public async Task<IActionResult> FetchReports([FromQuery] FetchReportsPaginationRequest request)
+        [HttpGet("reports/user")]
+        public async Task<IActionResult> FetchUserReports([FromQuery] FetchUserReportsPaginationRequest request)
         {
             var response = await mediator.Send(request);
 

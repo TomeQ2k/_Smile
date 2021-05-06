@@ -6,6 +6,7 @@ using MediatR;
 using Smile.Core.Application.Dtos.User;
 using Smile.Core.Application.Logic.Requests.Query.User;
 using Smile.Core.Application.Logic.Responses.Query.User;
+using Smile.Core.Application.Models.Pagination;
 using Smile.Core.Application.Services;
 using Smile.Core.Application.ServiceUtils;
 
@@ -31,16 +32,16 @@ namespace Smile.Core.Application.Logic.Handlers.Query.User
 
             request.UserId = currentUserId;
 
-            var users = await userService.GetUsers(request);
+            var users = await userService.GetUsers(request) as PagedList<Domain.Entities.Auth.User>;
 
             httpContextService.AddPagination(users.CurrentPage, users.PageSize, users.TotalCount, users.TotalPages);
 
             var usersToReturn = mapper.Map<List<UserDto>>(users);
 
             for (int i = 0; i < users.Count; i++)
-                usersToReturn[i] = (UserDto) FriendUtils.SetFriendProperties(usersToReturn[i], users[i], currentUserId);
+                usersToReturn[i] = (UserDto)FriendUtils.SetFriendProperties(usersToReturn[i], users[i], currentUserId);
 
-            return new GetUsersPaginationResponse {Users = usersToReturn};
+            return new GetUsersPaginationResponse { Users = usersToReturn };
         }
     }
 }

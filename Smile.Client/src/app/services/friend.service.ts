@@ -11,7 +11,7 @@ import { FriendsResponse } from '../resolvers/responses/friends-response';
   providedIn: 'root'
 })
 export class FriendService {
-  private readonly communityApiUrl = environment.apiUrl + 'community/';
+  private readonly communityApiUrl = environment.apiUrl + 'friend/';
 
   private friendInvitesCount = new BehaviorSubject<number>(0);
   currentFriendInvitesCount = this.friendInvitesCount.asObservable();
@@ -30,7 +30,7 @@ export class FriendService {
       httpParams = httpParams.append('friendName', friendsRequest.friendName);
     }
 
-    return this.httpClient.get<FriendsResponse>(this.communityApiUrl + 'friends', { observe: 'response', params: httpParams })
+    return this.httpClient.get<FriendsResponse>(this.communityApiUrl + 'filter', { observe: 'response', params: httpParams })
       .pipe(
         map(response => {
           paginatedResult.result = response.body;
@@ -44,19 +44,19 @@ export class FriendService {
   }
 
   public invite(recipientId: string) {
-    return this.httpClient.post(this.communityApiUrl + 'friend/invite', { recipientId }, { observe: 'response' });
+    return this.httpClient.post(this.communityApiUrl + 'invite', { recipientId }, { observe: 'response' });
   }
 
   public receive(senderId: string, recipientId: string, accepted: boolean) {
-    return this.httpClient.put(this.communityApiUrl + 'friend/receive', { senderId, recipientId, accepted }, { observe: 'response' });
+    return this.httpClient.put(this.communityApiUrl + 'receive', { senderId, recipientId, accepted }, { observe: 'response' });
   }
 
   public deleteFriend(friendId: string) {
-    return this.httpClient.delete(this.communityApiUrl + 'friend/delete', { params: { friendId } });
+    return this.httpClient.delete(this.communityApiUrl + 'delete', { params: { friendId } });
   }
 
   public countFriendInvites() {
-    return this.httpClient.get<any>(this.communityApiUrl + 'friends/invites/count').subscribe(response => {
+    return this.httpClient.get<any>(this.communityApiUrl + 'invites/count').subscribe(response => {
       this.changeCurrentFriendInvitesCount(response.friendInvitesCount);
     });
   }

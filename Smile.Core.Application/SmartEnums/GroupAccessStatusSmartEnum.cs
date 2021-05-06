@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using System.Linq;
 using Ardalis.SmartEnum;
 using Smile.Core.Common.Enums;
@@ -14,20 +13,20 @@ namespace Smile.Core.Application.SmartEnums
         public static readonly GroupAccessStatusSmartEnum OnlyPrivate = new OnlyPrivateType();
         public static readonly GroupAccessStatusSmartEnum OnlyPublic = new OnlyPublicType();
 
-        public abstract IEnumerable<Group> Filter(IEnumerable<Group> groups);
+        public abstract IQueryable<Group> Filter(IQueryable<Group> groups);
 
         private sealed class AllType : GroupAccessStatusSmartEnum
         {
             public AllType() : base(nameof(All), (int)GroupAccessStatus.All) { }
 
-            public override IEnumerable<Group> Filter(IEnumerable<Group> groups) => groups;
+            public override IQueryable<Group> Filter(IQueryable<Group> groups) => groups;
         }
 
         private sealed class OnlyPrivateType : GroupAccessStatusSmartEnum
         {
             public OnlyPrivateType() : base(nameof(OnlyPrivate), (int)GroupAccessStatus.OnlyPrivate) { }
 
-            public override IEnumerable<Group> Filter(IEnumerable<Group> groups)
+            public override IQueryable<Group> Filter(IQueryable<Group> groups)
                 => groups.Where(g => g.IsPrivate);
         }
 
@@ -35,7 +34,7 @@ namespace Smile.Core.Application.SmartEnums
         {
             public OnlyPublicType() : base(nameof(OnlyPublic), (int)GroupAccessStatus.OnlyPublic) { }
 
-            public override IEnumerable<Group> Filter(IEnumerable<Group> groups)
+            public override IQueryable<Group> Filter(IQueryable<Group> groups)
                 => groups.Where(g => !g.IsPrivate);
         }
     }

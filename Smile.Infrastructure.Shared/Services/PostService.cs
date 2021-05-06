@@ -3,13 +3,12 @@ using Smile.Core.Domain.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using Smile.Core.Application.Exceptions;
-using Smile.Core.Application.Extensions;
 using Smile.Core.Application.Logic.Requests.Query.Post;
-using Smile.Core.Application.Models.Pagination;
 using Smile.Core.Application.Results;
 using Smile.Core.Application.Services;
 using Smile.Core.Application.Services.ReadOnly;
 using Smile.Core.Domain.Entities.Main;
+using Smile.Core.Domain.Data.Models;
 
 namespace Smile.Infrastructure.Shared.Services
 {
@@ -30,9 +29,8 @@ namespace Smile.Infrastructure.Shared.Services
             => (await database.PostRepository.Get(postId))?.SortComments() ??
                throw new EntityNotFoundException("Post not found");
 
-        public async Task<PagedList<Post>> GetPosts(GetPostsPaginationRequest paginationRequest)
-            => await database.PostRepository.GetFilteredPosts(paginationRequest)
-                .ToPagedList<Post>(paginationRequest.PageNumber, paginationRequest.PageSize);
+        public async Task<IPagedList<Post>> GetPosts(GetPostsPaginationRequest paginationRequest)
+            => await database.PostRepository.GetFilteredPosts(paginationRequest, (paginationRequest.PageNumber, paginationRequest.PageSize));
 
         public async Task<Post> CreatePost(Post post, IFormFile photo = null)
         {

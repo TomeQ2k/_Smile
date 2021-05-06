@@ -6,12 +6,11 @@ using System.Threading.Tasks;
 using Smile.Core.Application.Builders;
 using Smile.Core.Application.Exceptions;
 using Smile.Core.Application.Logic.Requests.Query.Group;
-using Smile.Core.Application.Models.Pagination;
 using Smile.Core.Application.Results;
 using Smile.Core.Application.Services;
 using Smile.Core.Application.Services.ReadOnly;
-using Smile.Core.Application.SmartEnums;
 using Smile.Core.Domain.Entities.Group;
+using Smile.Core.Domain.Data.Models;
 
 namespace Smile.Infrastructure.Shared.Services
 {
@@ -43,19 +42,8 @@ namespace Smile.Infrastructure.Shared.Services
                 : throw new NoPermissionsException("You are not member of this group");
         }
 
-        public async Task<PagedList<Group>> FetchGroups(FetchGroupsPaginationRequest paginationRequest)
-        {
-            var groups = await database.GroupRepository.GetFilteredGroups(paginationRequest);
-
-            groups = GroupAccessStatusSmartEnum.FromValue((int) paginationRequest.AccessStatus).Filter(groups);
-            groups = GroupJoinStatusSmartEnum.FromValue((int) paginationRequest.JoinStatus)
-                .Filter(groups, paginationRequest.UserId);
-
-            groups = GroupSortTypeSmartEnum.FromValue((int) paginationRequest.SortType).Sort(groups);
-
-            return PagedList<Group>.Create(groups.AsQueryable(), paginationRequest.PageNumber,
-                paginationRequest.PageSize);
-        }
+        public async Task<IPagedList<Group>> FetchGroups(FetchGroupsPaginationRequest paginationRequest)
+            => await database.GroupRepository.GetFilteredGroups(paginationRequest, (paginationRequest.PageNumber, paginationRequest.PageSize));
 
         public async Task<Group> CreateGroup(string name, string description, bool isPrivate, IFormFile image,
             string joinCode,

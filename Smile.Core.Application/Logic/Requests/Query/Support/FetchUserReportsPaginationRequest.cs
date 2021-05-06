@@ -4,7 +4,7 @@ using Smile.Core.Application.Logic.Responses.Query.Support;
 
 namespace Smile.Core.Application.Logic.Requests.Query.Support
 {
-    public class FetchReportsPaginationRequest : ReportFiltersParams, IRequest<FetchReportsPaginationResponse>
+    public class FetchUserReportsPaginationRequest : ReportFiltersParams, IRequest<FetchUserReportsPaginationResponse>
     {
         public string UserId { get; set; }
     }
