@@ -12,6 +12,7 @@ using Smile.Core.Application.Services;
 using Smile.Core.Application.Services.ReadOnly;
 using Smile.Core.Domain.Entities.Auth;
 using Smile.Core.Domain.Entities.Messenger;
+using Smile.Core.Domain.Data.Models;
 
 namespace Smile.Infrastructure.Shared.Services
 {
@@ -72,25 +73,23 @@ namespace Smile.Infrastructure.Shared.Services
             return uniqueConversations.ToPagedList<Conversation>(paginationRequest.PageNumber, paginationRequest.PageSize);
         }
 
-        public async Task<PagedList<Message>> GetMessagesThread(GetMessagesThreadPaginationRequest paginationRequest)
+        public async Task<IPagedList<Message>> GetMessagesThread(GetMessagesThreadPaginationRequest paginationRequest)
         {
-            var sender = await profileService.GetCurrentUser();
+            var currentUser = await profileService.GetCurrentUser();
 
-            if (sender.Id == paginationRequest.RecipientId)
+            if (currentUser.Id == paginationRequest.RecipientId)
                 throw new EntityNotFoundException("Messages thread not found");
 
-            var senderFriends = sender.FriendsSent.Concat(sender.FriendsReceived);
+            var senderFriends = currentUser.FriendsSent.Concat(currentUser.FriendsReceived);
 
             if (!senderFriends.Any(f => (f.SenderAccepted && f.RecipientAccepted) && (f.SenderId == paginationRequest.RecipientId || f.RecipientId == paginationRequest.RecipientId)))
                 throw new NoPermissionsException("You can chat only with your friends");
 
-            var messages = sender.MessagesSent.Concat(sender.MessagesReceived).Where(m => (m.SenderId == sender.Id && m.RecipientId == paginationRequest.RecipientId)
-                    || (m.SenderId == paginationRequest.RecipientId && m.RecipientId == sender.Id))
-                    .OrderByDescending(m => m.DateSent).ToList();
+            var messages = await database.MessageRepository.GetMessagesThread(currentUser.Id, paginationRequest.RecipientId, (paginationRequest.PageNumber, paginationRequest.PageSize));
 
-            messages = await MarkAsRead(sender.Id, paginationRequest.RecipientId, messages);
+            messages = await MarkAsRead(currentUser.Id, paginationRequest.RecipientId, messages);
 
-            return messages.ToPagedList<Message>(paginationRequest.PageNumber, paginationRequest.PageSize);
+            return messages;
         }
 
         public async Task<Message> Send(string recipientId, string text)
@@ -157,7 +156,7 @@ namespace Smile.Infrastructure.Shared.Services
 
         #region private
 
-        private async Task<List<Message>> MarkAsRead(string currentUserId, string recipientId, List<Message> userMessages)
+        private async Task<IPagedList<Message>> MarkAsRead(string currentUserId, string recipientId, IPagedList<Message> userMessages)
         {
             if ((userMessages.FirstOrDefault())?.RecipientId != currentUserId)
                 return userMessages;

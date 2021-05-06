@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Smile.Core.Application.Builders;
+using Smile.Core.Application.Extensions;
 using Smile.Core.Application.Logging;
 using Smile.Core.Application.Logic.Requests.Query.LogRequests;
 using Smile.Core.Application.Models.Mongo;
@@ -86,7 +87,7 @@ namespace Smile.Infrastructure.Persistence.Logging
 
             logs = LogSortTypeSmartEnum.FromValue((int)paginationRequest.SortType).Sort(logs);
 
-            return PagedList<LogDocument>.Create(logs, paginationRequest.PageNumber, paginationRequest.PageSize);
+            return logs.ToPagedList<LogDocument>(paginationRequest.PageNumber, paginationRequest.PageSize);
         }
 
         #region private
