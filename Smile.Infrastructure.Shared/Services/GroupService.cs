@@ -43,7 +43,8 @@ namespace Smile.Infrastructure.Shared.Services
         }
 
         public async Task<IPagedList<Group>> FetchGroups(FetchGroupsPaginationRequest paginationRequest)
-            => await database.GroupRepository.GetFilteredGroups(paginationRequest, (paginationRequest.PageNumber, paginationRequest.PageSize));
+            => await database.GroupRepository.GetFilteredGroups(paginationRequest,
+                (paginationRequest.PageNumber, paginationRequest.PageSize));
 
         public async Task<Group> CreateGroup(string name, string description, bool isPrivate, IFormFile image,
             string joinCode,
@@ -65,9 +66,9 @@ namespace Smile.Infrastructure.Shared.Services
             if (image != null)
             {
                 var uploadedImage = await filesManager.Upload(image, $"groups/{group.Id}");
-                group.SetImage(uploadedImage?.Url);
+                group.SetImage(uploadedImage?.Path);
 
-                database.FileRepository.AddFile(uploadedImage?.Url, uploadedImage?.Path);
+                database.FileRepository.AddFile(uploadedImage?.Path);
             }
 
             currentUser.Groups.Add(group);

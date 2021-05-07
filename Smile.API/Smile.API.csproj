@@ -15,4 +15,32 @@
     <ProjectReference Include="..\Smile.Infrastructure.Persistence\Smile.Infrastructure.Persistence.csproj" />
     <ProjectReference Include="..\Smile.Infrastructure.Shared\Smile.Infrastructure.Shared.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="wwwroot\files\reports\B8752C66D1414515\056f010695544b40a2d5834f841a8918.svg" />
+    <_ContentIncludedByDefault Remove="wwwroot\files\reports\B8752C66D1414515\41789e8ea5794cd6ae09b2b4d1a6a35d.svg" />
+    <_ContentIncludedByDefault Remove="wwwroot\files\reports\B8752C66D1414515\9dbe78b7f253470c81db907382d1c440.svg" />
+    <_ContentIncludedByDefault Remove="wwwroot\files\replies\13C1A598C0C540E6\731eaad3b158421cba67f076309c5219.svg" />
+    <_ContentIncludedByDefault Remove="wwwroot\files\replies\13C1A598C0C540E6\bcd980b0a3f3457b98414b8a9f045214.pdf" />
+    <_ContentIncludedByDefault Remove="wwwroot\files\replies\13C1A598C0C540E6\d12bfc94389e4f0cac8a43c4e20cf03e.pdf" />
+    <_ContentIncludedByDefault Remove="wwwroot\files\replies\13C1A598C0C540E6\e227da4654e440c1880aba06eeb1b66f.pdf" />
+    <_ContentIncludedByDefault Remove="wwwroot\files\replies\13C1A598C0C540E6\ef12556b965a4a9994c9cb94f1d7e183.pdf" />
+    <_ContentIncludedByDefault Remove="wwwroot\files\replies\13C1A598C0C540E6\fcee713ad095406c9f3dcbd38f6ce53d.pdf" />
+    <_ContentIncludedByDefault Remove="wwwroot\files\replies\860425B578514C23\54590480afb44e8c9fbd6c70f9aa7250.txt" />
+    <_ContentIncludedByDefault Remove="wwwroot\files\posts\0862E29A19674D8B\7f7f88b9fede40f39236297e7ab70e66.jpg" />
+    <_ContentIncludedByDefault Remove="wwwroot\files\posts\3591EB3119F34FFA\c9354768fbd24f4b86f171fc3026b5b8.png" />
+    <_ContentIncludedByDefault Remove="wwwroot\files\posts\5386FBFBF3C64D41\9867fbd1ab374072bef598bb5d0d2559.jpg" />
+    <_ContentIncludedByDefault Remove="wwwroot\files\posts\5BD6BEDD03A94DA5\609887a0d11142daa6a770f71cdf4059.jpg" />
+    <_ContentIncludedByDefault Remove="wwwroot\files\posts\6045AE151E8F45E1\c874ad488d2a450aa174530bab22ee62.jpg" />
+    <_ContentIncludedByDefault Remove="wwwroot\files\posts\8BF8B43083F546BC\39d8a2f21cff483abfb37743d8a50ef3.jpg" />
+    <_ContentIncludedByDefault Remove="wwwroot\files\posts\9E15B5F26D9F4183\307e951dd476427db25dce0bc63a77ff.jpeg" />
+    <_ContentIncludedByDefault Remove="wwwroot\files\groups\0801C4CC8E634363\842ff3172aeb426cb1fd391e4262a2d9.svg" />
+    <_ContentIncludedByDefault Remove="wwwroot\files\groups\BB061E2F4863418F\2007709ce4954b67999c035257d529ce.jpg" />
+    <_ContentIncludedByDefault Remove="wwwroot\files\groups\B016B8910AE04C79\c5e44776dae04e229d08dfd7fcf4358c.jpg" />
+    <_ContentIncludedByDefault Remove="wwwroot\files\avatars\6A3BE90AF5854465\46a5bd7ed49c4fe58e218fb17db86f03.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="wwwroot\files\groups" />
+    <Folder Include="wwwroot\files\posts" />
+    <Folder Include="wwwroot\files\replies" />
+  </ItemGroup>
 </Project>

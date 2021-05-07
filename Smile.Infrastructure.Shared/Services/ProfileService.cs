@@ -103,9 +103,9 @@ namespace Smile.Infrastructure.Shared.Services
             await database.FileRepository.DeleteFileByPath(filesPath);
 
             var uploadedAvatar = await filesManager.Upload(photo, $"avatars/{user.Id}");
-            user.SetAvatar(uploadedAvatar?.Url);
+            user.SetAvatar(uploadedAvatar?.Path);
 
-            database.FileRepository.AddFile(uploadedAvatar?.Url, uploadedAvatar?.Path);
+            database.FileRepository.AddFile(uploadedAvatar?.Path);
 
             await database.Complete();
 

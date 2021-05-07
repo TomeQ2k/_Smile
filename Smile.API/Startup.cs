@@ -109,6 +109,8 @@ namespace Smile.API
                 RequestPath = new PathString("/files"),
                 EnableDirectoryBrowsing = true
             });
+
+            StorageLocation.Init(Configuration.GetValue<string>(AppSettingsKeys.ServerAddress));
         }
     }
 }

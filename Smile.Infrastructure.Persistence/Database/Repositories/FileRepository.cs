@@ -6,11 +6,13 @@ namespace Smile.Infrastructure.Persistence.Database.Repositories
 {
     public class FileRepository : Repository<File>, IFileRepository
     {
-        public FileRepository(DataContext context) : base(context) { }
-
-        public void AddFile(string url, string path)
+        public FileRepository(DataContext context) : base(context)
         {
-            var fileToAdd = File.Create<File>(url, path);
+        }
+
+        public void AddFile(string path)
+        {
+            var fileToAdd = File.Create<File>(path);
 
             Add(fileToAdd);
         }

@@ -30,7 +30,8 @@ namespace Smile.Infrastructure.Shared.Services
                throw new EntityNotFoundException("Post not found");
 
         public async Task<IPagedList<Post>> GetPosts(GetPostsPaginationRequest paginationRequest)
-            => await database.PostRepository.GetFilteredPosts(paginationRequest, (paginationRequest.PageNumber, paginationRequest.PageSize));
+            => await database.PostRepository.GetFilteredPosts(paginationRequest,
+                (paginationRequest.PageNumber, paginationRequest.PageSize));
 
         public async Task<Post> CreatePost(Post post, IFormFile photo = null)
         {
@@ -49,9 +50,9 @@ namespace Smile.Infrastructure.Shared.Services
             if (photo != null)
             {
                 var uploadedPhoto = await filesManager.Upload(photo, $"posts/{post.Id}");
-                post.SetPhoto(uploadedPhoto?.Url);
+                post.SetPhoto(uploadedPhoto?.Path);
 
-                database.FileRepository.AddFile(uploadedPhoto?.Url, uploadedPhoto?.Path);
+                database.FileRepository.AddFile(uploadedPhoto?.Path);
 
                 return await database.Complete() ? post : null;
             }
@@ -79,9 +80,9 @@ namespace Smile.Infrastructure.Shared.Services
                 {
                     string filePath = $"posts/{post.Id}";
                     var uploadedPhoto = await filesManager.Upload(photo, filePath);
-                    post.SetPhoto(uploadedPhoto?.Url);
+                    post.SetPhoto(uploadedPhoto?.Path);
 
-                    database.FileRepository.AddFile(uploadedPhoto?.Url, uploadedPhoto?.Path);
+                    database.FileRepository.AddFile(uploadedPhoto?.Path);
                 }
                 else
                     post.SetPhoto(null);

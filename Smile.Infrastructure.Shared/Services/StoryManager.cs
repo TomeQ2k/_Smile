@@ -34,10 +34,10 @@ namespace Smile.Infrastructure.Shared.Services
 
             return currentUser.Stories.Where(s => s.DateExpires >= DateTime.Now).OrderByDescending(s => s.DateExpires)
                 .Concat((await database.StoryRepository
-                .GetAll()).Where(s => s.DateExpires >= DateTime.Now
-                    && friends.Any(f => (f.SenderId == s.UserId || f.RecipientId == s.UserId)
-                    && (f.SenderAccepted && f.RecipientAccepted)))
-                .OrderByDescending(s => s.DateExpires))
+                        .GetAll()).Where(s => s.DateExpires >= DateTime.Now
+                                              && friends.Any(f => (f.SenderId == s.UserId || f.RecipientId == s.UserId)
+                                                                  && (f.SenderAccepted && f.RecipientAccepted)))
+                    .OrderByDescending(s => s.DateExpires))
                 .Distinct();
         }
 
@@ -53,16 +53,17 @@ namespace Smile.Infrastructure.Shared.Services
                 return null;
 
             var uploadedPhoto = await filesManager.Upload(photo, $"stories/{story.Id}");
-            story.SetStoryUrl(uploadedPhoto?.Url);
+            story.SetStoryUrl(uploadedPhoto?.Path);
 
-            database.FileRepository.AddFile(uploadedPhoto?.Url, uploadedPhoto?.Path);
+            database.FileRepository.AddFile(uploadedPhoto?.Path);
 
             return await database.Complete() ? story : null;
         }
 
         public async Task<bool> WatchStory(string storyId, string userId)
         {
-            var story = await database.StoryRepository.Get(storyId) ?? throw new EntityNotFoundException("Story not found");
+            var story = await database.StoryRepository.Get(storyId) ??
+                        throw new EntityNotFoundException("Story not found");
 
             if (story.UserStories.Any(us => us.UserId == userId))
                 return true;
@@ -77,7 +78,7 @@ namespace Smile.Infrastructure.Shared.Services
         public async Task<bool> DeleteStory(string storyId)
         {
             var story = (await profileService.GetCurrentUser()).Stories.FirstOrDefault(s => s.Id == storyId)
-                ?? throw new EntityNotFoundException("Story not found");
+                        ?? throw new EntityNotFoundException("Story not found");
 
             database.StoryRepository.Delete(story);
 
@@ -98,7 +99,8 @@ namespace Smile.Infrastructure.Shared.Services
 
                     storiesToReturn.ForEach(story => story.IsWatched = IsWatched(story, currentUserId));
 
-                    var storyWrapper = new StoryWrapper(story.UserId, story.Username, story.UserPhotoUrl, storiesToReturn);
+                    var storyWrapper =
+                        new StoryWrapper(story.UserId, story.Username, story.UserPhotoUrl, storiesToReturn);
                     storyWrapper.SetIsWatched();
 
                     return storyWrapper;

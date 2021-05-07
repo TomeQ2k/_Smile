@@ -28,8 +28,7 @@ namespace Smile.Infrastructure.Persistence.Logging
 
         public async Task<bool> StoreLogs()
         {
-            string logsFileRelativePath = $"logs/api-logs-{DateTime.Now.AddDays(-1).ToString("yyyy-MM-dd")}.log";
-            string logsFilePath = $@"{filesManager.WebRootPath}/{logsFileRelativePath}";
+            string logsFilePath = $"/logs/api-logs-{DateTime.Now.AddDays(-1).ToString("yyyy-MM-dd")}.log";
 
             if (!filesManager.FileExists(logsFilePath))
                 return false;
@@ -48,7 +47,7 @@ namespace Smile.Infrastructure.Persistence.Logging
                                 select log)
                 await logsMongoRepository.Insert(log);
 
-            filesManager.Delete(logsFileRelativePath);
+            filesManager.Delete(logsFilePath);
 
             return true;
         }

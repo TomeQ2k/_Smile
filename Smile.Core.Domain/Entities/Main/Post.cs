@@ -30,7 +30,9 @@ namespace Smile.Core.Domain.Entities.Main
 
         public Post SortComments(bool descending = false)
         {
-            Comments = descending ? Comments.OrderByDescending(c => c.DateUpdated).ToList() : Comments.OrderBy(c => c.DateUpdated).ToList();
+            Comments = descending
+                ? Comments.OrderByDescending(c => c.DateUpdated).ToList()
+                : Comments.OrderBy(c => c.DateUpdated).ToList();
             return this;
         }
     }

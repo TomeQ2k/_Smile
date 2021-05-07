@@ -18,7 +18,8 @@ namespace Smile.Infrastructure.Shared.Services
     {
         private readonly IEmailSender emailSender;
 
-        public ReplyManager(IDatabase database, IFilesManager filesManager, IReadOnlyProfileService profileService, IEmailSender emailSender)
+        public ReplyManager(IDatabase database, IFilesManager filesManager, IReadOnlyProfileService profileService,
+            IEmailSender emailSender)
             : base(database, filesManager, profileService)
         {
             this.emailSender = emailSender;
@@ -64,7 +65,7 @@ namespace Smile.Infrastructure.Shared.Services
             {
                 var filesUploaded = await filesManager.Upload(files, $"replies/{report.Id}");
 
-                filesUploaded.ToList().ForEach(f => reply.ReplyFiles.Add(ReplyFile.Create<ReplyFile>(f.Url, f.Path)));
+                filesUploaded.ToList().ForEach(f => reply.ReplyFiles.Add(ReplyFile.Create<ReplyFile>(f.Path)));
 
                 await database.Complete();
             }
@@ -76,8 +77,10 @@ namespace Smile.Infrastructure.Shared.Services
                 throw new NoPermissionsException("This is not your report");
 
             if (!reply.IsAdmin && report.Replies.OrderByDescending(r => r.DateSent)
-                .TakeWhile(r => !r.IsAdmin && r.DateSent.AddDays(1) >= DateTime.Now).Count() >= Constants.MaxRepliesPerDay)
-                throw new NoPermissionsException($"You are allowed to send only {Constants.MaxRepliesPerDay} replies per day");
+                    .TakeWhile(r => !r.IsAdmin && r.DateSent.AddDays(1) >= DateTime.Now).Count() >=
+                Constants.MaxRepliesPerDay)
+                throw new NoPermissionsException(
+                    $"You are allowed to send only {Constants.MaxRepliesPerDay} replies per day");
         }
 
         #endregion

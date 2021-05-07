@@ -5,7 +5,7 @@ namespace Smile.Core.Domain.Data.Repositories
 {
     public interface IFileRepository : IRepository<File>
     {
-        void AddFile(string url, string path);
+        void AddFile(string path);
 
         Task DeleteFileByPath(string path);
     }

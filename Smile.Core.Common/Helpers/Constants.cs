@@ -28,7 +28,6 @@ namespace Smile.Core.Common.Helpers
 
         public const string NlogConfig = "nlog.config";
 
-
         public const string INFO = "INFO";
         public const string DEBUG = "DEBUG";
         public const string WARNING = "WARNING";
@@ -59,9 +58,9 @@ namespace Smile.Core.Common.Helpers
         public static string AdminRole = "Admin";
         public static string HeadAdminRole = "HeadAdmin";
 
-        public static string[] AdminRoles = { AdminRole, HeadAdminRole };
-        public static RoleName[] SupportRoles = { RoleName.Admin, RoleName.HeadAdmin };
-        public static RoleName[] RolesToSeed = { RoleName.User, RoleName.Admin, RoleName.HeadAdmin };
+        public static string[] AdminRoles = {AdminRole, HeadAdminRole};
+        public static RoleName[] SupportRoles = {RoleName.Admin, RoleName.HeadAdmin};
+        public static RoleName[] RolesToSeed = {RoleName.User, RoleName.Admin, RoleName.HeadAdmin};
 
         #endregion
     }

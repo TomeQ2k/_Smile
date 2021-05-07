@@ -12,7 +12,9 @@ namespace Smile.Infrastructure.Shared.Services
     public class ReportManager : ReportBaseManager, IReportManager
     {
         public ReportManager(IDatabase database, IFilesManager filesManager, IReadOnlyProfileService profileService)
-            : base(database, filesManager, profileService) { }
+            : base(database, filesManager, profileService)
+        {
+        }
 
         public async Task<Report> CreateReport(string subject, string content, IEnumerable<IFormFile> files = null)
         {
@@ -38,7 +40,7 @@ namespace Smile.Infrastructure.Shared.Services
             {
                 var filesUploaded = await filesManager.Upload(files, $"reports/{report.Id}");
 
-                filesUploaded.ToList().ForEach(f => report.ReportFiles.Add(ReportFile.Create<ReportFile>(f.Url, f.Path)));
+                filesUploaded.ToList().ForEach(f => report.ReportFiles.Add(ReportFile.Create<ReportFile>(f.Path)));
 
                 await database.Complete();
             }
