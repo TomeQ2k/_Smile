@@ -16,9 +16,9 @@ namespace Smile.Infrastructure.Persistence.Database.Repositories
         {
         }
 
-        public async Task<IPagedList<Report>> GetFilteredUserReports(string currentUserId, IReportFiltersParams filters, (int PageNumber, int PageSize) pagination)
+        public async Task<IPagedList<Report>> GetFilteredUserReports(string userId, IReportFiltersParams filters, (int PageNumber, int PageSize) pagination)
         {
-            var reports = context.Reports.Where(r => r.ReporterId == currentUserId);
+            var reports = context.Reports.Where(r => r.ReporterId == userId);
 
             reports = ReportStatusSmartEnum.FromValue((int)filters.ReportStatus).Filter(reports);
 
