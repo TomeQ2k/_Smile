@@ -5,7 +5,6 @@ using Smile.Core.Domain.Entities.Auth;
 using Smile.Core.Domain.Entities.Connection;
 using Smile.Core.Domain.Entities.Group;
 using Smile.Core.Domain.Entities.Main;
-using Smile.Core.Domain.Entities.Story;
 
 namespace Smile.Core.Domain.Data
 {
@@ -18,7 +17,7 @@ namespace Smile.Core.Domain.Data
         IRepository<Comment> CommentRepository { get; }
         IFriendRepository FriendRepository { get; }
         IMessageRepository MessageRepository { get; }
-        IRepository<Story> StoryRepository { get; }
+        IStoryRepository StoryRepository { get; }
         IReportRepository ReportRepository { get; }
         IGroupRepository GroupRepository { get; }
         IRepository<GroupMember> GroupMemberRepository { get; }

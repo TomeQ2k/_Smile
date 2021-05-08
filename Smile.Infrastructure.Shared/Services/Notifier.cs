@@ -3,7 +3,6 @@ using Smile.Core.Application.Helpers;
 using Smile.Core.Common.Enums;
 using Smile.Core.Domain.Data;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Smile.Core.Application.Dtos.Notification;
 using Smile.Core.Application.Exceptions;
@@ -86,7 +85,6 @@ namespace Smile.Infrastructure.Shared.Services
         }
 
         public async Task<int> CountUnreadNotifications()
-            => (await database.NotificationRepository.GetWhere(n =>
-                n.UserId == httpContextReader.CurrentUserId && !n.IsRead)).Count();
+            => await database.NotificationRepository.CountUnreadNotifications(httpContextReader.CurrentUserId);
     }
 }

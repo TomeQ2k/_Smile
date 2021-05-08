@@ -6,7 +6,6 @@ using Smile.Core.Domain.Entities.Auth;
 using Smile.Core.Domain.Entities.Connection;
 using Smile.Core.Domain.Entities.Group;
 using Smile.Core.Domain.Entities.Main;
-using Smile.Core.Domain.Entities.Story;
 
 #pragma warning disable 649
 
@@ -44,8 +43,8 @@ namespace Smile.Infrastructure.Persistence.Database
         private IMessageRepository messageRepository;
         public IMessageRepository MessageRepository => messageRepository ?? new MessageRepository(context);
 
-        private IRepository<Story> storyRepository;
-        public IRepository<Story> StoryRepository => storyRepository ?? new Repository<Story>(context);
+        private IStoryRepository storyRepository;
+        public IStoryRepository StoryRepository => storyRepository ?? new StoryRepository(context);
 
         private IReportRepository reportRepository;
         public IReportRepository ReportRepository => reportRepository ?? new ReportRepository(context);

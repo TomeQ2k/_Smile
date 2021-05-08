@@ -4,6 +4,7 @@ using Smile.Core.Domain.Entities.Community;
 using Smile.Core.Domain.Data.Models;
 using System.Threading.Tasks;
 using Smile.Core.Application.Extensions;
+using Microsoft.EntityFrameworkCore;
 
 namespace Smile.Infrastructure.Persistence.Database.Repositories
 {
@@ -21,5 +22,10 @@ namespace Smile.Infrastructure.Persistence.Database.Repositories
                         ? f.Recipient.Username.ToLower().Contains(friendName.ToLower())
                         : f.Sender.Username.ToLower().Contains(friendName.ToLower())))
                         .ToPagedList<Friend>(pagination.PageNumber, pagination.PageSize);
+
+        public async Task<int> CountFriendInvites(string userId)
+            => await context.Friends
+                .Where(f => f.RecipientId == userId && !f.RecipientAccepted)
+                .CountAsync();
     }
 }

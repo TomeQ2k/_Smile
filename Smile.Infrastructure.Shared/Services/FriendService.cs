@@ -1,5 +1,4 @@
 using Smile.Core.Domain.Data;
-using System.Linq;
 using System.Threading.Tasks;
 using Smile.Core.Application.Exceptions;
 using Smile.Core.Application.Logic.Requests.Query.Community;
@@ -15,11 +14,13 @@ namespace Smile.Infrastructure.Shared.Services
     {
         private readonly IDatabase database;
         private readonly IReadOnlyProfileService profileService;
+        private readonly IHttpContextReader httpContextReader;
 
-        public FriendService(IDatabase database, IReadOnlyProfileService profileService)
+        public FriendService(IDatabase database, IReadOnlyProfileService profileService, IHttpContextReader httpContextReader)
         {
             this.database = database;
             this.profileService = profileService;
+            this.httpContextReader = httpContextReader;
         }
 
         public async Task<IPagedList<Friend>> GetFriends(GetFriendsPaginationRequest paginationRequest)
@@ -84,7 +85,7 @@ namespace Smile.Infrastructure.Shared.Services
         }
 
         public async Task<int> CountFriendInvites()
-            => (await profileService.GetCurrentUser()).FriendsReceived.Where(f => !f.RecipientAccepted).Count();
+            => await database.FriendRepository.CountFriendInvites(httpContextReader.CurrentUserId);
 
         #region private
 

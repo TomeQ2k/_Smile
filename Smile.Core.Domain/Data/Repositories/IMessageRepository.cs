@@ -6,6 +6,8 @@ namespace Smile.Core.Domain.Data.Repositories
 {
     public interface IMessageRepository : IRepository<Message>
     {
-        Task<IPagedList<Message>> GetMessagesThread(string currentUserId, string recipientId, (int PageNumber, int PageSize) pagination);
+        Task<IPagedList<Message>> GetMessagesThread(string userId, string recipientId, (int PageNumber, int PageSize) pagination);
+
+        Task<int> CountUnreadMessages(string userId);
     }
 }

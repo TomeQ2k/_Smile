@@ -20,11 +20,13 @@ namespace Smile.Infrastructure.Shared.Services
     {
         private readonly IDatabase database;
         private readonly IReadOnlyProfileService profileService;
+        private readonly IHttpContextReader httpContextReader;
 
-        public Messenger(IDatabase database, IReadOnlyProfileService profileService)
+        public Messenger(IDatabase database, IReadOnlyProfileService profileService, IHttpContextReader httpContextReader)
         {
             this.database = database;
             this.profileService = profileService;
+            this.httpContextReader = httpContextReader;
         }
 
         public async Task<PagedList<Conversation>> GetConversations(GetConversationsPaginationRequest paginationRequest)
@@ -148,11 +150,7 @@ namespace Smile.Infrastructure.Shared.Services
         public async Task<User> GetRecipient(string recipientId) => await database.UserRepository.Get(recipientId) ?? throw new EntityNotFoundException("Recipient not found");
 
         public async Task<int> CountUnreadMessages()
-            => (await profileService.GetCurrentUser()).MessagesReceived
-                .OrderByDescending(m => m.DateSent)
-                .GroupBy(m => new { m.SenderId })
-                .Where(m => !m.First().IsRead)
-                .Count();
+            => await database.MessageRepository.CountUnreadMessages(httpContextReader.CurrentUserId);
 
         #region private
 

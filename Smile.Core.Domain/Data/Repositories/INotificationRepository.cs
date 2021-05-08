@@ -6,6 +6,8 @@ namespace Smile.Core.Domain.Data.Repositories
 {
     public interface INotificationRepository : IRepository<Notification>
     {
-        Task<IEnumerable<Notification>> GetOrderedNotifications(string currentUserId);
+        Task<IEnumerable<Notification>> GetOrderedNotifications(string userId);
+
+        Task<int> CountUnreadNotifications(string userId);
     }
 }

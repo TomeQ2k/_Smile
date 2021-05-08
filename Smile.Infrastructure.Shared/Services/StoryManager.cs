@@ -33,11 +33,7 @@ namespace Smile.Infrastructure.Shared.Services
             var friends = currentUser.FriendsSent.Concat(currentUser.FriendsReceived);
 
             return currentUser.Stories.Where(s => s.DateExpires >= DateTime.Now).OrderByDescending(s => s.DateExpires)
-                .Concat((await database.StoryRepository
-                        .GetAll()).Where(s => s.DateExpires >= DateTime.Now
-                                              && friends.Any(f => (f.SenderId == s.UserId || f.RecipientId == s.UserId)
-                                                                  && (f.SenderAccepted && f.RecipientAccepted)))
-                    .OrderByDescending(s => s.DateExpires))
+                .Concat(await database.StoryRepository.GetUserCurrentStories(currentUser.Id))
                 .Distinct();
         }
 
