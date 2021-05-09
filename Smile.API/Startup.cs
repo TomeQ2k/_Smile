@@ -15,7 +15,6 @@ using Smile.Core.Common.Helpers;
 using Smile.Infrastructure.Shared.SignalR;
 using System.IO;
 using System.Reflection;
-using Smile.Core.Application.Logging;
 using Smile.Core.Application.Mapper;
 
 namespace Smile.API
@@ -77,7 +76,7 @@ namespace Smile.API
             });
         }
 
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, INLogger logger)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             app.UseForwardedHeaders();
 
