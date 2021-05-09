@@ -17,17 +17,20 @@ namespace Smile.Infrastructure.Shared.Services
         private readonly IDatabase database;
         private readonly IReadOnlyProfileService profileService;
         private readonly IFilesManager filesManager;
+        private readonly IHttpContextReader httpContextReader;
 
-        public PostService(IDatabase database, IReadOnlyProfileService profileService, IFilesManager filesManager)
+        public PostService(IDatabase database, IReadOnlyProfileService profileService, IFilesManager filesManager, IHttpContextReader httpContextReader)
         {
             this.database = database;
             this.profileService = profileService;
             this.filesManager = filesManager;
+            this.httpContextReader = httpContextReader;
         }
 
         public async Task<Post> GetPost(string postId)
-            => (await database.PostRepository.Get(postId))?.SortComments() ??
-               throw new EntityNotFoundException("Post not found");
+            => (await database.PostRepository.Find(p => p.Id == postId && (p.GroupId == null ||
+                    (p.Group.AdminId == httpContextReader.CurrentUserId || p.Group.GroupMembers.Any(gm => gm.UserId == httpContextReader.CurrentUserId)))))
+                ?.SortComments() ?? throw new EntityNotFoundException("Post not found");
 
         public async Task<IPagedList<Post>> GetPosts(GetPostsPaginationRequest paginationRequest)
             => await database.PostRepository.GetFilteredPosts(paginationRequest,

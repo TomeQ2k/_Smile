@@ -109,7 +109,7 @@ namespace Smile.Core.Application.Mapper
 
             CreateMap<Group, GroupDto>()
                 .ForMember(dest => dest.AdminName, opt => opt.MapFrom(g => g.Admin.Username))
-                .ForMember(dest => dest.AdminPhotoUrl, opt => opt.MapFrom(g => g.Admin.PhotoUrl))
+                .ForMember(dest => dest.AdminPhotoUrl, opt => opt.MapFrom(g => StorageLocation.BuildLocation(g.Admin.PhotoUrl)))
                 .ForMember(dest => dest.MembersCount, opt => opt.MapFrom(g => g.GetMembersCount()))
                 .ForMember(dest => dest.Members, opt => opt.MapFrom(g => g.GetMembers()))
                 .ForMember(dest => dest.Moderators, opt => opt.MapFrom(g => g.GetModerators()))
