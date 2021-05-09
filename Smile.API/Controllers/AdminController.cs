@@ -69,7 +69,7 @@ namespace Smile.API.Controllers
         {
             var response = await mediator.Send(request);
 
-            logger.LogResponse($"Admin #{HttpContext.GetCurrentUserId()} confirmed user #{request.UserId}",
+            logger.LogResponse($"Admin #{HttpContext.GetCurrentUserId()} confirmed user #{request.UserId} account",
                 response.Error);
 
             return this.CreateResponse(response);

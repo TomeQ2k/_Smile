@@ -89,7 +89,7 @@ namespace Smile.API.Controllers
             var response = await mediator.Send(request);
 
             logger.LogResponse(
-                $"User #{HttpContext.GetCurrentUserId()} {(request.IsModerator ? "ASSIGN" : "REMOVE")} moderator for user #{request.UserId} in group #{request.GroupId}",
+                $"User #{HttpContext.GetCurrentUserId()} {(request.IsModerator ? "ASSIGNED" : "REMOVED")} moderator for user #{request.UserId} in group #{request.GroupId}",
                 response.Error);
 
             return this.CreateResponse(response);
@@ -101,7 +101,7 @@ namespace Smile.API.Controllers
             var response = await mediator.Send(request);
 
             logger.LogResponse(
-                $"User #{HttpContext.GetCurrentUserId()} checked that user :{request.Username} {(response.CanInvite ? "can" : "cannot")} be invited to group #{request.GroupId}",
+                $"User #{HttpContext.GetCurrentUserId()} checked that user :{request.Username} {(response.CanInvite ? "CAN" : "CANNOT")} be invited to group #{request.GroupId}",
                 response.Error);
 
             return this.CreateResponse(response);

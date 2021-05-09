@@ -52,7 +52,7 @@ namespace Smile.API.Controllers
         {
             var response = await mediator.Send(request);
 
-            logger.LogResponse($"User #{HttpContext.GetCurrentUserId()} delete friend #{request.FriendId}",
+            logger.LogResponse($"User #{HttpContext.GetCurrentUserId()} deleted friend #{request.FriendId}",
                 response.Error);
 
             return this.CreateResponse(response);
