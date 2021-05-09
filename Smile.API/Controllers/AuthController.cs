@@ -83,7 +83,8 @@ namespace Smile.API.Controllers
             var response = await mediator.Send(request);
 
             logger.LogResponse(
-                $"User {request.Content} verified {(request.AuthValidationType == AuthValidationType.Email ? "EMAIL" : "USERNAME")} availability",
+               $"{(request.AuthValidationType == AuthValidationType.Email ? "EMAIL" : "USERNAME")} " +
+               $"'{request.Content}' availability validated with status: {(response.IsAvailable ? "AVAILABLE" : "NOT AVAILABLE")}",
                 response.Error);
 
             return this.CreateResponse(response);
