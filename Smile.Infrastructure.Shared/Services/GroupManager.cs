@@ -11,6 +11,7 @@ using Smile.Core.Application.Services;
 using Smile.Core.Application.Services.ReadOnly;
 using Smile.Core.Application.SmartEnums;
 using Smile.Core.Domain.Entities.Group;
+using Smile.Infrastructure.Shared.Specifications;
 
 namespace Smile.Infrastructure.Shared.Services
 {
@@ -38,11 +39,11 @@ namespace Smile.Infrastructure.Shared.Services
             var group = await database.GroupRepository.Get(groupId) ??
                         throw new EntityNotFoundException("Group not found");
 
-            if (!InviteMemberPermissionSmartEnum.FromValue((int) group.InviteMemberPermission)
+            if (!InviteMemberPermissionSmartEnum.FromValue((int)group.InviteMemberPermission)
                 .ValidatePermission(currentUser.Id, group))
                 throw new NoPermissionsException("You are not allowed to invite members in this group");
 
-            if (currentUser.Id == userId || group.GroupMembers.Any(m => m.UserId == userId))
+            if (IsUserGroupMemberSpecification.Create(userId).IsSatisfied(group))
                 throw new DuplicateException("This user is currently member of this group");
 
             var member = GroupMember.Create(userId, groupId);
@@ -80,7 +81,7 @@ namespace Smile.Infrastructure.Shared.Services
             if (currentUser.Id == userId)
                 throw new NoPermissionsException("You are not allowed to kick yourself");
 
-            if (!RemoveMemberPermissionSmartEnum.FromValue((int) group.RemoveMemberPermission)
+            if (!RemoveMemberPermissionSmartEnum.FromValue((int)group.RemoveMemberPermission)
                 .ValidatePermission(currentUser.Id, group))
                 throw new NoPermissionsException("You are not allowed to kick members from this group");
 

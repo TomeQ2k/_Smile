@@ -59,7 +59,7 @@
         <span>{{ group?.membersCount }}</span>
       </div>
     </div>
-    <ng-container *ngIf="!group?.isMember && !enterCodeMode">
+    <ng-container *ngIf="(!group?.isMember || (!group?.isAccepted && group?.isMember)) && !enterCodeMode">
       <p class="requested-text" *ngIf="group?.joinRequested">REQUESTED</p>
       <button *ngIf="canJoin()" class="secondary-button" (click)="joinGroup()">Join</button>
       <button *ngIf="canAccept()" class="secondary-button" (click)="acceptInvite(true)">Accept</button>

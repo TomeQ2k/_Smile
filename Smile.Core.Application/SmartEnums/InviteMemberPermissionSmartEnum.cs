@@ -36,7 +36,7 @@ namespace Smile.Core.Application.SmartEnums
             public AllType() : base(nameof(All), (int)InviteMemberPermission.All) { }
 
             public override bool ValidatePermission(string currentUserId, Group group)
-                => group.GroupMembers.Any(m => m.UserId == currentUserId);
+                => currentUserId == group.AdminId || group.GroupMembers.Any(m => m.UserId == currentUserId);
         }
     }
 }
