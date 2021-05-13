@@ -39,6 +39,9 @@ namespace Smile.Infrastructure.Shared.Services
             var group = await database.GroupRepository.Get(groupId) ??
                         throw new EntityNotFoundException("Group not found");
 
+            if (currentUser.Id == userId)
+                throw new NoPermissionsException("You are not allowed to invite yourself to this group");
+
             if (!InviteMemberPermissionSmartEnum.FromValue((int)group.InviteMemberPermission)
                 .ValidatePermission(currentUser.Id, group))
                 throw new NoPermissionsException("You are not allowed to invite members in this group");
@@ -162,7 +165,7 @@ namespace Smile.Infrastructure.Shared.Services
             var group = await database.GroupRepository.Get(groupId) ??
                         throw new EntityNotFoundException("Group not found");
 
-            if (group.AdminId != currentUser.Id && !currentUser.IsAdmin())
+            if (!DeleteGroupSpecification.Create(currentUser).IsSatisfied(group))
                 throw new NoPermissionsException("You are not allowed to delete this group");
 
             database.GroupRepository.Delete(group);
@@ -233,8 +236,7 @@ namespace Smile.Infrastructure.Shared.Services
             var memberInvite = group.GroupInvites.FirstOrDefault(i => i.UserId == userId) ??
                                throw new EntityNotFoundException("Invite not found");
 
-            if ((currentUserId == userId && memberInvite.IsInvited) ||
-                (currentUserId == group.AdminId && memberInvite.IsJoining))
+            if (CanMemberAcceptOrDenyGroupInviteSpecification.Create(group, currentUserId, userId).IsSatisfied(memberInvite))
                 AcceptOrDeny(accept, ref member);
             else
                 throw new NoPermissionsException("You are not allowed to accept this member invite");

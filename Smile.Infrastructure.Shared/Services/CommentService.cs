@@ -5,6 +5,7 @@ using Smile.Core.Application.Exceptions;
 using Smile.Core.Application.Services;
 using Smile.Core.Application.Services.ReadOnly;
 using Smile.Core.Domain.Entities.Main;
+using Smile.Infrastructure.Shared.Specifications;
 
 namespace Smile.Infrastructure.Shared.Services
 {
@@ -36,7 +37,7 @@ namespace Smile.Infrastructure.Shared.Services
         {
             var user = await profileService.GetCurrentUser();
 
-            if (currentComment.UserId != user.Id && !user.IsAdmin())
+            if (!UpdateOrDeleteCommentSpecification.Create(user).IsSatisfied(currentComment))
                 throw new NoPermissionsException("You are not allowed to update this post");
 
             currentComment.SetContent(content);
@@ -53,7 +54,7 @@ namespace Smile.Infrastructure.Shared.Services
             var comment = user.Comments.FirstOrDefault(c => c.Id == commentId) ?? await database.CommentRepository.Get(commentId)
                 ?? throw new EntityNotFoundException("Comment not found");
 
-            if (comment.UserId != user.Id && !user.IsAdmin())
+            if (!UpdateOrDeleteCommentSpecification.Create(user).IsSatisfied(comment))
                 throw new NoPermissionsException("You have no permissions to perform this action");
 
             database.CommentRepository.Delete(comment);

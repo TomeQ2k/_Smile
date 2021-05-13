@@ -9,6 +9,7 @@ using Smile.Core.Application.Services;
 using Smile.Core.Application.Services.ReadOnly;
 using Smile.Core.Domain.Entities.Main;
 using Smile.Core.Domain.Data.Models;
+using Smile.Infrastructure.Shared.Specifications;
 
 namespace Smile.Infrastructure.Shared.Services
 {
@@ -40,9 +41,7 @@ namespace Smile.Infrastructure.Shared.Services
         {
             var user = await profileService.GetCurrentUser();
 
-            if (!string.IsNullOrEmpty(post.GroupId)
-                && !user.Groups.Concat(user.GroupMembers.Where(m => m.IsAccepted).Select(m => m.Group))
-                    .Any(g => g.Id == post.GroupId))
+            if (!CreateGroupPostSpecification.Create(user).IsSatisfied(post))
                 throw new NoPermissionsException("You are not member of this group");
 
             user.Posts.Add(post);
@@ -67,7 +66,7 @@ namespace Smile.Infrastructure.Shared.Services
         {
             var user = await profileService.GetCurrentUser();
 
-            if (post.AuthorId != user.Id && !user.IsAdmin())
+            if (!UpdatePostSpecification.Create(user).IsSatisfied(post))
                 throw new NoPermissionsException("You are not allowed to update this post");
 
             database.PostRepository.Update(post);
@@ -100,7 +99,7 @@ namespace Smile.Infrastructure.Shared.Services
             var post = user.Posts.FirstOrDefault(p => p.Id == postId) ?? await database.PostRepository.Get(postId)
                 ?? throw new EntityNotFoundException("Post not found");
 
-            if (post.AuthorId != user.Id && !user.IsAdmin() && post.Group?.AdminId != user.Id)
+            if (!DeletePostSpecification.Create(user).IsSatisfied(post))
                 throw new NoPermissionsException("You have no permissions to perform this action");
 
             database.PostRepository.Delete(post);

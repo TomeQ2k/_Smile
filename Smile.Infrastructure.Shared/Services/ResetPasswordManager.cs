@@ -8,6 +8,7 @@ using Smile.Core.Application.Exceptions;
 using Smile.Core.Application.Results;
 using Smile.Core.Application.Services;
 using Smile.Core.Domain.Entities.Auth;
+using Smile.Infrastructure.Shared.Specifications;
 
 namespace Smile.Infrastructure.Shared.Services
 {
@@ -32,7 +33,7 @@ namespace Smile.Infrastructure.Shared.Services
             var resetPasswordToken = user.Tokens.FirstOrDefault(t => t.Code == token && t.TokenType == TokenType.ResetPassword)
                 ?? throw new TokenException("Token is invalid");
 
-            if (resetPasswordToken.DateExpired < DateTime.Now)
+            if (TokenExpirationSpecification.Create().IsSatisfied(resetPasswordToken))
                 throw new TokenException("Token expired", ErrorCodes.TokenExpired);
 
             string saltedPasswordHash = string.Empty;
@@ -79,7 +80,7 @@ namespace Smile.Infrastructure.Shared.Services
             var resetPasswordToken = user.Tokens.FirstOrDefault(t => t.Code == token && t.TokenType == TokenType.ResetPassword)
                 ?? throw new TokenException("Token is invalid");
 
-            if (resetPasswordToken.DateExpired < DateTime.Now)
+            if (TokenExpirationSpecification.Create().IsSatisfied(resetPasswordToken))
                 throw new TokenException("Token expired", ErrorCodes.TokenExpired);
 
             return true;

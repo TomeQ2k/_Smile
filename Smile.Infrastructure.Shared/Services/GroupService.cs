@@ -11,6 +11,7 @@ using Smile.Core.Application.Services;
 using Smile.Core.Application.Services.ReadOnly;
 using Smile.Core.Domain.Entities.Group;
 using Smile.Core.Domain.Data.Models;
+using Smile.Infrastructure.Shared.Specifications;
 
 namespace Smile.Infrastructure.Shared.Services
 {
@@ -36,8 +37,7 @@ namespace Smile.Infrastructure.Shared.Services
             var currentUserGroups =
                 currentUser.Groups.Concat(currentUser.GroupMembers.Where(m => m.IsAccepted).Select(m => m.Group));
 
-            return group.AdminId == currentUser.Id ||
-                   group.GroupMembers.Any(m => m.UserId == currentUser.Id && m.IsAccepted) || currentUser.IsAdmin()
+            return GetGroupByMemberSpecification.Create(currentUser).IsSatisfied(group)
                 ? group
                 : throw new NoPermissionsException("You are not member of this group");
         }
@@ -82,7 +82,7 @@ namespace Smile.Infrastructure.Shared.Services
                         throw new EntityNotFoundException("Group not found");
             var currentUser = await profileService.GetCurrentUser();
 
-            if (group.AdminId == currentUser.Id || group.GroupMembers.Any(m => m.UserId == currentUser.Id))
+            if (IsUserGroupMemberSpecification.Create(currentUser.Id).IsSatisfied(group))
                 throw new DuplicateException("You are member of this group");
 
             return await CreateMember(group, currentUser.Id, joinCode);
@@ -105,10 +105,9 @@ namespace Smile.Infrastructure.Shared.Services
         {
             var member = GroupMember.Create(userId, group.Id);
 
-            if (group.IsPrivate && !string.IsNullOrEmpty(group.JoinCode) && group.JoinCode != joinCode)
+            if (InvalidGroupJoinCodeSpecification.Create(joinCode).IsSatisfied(group))
                 throw new NoPermissionsException("Invalid join code");
-            else if (!group.IsPrivate ||
-                     (group.IsPrivate && !string.IsNullOrEmpty(group.JoinCode) && group.JoinCode == joinCode))
+            else if (GroupJoinSpecification.Create(joinCode).IsSatisfied(group))
                 member.Accept();
             else
             {

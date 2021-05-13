@@ -2,7 +2,6 @@ using Microsoft.AspNetCore.Http;
 using Smile.Core.Application.Helpers;
 using Smile.Core.Common.Helpers;
 using Smile.Core.Domain.Data;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -11,6 +10,7 @@ using Smile.Core.Application.Services;
 using Smile.Core.Application.Services.ReadOnly;
 using Smile.Core.Domain.Entities.Auth;
 using Smile.Core.Domain.Entities.Support;
+using Smile.Infrastructure.Shared.Specifications;
 
 namespace Smile.Infrastructure.Shared.Services
 {
@@ -76,9 +76,7 @@ namespace Smile.Infrastructure.Shared.Services
             if (report.ReporterId != currentUser.Id && !isAdmin)
                 throw new NoPermissionsException("This is not your report");
 
-            if (!reply.IsAdmin && report.Replies.OrderByDescending(r => r.DateSent)
-                    .TakeWhile(r => !r.IsAdmin && r.DateSent.AddDays(1) >= DateTime.Now).Count() >=
-                Constants.MaxRepliesPerDay)
+            if (!SendRepliesPerDaySpecification.Create(reply).IsSatisfied(report))
                 throw new NoPermissionsException(
                     $"You are allowed to send only {Constants.MaxRepliesPerDay} replies per day");
         }

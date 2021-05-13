@@ -13,6 +13,7 @@ using Smile.Core.Application.Services.ReadOnly;
 using Smile.Core.Domain.Entities.Auth;
 using Smile.Core.Domain.Entities.Messenger;
 using Smile.Core.Domain.Data.Models;
+using Smile.Infrastructure.Shared.Specifications;
 
 namespace Smile.Infrastructure.Shared.Services
 {
@@ -82,9 +83,7 @@ namespace Smile.Infrastructure.Shared.Services
             if (currentUser.Id == paginationRequest.RecipientId)
                 throw new EntityNotFoundException("Messages thread not found");
 
-            var senderFriends = currentUser.FriendsSent.Concat(currentUser.FriendsReceived);
-
-            if (!senderFriends.Any(f => (f.SenderAccepted && f.RecipientAccepted) && (f.SenderId == paginationRequest.RecipientId || f.RecipientId == paginationRequest.RecipientId)))
+            if (!SendMessageOnlyToFriendsSpecification.Create(paginationRequest.RecipientId).IsSatisfied(currentUser))
                 throw new NoPermissionsException("You can chat only with your friends");
 
             var messages = await database.MessageRepository.GetMessagesThread(currentUser.Id, paginationRequest.RecipientId, (paginationRequest.PageNumber, paginationRequest.PageSize));
@@ -101,7 +100,7 @@ namespace Smile.Infrastructure.Shared.Services
             if (sender.Id == recipientId)
                 throw new NoPermissionsException("You cannot send message to yourself");
 
-            if (!sender.FriendsSent.Concat(sender.FriendsReceived).Any(f => (f.RecipientId == recipientId || f.SenderId == recipientId) && (f.SenderAccepted && f.RecipientAccepted)))
+            if (!SendMessageOnlyToFriendsSpecification.Create(recipientId).IsSatisfied(sender))
                 throw new NoPermissionsException("You can send message only to your friends");
 
             var recipient = await GetRecipient(recipientId);

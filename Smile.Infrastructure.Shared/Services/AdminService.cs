@@ -1,10 +1,10 @@
-using Smile.Core.Common.Enums;
 using Smile.Core.Domain.Data;
 using System.Threading.Tasks;
 using Smile.Core.Application.Exceptions;
 using Smile.Core.Application.Services;
 using Smile.Core.Application.Services.ReadOnly;
 using Smile.Core.Domain.Entities.Auth;
+using Smile.Infrastructure.Shared.Specifications;
 
 namespace Smile.Infrastructure.Shared.Services
 {
@@ -86,7 +86,7 @@ namespace Smile.Infrastructure.Shared.Services
             var user = await userService.GetUser(userId);
             var currentAdmin = await GetCurrentAdmin(userId);
 
-            if (user.IsAdmin() && !rolesService.IsPermitted(currentAdmin, RoleName.HeadAdmin))
+            if (!CanUserBeManagedSpecification.Create(currentAdmin, rolesService).IsSatisfied(user))
                 throw new NoPermissionsException("You do not have permissions to manage admin account");
 
             return user;
