@@ -1,6 +1,6 @@
 using Smile.Core.Domain.Data;
 
-namespace Smile.Core.Application.Services
+namespace Smile.Infrastructure.Shared.Services
 {
     public abstract class BaseValidationService
     {

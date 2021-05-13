@@ -8,6 +8,7 @@ using Smile.Core.Application.Exceptions;
 using Smile.Core.Application.Results;
 using Smile.Core.Application.Services;
 using Smile.Core.Domain.Entities.Auth;
+using Smile.Infrastructure.Shared.Specifications;
 
 namespace Smile.Infrastructure.Shared.Services
 {
@@ -30,10 +31,10 @@ namespace Smile.Infrastructure.Shared.Services
         {
             var user = await database.UserRepository.Find(u => u.Email.ToLower() == email.ToLower()) ?? throw new InvalidCredentialsException("Invalid email or password");
 
-            if (!user.EmailConfirmed)
+            if (!UserConfirmedSpecification.Create().IsSatisfied(user))
                 throw new AccountNotConfirmedException("Account has not been activated");
 
-            if (user.IsBlocked)
+            if (UserBlockedSpecification.Create().IsSatisfied(user))
                 throw new BlockException("Your account is blocked");
 
             if (hashGenerator.VerifyHash(password, user.PasswordHash, user.PasswordSalt))
@@ -80,7 +81,7 @@ namespace Smile.Infrastructure.Shared.Services
         {
             var user = await database.UserRepository.Get(userId) ?? throw new EntityNotFoundException("Account does not exist", ErrorCodes.EntityNotFound);
 
-            if (user.IsBlocked)
+            if (UserBlockedSpecification.Create().IsSatisfied(user))
                 throw new BlockException("Your account is blocked");
 
             var registerToken = user.Tokens.FirstOrDefault(t => t.Code == token && t.TokenType == TokenType.Register)

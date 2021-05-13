@@ -69,7 +69,7 @@ namespace Smile.Infrastructure.Shared.Services
         {
             var user = await GetUserToManage(userId);
 
-            if (user.EmailConfirmed)
+            if (UserConfirmedSpecification.Create().IsSatisfied(user))
                 return false;
 
             var currentAdmin = GetCurrentAdmin(userId);

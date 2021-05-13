@@ -27,7 +27,7 @@ namespace Smile.Infrastructure.Shared.Services
         {
             var user = await database.UserRepository.Get(userId) ?? throw new EntityNotFoundException("Account does not exist", ErrorCodes.EntityNotFound);
 
-            if (user.IsBlocked)
+            if (UserBlockedSpecification.Create().IsSatisfied(user))
                 throw new BlockException("Your account is blocked");
 
             var resetPasswordToken = user.Tokens.FirstOrDefault(t => t.Code == token && t.TokenType == TokenType.ResetPassword)
@@ -57,7 +57,7 @@ namespace Smile.Infrastructure.Shared.Services
         {
             var user = await database.UserRepository.Find(u => u.Email.ToLower() == email.ToLower()) ?? throw new EntityNotFoundException("Account does not exist", ErrorCodes.EntityNotFound);
 
-            if (user.IsBlocked)
+            if (UserBlockedSpecification.Create().IsSatisfied(user))
                 throw new BlockException("Your account is blocked");
 
             var resetPasswordToken = Token.Create(TokenType.ResetPassword);
@@ -74,7 +74,7 @@ namespace Smile.Infrastructure.Shared.Services
         {
             var user = await database.UserRepository.Get(userId) ?? throw new EntityNotFoundException("Account does not exist", ErrorCodes.EntityNotFound);
 
-            if (user.IsBlocked)
+            if (UserBlockedSpecification.Create().IsSatisfied(user))
                 throw new BlockException("Your account is blocked");
 
             var resetPasswordToken = user.Tokens.FirstOrDefault(t => t.Code == token && t.TokenType == TokenType.ResetPassword)
