@@ -11,8 +11,8 @@ namespace Smile.API.AppConfigs
         public static IServiceCollection ConfigureDbContext(this IServiceCollection services, IConfiguration configuration)
             => services.AddDbContext<DataContext>(options =>
             {
-                options.UseLazyLoadingProxies();
                 options.UseMySql(configuration.GetConnectionString(AppSettingsKeys.ConnectionString), b => b.MigrationsAssembly("Smile.API"));
+                options.UseLazyLoadingProxies();
             });
     }
 }
