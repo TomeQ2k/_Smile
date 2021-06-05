@@ -2,8 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
+using Smile.Core.Domain.Mongo.Models;
 
-namespace Smile.Core.Domain.Data.Mongo
+namespace Smile.Core.Domain.Mongo
 {
     public interface IMongoRepository<TDocument> where TDocument : IDocument
     {

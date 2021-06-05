@@ -5,8 +5,8 @@ using MediatR;
 using Smile.Core.Application.Logging;
 using Smile.Core.Application.Logic.Requests.Query.LogRequests;
 using Smile.Core.Application.Logic.Responses.Query.LogResponses;
-using Smile.Core.Application.Models.Mongo;
 using Smile.Core.Application.Services;
+using Smile.Core.Domain.Entities.LogEntity;
 
 namespace Smile.Core.Application.Logic.Handlers.Query.LogQueries
 {

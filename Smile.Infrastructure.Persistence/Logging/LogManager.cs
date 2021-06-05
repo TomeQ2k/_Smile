@@ -5,24 +5,23 @@ using System.Threading.Tasks;
 using Smile.Core.Application.Builders;
 using Smile.Core.Application.Extensions;
 using Smile.Core.Application.Logging;
-using Smile.Core.Application.Logic.Requests.Query.LogRequests;
-using Smile.Core.Application.Models.Mongo;
+using Smile.Core.Application.Logic.Requests.Query.Params;
 using Smile.Core.Application.Models.Pagination;
 using Smile.Core.Application.Services;
-using Smile.Core.Application.SmartEnums;
 using Smile.Core.Common.Helpers;
-using Smile.Core.Domain.Data.Mongo;
+using Smile.Core.Domain.Entities.LogEntity;
+using Smile.Core.Domain.Mongo.Repositories;
 
 namespace Smile.Infrastructure.Persistence.Logging
 {
     public class LogManager : ILogManager
     {
-        private readonly IMongoRepository<LogDocument> logsMongoRepository;
+        private readonly ILogMongoRepository logMongoRepository;
         private readonly IFilesManager filesManager;
 
-        public LogManager(IMongoRepository<LogDocument> logsMongoRepository, IFilesManager filesManager)
+        public LogManager(ILogMongoRepository logMongoRepository, IFilesManager filesManager)
         {
-            this.logsMongoRepository = logsMongoRepository;
+            this.logMongoRepository = logMongoRepository;
             this.filesManager = filesManager;
         }
 
@@ -36,16 +35,16 @@ namespace Smile.Infrastructure.Persistence.Logging
             var allLogs = await LoadLogsFromFile(logsFilePath);
 
             foreach (var log in from fileLog in allLogs
-                                let logProps = fileLog.Split("$|")
-                                let log = new LogBuilder()
-                                    .CreatedAt(DateTime.Parse(logProps[0]))
-                                    .SetLevel(logProps[1])
-                                    .SetLogger(logProps[2])
-                                    .SetMessage(logProps[3], logProps[4])
-                                    .WithAction(logProps[5], logProps[6])
-                                    .Build()
-                                select log)
-                await logsMongoRepository.Insert(log);
+                let logProps = fileLog.Split("$|")
+                let log = new LogBuilder()
+                    .CreatedAt(DateTime.Parse(logProps[0]))
+                    .SetLevel(logProps[1])
+                    .SetLogger(logProps[2])
+                    .SetMessage(logProps[3], logProps[4])
+                    .WithAction(logProps[5], logProps[6])
+                    .Build()
+                select log)
+                await logMongoRepository.Insert(log);
 
             filesManager.Delete(logsFilePath);
 
@@ -54,7 +53,7 @@ namespace Smile.Infrastructure.Persistence.Logging
 
         public async Task ClearLogs()
         {
-            var logsToDelete = (await logsMongoRepository.GetAll())
+            var logsToDelete = (await logMongoRepository.GetAll())
                 .Where(l => ((l.Level == Constants.INFO || l.Level == Constants.DEBUG) &&
                              l.Date.AddMonths(Constants.InfoLogLifeTimeInMonths) < DateTime.Now)
                             || (l.Level == Constants.WARNING &&
@@ -64,30 +63,11 @@ namespace Smile.Infrastructure.Persistence.Logging
                 .ToList();
 
             for (int i = 0; i < logsToDelete.Count; i++)
-                await logsMongoRepository.Delete(logsToDelete[i].Id.ToString());
+                await logMongoRepository.Delete(logsToDelete[i].Id.ToString());
         }
 
-        public async Task<PagedList<LogDocument>> GetLogs(GetLogsPaginationRequest paginationRequest)
-        {
-            var logs = (await logsMongoRepository.GetAll()).Where(l => l.Date >= paginationRequest.MinDate
-                                                                       && l.Date <= paginationRequest.MaxDate);
-
-            if (!string.IsNullOrEmpty(paginationRequest.Level))
-                logs = logs.Where(l => l.Level.ToLower() == paginationRequest.Level.ToLower());
-
-            if (!string.IsNullOrEmpty(paginationRequest.Message))
-                logs = logs.Where(l => l.Message.ToLower().Contains(paginationRequest.Message.ToLower()));
-
-            if (!string.IsNullOrEmpty(paginationRequest.Url))
-                logs = logs.Where(l => l.Url.ToLower().Contains(paginationRequest.Url.ToLower()));
-
-            if (!string.IsNullOrEmpty(paginationRequest.Action))
-                logs = logs.Where(l => l.Action.ToLower().Contains(paginationRequest.Action.ToLower()));
-
-            logs = LogSortTypeSmartEnum.FromValue((int)paginationRequest.SortType).Sort(logs);
-
-            return logs.ToPagedList<LogDocument>(paginationRequest.PageNumber, paginationRequest.PageSize);
-        }
+        public async Task<PagedList<LogDocument>> GetLogs(LogFiltersParams filters)
+            => (await logMongoRepository.GetFilteredLogs(filters)).ToPagedList(filters.PageNumber, filters.PageSize);
 
         #region private
 

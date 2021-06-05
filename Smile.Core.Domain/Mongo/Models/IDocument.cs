@@ -1,12 +1,12 @@
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 
-namespace Smile.Core.Domain.Data.Mongo
+namespace Smile.Core.Domain.Mongo.Models
 {
-    public abstract class Document : IDocument
+    public interface IDocument
     {
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]
-        public string Id { get; set; }
+        string Id { get; set; }
     }
 }

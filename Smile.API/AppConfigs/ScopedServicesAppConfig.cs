@@ -6,10 +6,12 @@ using Smile.Core.Application.Services;
 using Smile.Core.Application.Services.ReadOnly;
 using Smile.Core.Application.SignalR;
 using Smile.Core.Domain.Data;
-using Smile.Core.Domain.Data.Mongo;
+using Smile.Core.Domain.Mongo;
+using Smile.Core.Domain.Mongo.Repositories;
 using Smile.Infrastructure.Persistence.Database;
 using Smile.Infrastructure.Persistence.Logging;
 using Smile.Infrastructure.Persistence.Mongo;
+using Smile.Infrastructure.Persistence.Mongo.Repositories;
 using Smile.Infrastructure.Shared.Services;
 using Smile.Infrastructure.Shared.SignalR;
 
@@ -23,6 +25,7 @@ namespace Smile.API.AppConfigs
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 
             services.AddScoped(typeof(IMongoRepository<>), typeof(MongoRepository<>));
+            services.AddScoped<ILogMongoRepository, LogMongoRepository>();
 
             services.AddScoped<IAuthService, AuthService>();
             services.AddScoped<IRolesService, RolesService>();

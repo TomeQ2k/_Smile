@@ -1,6 +1,6 @@
 using System;
 using Smile.Core.Application.Builders.Interfaces;
-using Smile.Core.Application.Models.Mongo;
+using Smile.Core.Domain.Entities.LogEntity;
 
 namespace Smile.Core.Application.Builders
 {

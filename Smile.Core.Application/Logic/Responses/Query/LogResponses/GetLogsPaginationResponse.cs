@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using Smile.Core.Application.Models.Error;
-using Smile.Core.Application.Models.Mongo;
+using Smile.Core.Domain.Entities.LogEntity;
 
 namespace Smile.Core.Application.Logic.Responses.Query.LogResponses
 {

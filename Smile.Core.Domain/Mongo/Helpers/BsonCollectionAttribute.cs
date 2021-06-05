@@ -1,6 +1,6 @@
 using System;
 
-namespace Smile.Core.Application.Attributes
+namespace Smile.Core.Domain.Mongo.Helpers
 {
     public class BsonCollectionAttribute : Attribute
     {

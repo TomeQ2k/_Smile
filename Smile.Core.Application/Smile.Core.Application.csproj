@@ -20,7 +20,4 @@
 		<ProjectReference Include="..\Smile.Core.Common\Smile.Core.Common.csproj" />
 		<ProjectReference Include="..\Smile.Core.Domain\Smile.Core.Domain.csproj" />
 	</ItemGroup>
-	<ItemGroup>
-	  <Folder Include="Models\Helpers" />
-	</ItemGroup>
 </Project>

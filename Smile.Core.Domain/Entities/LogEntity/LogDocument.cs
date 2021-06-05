@@ -1,8 +1,8 @@
 using System;
-using Smile.Core.Application.Attributes;
-using Smile.Core.Domain.Data.Mongo;
+using Smile.Core.Domain.Mongo.Helpers;
+using Smile.Core.Domain.Mongo.Models;
 
-namespace Smile.Core.Application.Models.Mongo
+namespace Smile.Core.Domain.Entities.LogEntity
 {
     [BsonCollection("logs")]
     public class LogDocument : Document

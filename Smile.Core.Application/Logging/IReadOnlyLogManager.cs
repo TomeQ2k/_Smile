@@ -1,12 +1,12 @@
 using System.Threading.Tasks;
-using Smile.Core.Application.Logic.Requests.Query.LogRequests;
-using Smile.Core.Application.Models.Mongo;
+using Smile.Core.Application.Logic.Requests.Query.Params;
 using Smile.Core.Application.Models.Pagination;
+using Smile.Core.Domain.Entities.LogEntity;
 
 namespace Smile.Core.Application.Logging
 {
     public interface IReadOnlyLogManager
     {
-        Task<PagedList<LogDocument>> GetLogs(GetLogsPaginationRequest paginationRequest);
+        Task<PagedList<LogDocument>> GetLogs(LogFiltersParams filters);
     }
 }

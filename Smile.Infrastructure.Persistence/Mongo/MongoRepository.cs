@@ -1,18 +1,19 @@
 using MongoDB.Driver;
-using Smile.Core.Domain.Data.Mongo;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using Smile.Core.Application.Attributes;
 using Smile.Core.Application.Settings;
+using Smile.Core.Domain.Mongo;
+using Smile.Core.Domain.Mongo.Helpers;
+using Smile.Core.Domain.Mongo.Models;
 
 namespace Smile.Infrastructure.Persistence.Mongo
 {
     public class MongoRepository<TDocument> : IMongoRepository<TDocument> where TDocument : IDocument
     {
-        private readonly IMongoCollection<TDocument> collection;
+        protected readonly IMongoCollection<TDocument> collection;
 
         public MongoRepository(IMongoDatabaseSettings settings)
         {
@@ -40,7 +41,8 @@ namespace Smile.Infrastructure.Persistence.Mongo
 
         public async Task<bool> Update(TDocument document)
         {
-            var updateResult = await collection.ReplaceOneAsync(filter: x => x.Id == document.Id, replacement: document);
+            var updateResult =
+                await collection.ReplaceOneAsync(filter: x => x.Id == document.Id, replacement: document);
 
             return updateResult.IsAcknowledged && updateResult.ModifiedCount > 0;
         }
@@ -57,7 +59,7 @@ namespace Smile.Infrastructure.Persistence.Mongo
         #region private
 
         private protected string GetCollectionName(Type documentType)
-            => ((BsonCollectionAttribute)documentType.GetCustomAttributes(
+            => ((BsonCollectionAttribute) documentType.GetCustomAttributes(
                     typeof(BsonCollectionAttribute),
                     true)
                 .FirstOrDefault())?.CollectionName;
