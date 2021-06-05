@@ -1,4 +1,3 @@
-using MongoDB.Bson;
 using MongoDB.Driver;
 using Smile.Core.Domain.Data.Mongo;
 using System;
@@ -22,30 +21,38 @@ namespace Smile.Infrastructure.Persistence.Mongo
         }
 
         public async Task<TDocument> Get(string id)
-            => await Task.Run(() =>
-             {
-                 var objectId = new ObjectId(id);
-                 var filter = Builders<TDocument>.Filter.Eq(doc => doc.Id, objectId);
-
-                 return collection.Find(filter).SingleOrDefaultAsync();
-             });
+            => await collection
+                .Find(x => x.Id == id)
+                .FirstOrDefaultAsync();
 
         public virtual async Task<IEnumerable<TDocument>> GetAll()
-            => await Task.Run(() => collection.AsQueryable().ToEnumerable());
+            => await collection
+                .Find(x => true)
+                .ToListAsync();
 
         public virtual async Task<IEnumerable<TDocument>> FilterBy(Expression<Func<TDocument, bool>> predicate)
-            => (await collection.FindAsync(predicate)).ToEnumerable();
+            => await collection
+                .Find(predicate)
+                .ToListAsync();
 
         public async Task Insert(TDocument document)
-            => await Task.Run(() => collection.InsertOneAsync(document));
+            => await collection.InsertOneAsync(document);
 
-        public async Task Delete(string id)
-            => await Task.Run(() =>
-            {
-                var objectId = new ObjectId(id);
-                var filter = Builders<TDocument>.Filter.Eq(doc => doc.Id, objectId);
-                collection.FindOneAndDeleteAsync(filter);
-            });
+        public async Task<bool> Update(TDocument document)
+        {
+            var updateResult = await collection.ReplaceOneAsync(filter: x => x.Id == document.Id, replacement: document);
+
+            return updateResult.IsAcknowledged && updateResult.ModifiedCount > 0;
+        }
+
+        public async Task<bool> Delete(string id)
+        {
+            FilterDefinition<TDocument> filter = Builders<TDocument>.Filter.Eq(x => x.Id, id);
+
+            DeleteResult deleteResult = await collection.DeleteOneAsync(filter);
+
+            return deleteResult.IsAcknowledged && deleteResult.DeletedCount > 0;
+        }
 
         #region private
 

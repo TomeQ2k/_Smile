@@ -2,10 +2,10 @@ using Smile.Core.Domain.Data.Repositories;
 using System.Linq;
 using Smile.Core.Application.SmartEnums;
 using Smile.Core.Domain.Data.Repositories.Params;
-using Smile.Core.Domain.Entities.Main;
 using System.Threading.Tasks;
 using Smile.Core.Domain.Data.Models;
 using Smile.Core.Application.Extensions;
+using Smile.Core.Domain.Entities.Post;
 
 namespace Smile.Infrastructure.Persistence.Database.Repositories
 {

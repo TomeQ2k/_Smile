@@ -4,7 +4,7 @@ using System.Linq;
 using Smile.Core.Common.Helpers;
 using Smile.Core.Domain.Entities.Auth;
 
-namespace Smile.Core.Domain.Entities.Main
+namespace Smile.Core.Domain.Entities.Post
 {
     public class Post
     {
@@ -20,7 +20,7 @@ namespace Smile.Core.Domain.Entities.Main
         public virtual User Author { get; protected set; }
         public virtual Group.Group Group { get; protected set; }
 
-        public virtual ICollection<Comment> Comments { get; protected set; } = new HashSet<Comment>();
+        public virtual ICollection<Comment.Comment> Comments { get; protected set; } = new HashSet<Comment.Comment>();
         public virtual ICollection<Like> Likes { get; protected set; } = new HashSet<Like>();
 
         public void SetPhoto(string photoUrl)

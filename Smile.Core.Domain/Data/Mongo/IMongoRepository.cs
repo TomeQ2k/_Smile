@@ -12,6 +12,7 @@ namespace Smile.Core.Domain.Data.Mongo
         Task<IEnumerable<TDocument>> FilterBy(Expression<Func<TDocument, bool>> predicate);
 
         Task Insert(TDocument document);
-        Task Delete(string id);
+        Task<bool> Update(TDocument document);
+        Task<bool> Delete(string id);
     }
 }

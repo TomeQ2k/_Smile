@@ -3,9 +3,9 @@ using Smile.Core.Domain.Data.Repositories;
 using Smile.Infrastructure.Persistence.Database.Repositories;
 using System.Threading.Tasks;
 using Smile.Core.Domain.Entities.Auth;
+using Smile.Core.Domain.Entities.Comment;
 using Smile.Core.Domain.Entities.Connection;
 using Smile.Core.Domain.Entities.Group;
-using Smile.Core.Domain.Entities.Main;
 
 #pragma warning disable 649
 

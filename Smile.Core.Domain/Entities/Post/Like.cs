@@ -1,6 +1,6 @@
 using Smile.Core.Domain.Entities.Auth;
 
-namespace Smile.Core.Domain.Entities.Main
+namespace Smile.Core.Domain.Entities.Post
 {
     public class Like
     {

@@ -4,7 +4,6 @@ using System.Linq;
 using Smile.Core.Common.Enums.Permissions;
 using Smile.Core.Common.Helpers;
 using Smile.Core.Domain.Entities.Auth;
-using Smile.Core.Domain.Entities.Main;
 
 namespace Smile.Core.Domain.Entities.Group
 {
@@ -24,7 +23,7 @@ namespace Smile.Core.Domain.Entities.Group
 
         public virtual User Admin { get; protected set; }
 
-        public virtual ICollection<Post> Posts { get; protected set; } = new HashSet<Post>();
+        public virtual ICollection<Post.Post> Posts { get; protected set; } = new HashSet<Post.Post>();
         public virtual ICollection<GroupMember> GroupMembers { get; protected set; } = new HashSet<GroupMember>();
         public virtual ICollection<GroupInvite> GroupInvites { get; protected set; } = new HashSet<GroupInvite>();
 

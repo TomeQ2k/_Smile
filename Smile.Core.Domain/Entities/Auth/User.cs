@@ -4,8 +4,8 @@ using System.Linq;
 using Smile.Core.Common.Helpers;
 using Smile.Core.Domain.Entities.Community;
 using Smile.Core.Domain.Entities.Group;
-using Smile.Core.Domain.Entities.Main;
 using Smile.Core.Domain.Entities.Messenger;
+using Smile.Core.Domain.Entities.Post;
 using Smile.Core.Domain.Entities.Story;
 using Smile.Core.Domain.Entities.Support;
 
@@ -23,8 +23,8 @@ namespace Smile.Core.Domain.Entities.Auth
         public bool EmailConfirmed { get; protected set; }
         public bool IsBlocked { get; protected set; }
 
-        public virtual ICollection<Post> Posts { get; protected set; } = new HashSet<Post>();
-        public virtual ICollection<Comment> Comments { get; protected set; } = new HashSet<Comment>();
+        public virtual ICollection<Post.Post> Posts { get; protected set; } = new HashSet<Post.Post>();
+        public virtual ICollection<Comment.Comment> Comments { get; protected set; } = new HashSet<Comment.Comment>();
         public virtual ICollection<Like> Likes { get; protected set; } = new HashSet<Like>();
         public virtual ICollection<Friend> FriendsSent { get; protected set; } = new HashSet<Friend>();
         public virtual ICollection<Friend> FriendsReceived { get; protected set; } = new HashSet<Friend>();
@@ -83,7 +83,7 @@ namespace Smile.Core.Domain.Entities.Auth
             Posts = Posts.OrderByDescending(p => p.DateUpdated).ToList();
         }
 
-        public IEnumerable<Post> GetPostsWithoutGroup()
+        public IEnumerable<Post.Post> GetPostsWithoutGroup()
             => Posts.Where(p => p.GroupId == null);
 
         public IEnumerable<Group.Group> GetUserGroups()

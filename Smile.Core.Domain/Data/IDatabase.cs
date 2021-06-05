@@ -2,9 +2,9 @@ using Smile.Core.Domain.Data.Repositories;
 using System;
 using System.Threading.Tasks;
 using Smile.Core.Domain.Entities.Auth;
+using Smile.Core.Domain.Entities.Comment;
 using Smile.Core.Domain.Entities.Connection;
 using Smile.Core.Domain.Entities.Group;
-using Smile.Core.Domain.Entities.Main;
 
 namespace Smile.Core.Domain.Data
 {

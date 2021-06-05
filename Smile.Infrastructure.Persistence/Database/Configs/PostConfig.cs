@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Smile.Core.Domain.Entities.Main;
+using Smile.Core.Domain.Entities.Post;
 
 namespace Smile.Infrastructure.Persistence.Database.Configs
 {

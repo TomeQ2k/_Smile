@@ -7,6 +7,6 @@ namespace Smile.Core.Domain.Data.Mongo
     {
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]
-        ObjectId Id { get; set; }
+        string Id { get; set; }
     }
 }

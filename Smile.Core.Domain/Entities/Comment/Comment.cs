@@ -2,7 +2,7 @@ using System;
 using Smile.Core.Common.Helpers;
 using Smile.Core.Domain.Entities.Auth;
 
-namespace Smile.Core.Domain.Entities.Main
+namespace Smile.Core.Domain.Entities.Comment
 {
     public class Comment
     {
@@ -14,7 +14,7 @@ namespace Smile.Core.Domain.Entities.Main
         public string PostId { get; protected set; }
 
         public virtual User User { get; protected set; }
-        public virtual Post Post { get; protected set; }
+        public virtual Post.Post Post { get; protected set; }
 
         public static Comment Create(string content) => new Comment { Content = content };
 

@@ -1,12 +1,13 @@
 using Microsoft.EntityFrameworkCore;
 using Smile.Core.Domain.Entities.Auth;
+using Smile.Core.Domain.Entities.Comment;
 using Smile.Core.Domain.Entities.Community;
 using Smile.Core.Domain.Entities.Connection;
 using Smile.Core.Domain.Entities.File;
 using Smile.Core.Domain.Entities.Group;
-using Smile.Core.Domain.Entities.Main;
 using Smile.Core.Domain.Entities.Messenger;
 using Smile.Core.Domain.Entities.Notification;
+using Smile.Core.Domain.Entities.Post;
 using Smile.Core.Domain.Entities.Story;
 using Smile.Core.Domain.Entities.Support;
 using Smile.Infrastructure.Persistence.Database.Configs;
