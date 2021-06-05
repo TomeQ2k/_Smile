@@ -3,7 +3,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
 using MediatR;
-using Smile.Core.Application.Dtos.Main;
+using Smile.Core.Application.Dtos.Comment;
 using Smile.Core.Application.Exceptions;
 using Smile.Core.Application.Logic.Requests.Command.Comment;
 using Smile.Core.Application.Logic.Responses.Command.Comment;

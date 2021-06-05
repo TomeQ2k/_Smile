@@ -1,6 +1,6 @@
 using System;
 
-namespace Smile.Core.Application.Dtos.Main
+namespace Smile.Core.Application.Dtos.Comment
 {
     public class CommentDto
     {

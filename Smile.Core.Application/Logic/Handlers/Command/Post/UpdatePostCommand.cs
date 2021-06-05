@@ -2,7 +2,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
 using MediatR;
-using Smile.Core.Application.Dtos.Main;
+using Smile.Core.Application.Dtos.Post;
 using Smile.Core.Application.Exceptions;
 using Smile.Core.Application.Logic.Requests.Command.Post;
 using Smile.Core.Application.Logic.Responses.Command.Post;
@@ -24,7 +24,7 @@ namespace Smile.Core.Application.Logic.Handlers.Command.Post
         public async Task<UpdatePostResponse> Handle(UpdatePostRequest request, CancellationToken cancellationToken)
         {
             var post = await postService.GetPost(request.PostId);
-            post = mapper.Map<UpdatePostRequest, Domain.Entities.Main.Post>(request, post);
+            post = mapper.Map<UpdatePostRequest, Domain.Entities.Post.Post>(request, post);
 
             var updatedPost = await postService.UpdatePost(post, photo: request.Photo, changePhoto: request.ChangePhoto);
 

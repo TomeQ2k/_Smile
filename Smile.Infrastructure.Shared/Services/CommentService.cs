@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using Smile.Core.Application.Exceptions;
 using Smile.Core.Application.Services;
 using Smile.Core.Application.Services.ReadOnly;
-using Smile.Core.Domain.Entities.Main;
+using Smile.Core.Domain.Entities.Comment;
 using Smile.Infrastructure.Shared.Specifications;
 
 namespace Smile.Infrastructure.Shared.Services

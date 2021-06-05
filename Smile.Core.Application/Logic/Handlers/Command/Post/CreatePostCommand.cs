@@ -3,7 +3,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
 using MediatR;
-using Smile.Core.Application.Dtos.Main;
+using Smile.Core.Application.Dtos.Post;
 using Smile.Core.Application.Exceptions;
 using Smile.Core.Application.Helpers;
 using Smile.Core.Application.Logic.Requests.Command.Post;
@@ -31,7 +31,7 @@ namespace Smile.Core.Application.Logic.Handlers.Command.Post
 
         public async Task<CreatePostResponse> Handle(CreatePostRequest request, CancellationToken cancellationToken)
         {
-            var createdPost = await postService.CreatePost(mapper.Map<Domain.Entities.Main.Post>(request), photo: request.Photo) ??
+            var createdPost = await postService.CreatePost(mapper.Map<Domain.Entities.Post.Post>(request), photo: request.Photo) ??
                               throw new CrudException("Post has not been created");
 
             if (createdPost.Group != null && httpContextReader.CurrentUserId != createdPost.AuthorId)

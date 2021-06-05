@@ -1,7 +1,7 @@
 using System.Linq;
 using Ardalis.SmartEnum;
 using Smile.Core.Common.Enums;
-using Smile.Core.Domain.Entities.Main;
+using Smile.Core.Domain.Entities.Post;
 
 namespace Smile.Core.Application.SmartEnums
 {

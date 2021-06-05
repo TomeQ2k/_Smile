@@ -1,4 +1,4 @@
-using Smile.Core.Application.Dtos.Main;
+using Smile.Core.Application.Dtos.Comment;
 using Smile.Core.Application.Models.Error;
 
 namespace Smile.Core.Application.Logic.Responses.Command.Comment

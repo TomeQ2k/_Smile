@@ -1,11 +1,12 @@
 using System;
 using AutoMapper;
 using Smile.Core.Application.Dtos.Auth;
+using Smile.Core.Application.Dtos.Comment;
 using Smile.Core.Application.Dtos.Community;
 using Smile.Core.Application.Dtos.Group;
-using Smile.Core.Application.Dtos.Main;
 using Smile.Core.Application.Dtos.Messenger;
 using Smile.Core.Application.Dtos.Notification;
+using Smile.Core.Application.Dtos.Post;
 using Smile.Core.Application.Dtos.Profile;
 using Smile.Core.Application.Dtos.Story;
 using Smile.Core.Application.Dtos.Support;
@@ -14,11 +15,12 @@ using Smile.Core.Application.Logic.Requests.Command.GroupManager;
 using Smile.Core.Application.Logic.Requests.Command.Post;
 using Smile.Core.Common.Helpers;
 using Smile.Core.Domain.Entities.Auth;
+using Smile.Core.Domain.Entities.Comment;
 using Smile.Core.Domain.Entities.Community;
 using Smile.Core.Domain.Entities.Group;
-using Smile.Core.Domain.Entities.Main;
 using Smile.Core.Domain.Entities.Messenger;
 using Smile.Core.Domain.Entities.Notification;
+using Smile.Core.Domain.Entities.Post;
 using Smile.Core.Domain.Entities.Story;
 using Smile.Core.Domain.Entities.Support;
 

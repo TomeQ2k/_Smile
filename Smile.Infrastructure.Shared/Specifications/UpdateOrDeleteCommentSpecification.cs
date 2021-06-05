@@ -1,7 +1,7 @@
 using System;
 using System.Linq.Expressions;
 using Smile.Core.Domain.Entities.Auth;
-using Smile.Core.Domain.Entities.Main;
+using Smile.Core.Domain.Entities.Comment;
 
 namespace Smile.Infrastructure.Shared.Specifications
 {

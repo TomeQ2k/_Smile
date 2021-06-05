@@ -1,4 +1,4 @@
-using Smile.Core.Domain.Entities.Main;
+using Smile.Core.Domain.Entities.Post;
 
 namespace Smile.Core.Application.Results
 {

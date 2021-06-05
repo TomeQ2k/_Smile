@@ -2,7 +2,7 @@ using System;
 using System.Linq;
 using System.Linq.Expressions;
 using Smile.Core.Domain.Entities.Auth;
-using Smile.Core.Domain.Entities.Main;
+using Smile.Core.Domain.Entities.Post;
 
 namespace Smile.Infrastructure.Shared.Specifications
 {

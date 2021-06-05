@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-using Smile.Core.Application.Dtos.Main;
+using Smile.Core.Application.Dtos.Post;
 using Smile.Core.Common.Enums.Permissions;
 
 namespace Smile.Core.Application.Dtos.Group

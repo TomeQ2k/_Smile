@@ -2,7 +2,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
 using MediatR;
-using Smile.Core.Application.Dtos.Main;
+using Smile.Core.Application.Dtos.Post;
 using Smile.Core.Application.Exceptions;
 using Smile.Core.Application.Logic.Requests.Query.Post;
 using Smile.Core.Application.Logic.Responses.Query.Post;

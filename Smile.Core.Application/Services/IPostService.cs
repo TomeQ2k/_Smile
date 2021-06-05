@@ -2,7 +2,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Smile.Core.Application.Results;
 using Smile.Core.Application.Services.ReadOnly;
-using Smile.Core.Domain.Entities.Main;
+using Smile.Core.Domain.Entities.Post;
 
 namespace Smile.Core.Application.Services
 {

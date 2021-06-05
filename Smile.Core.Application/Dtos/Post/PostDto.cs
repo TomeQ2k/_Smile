@@ -1,7 +1,8 @@
 using System;
 using System.Collections.Generic;
+using Smile.Core.Application.Dtos.Comment;
 
-namespace Smile.Core.Application.Dtos.Main
+namespace Smile.Core.Application.Dtos.Post
 {
     public class PostDto
     {

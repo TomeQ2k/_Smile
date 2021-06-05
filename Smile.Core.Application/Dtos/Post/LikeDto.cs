@@ -1,4 +1,4 @@
-namespace Smile.Core.Application.Dtos.Main
+namespace Smile.Core.Application.Dtos.Post
 {
     public class LikeDto
     {
