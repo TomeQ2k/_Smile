@@ -8,7 +8,6 @@ using Smile.Core.Application.Logging;
 using Smile.Core.Application.Logic.Requests.Query.Params;
 using Smile.Core.Application.Models.Pagination;
 using Smile.Core.Application.Services;
-using Smile.Core.Common.Helpers;
 using Smile.Core.Domain.Entities.LogEntity;
 using Smile.Core.Domain.Mongo.Repositories;
 
@@ -35,15 +34,15 @@ namespace Smile.Infrastructure.Persistence.Logging
             var allLogs = await LoadLogsFromFile(logsFilePath);
 
             foreach (var log in from fileLog in allLogs
-                let logProps = fileLog.Split("$|")
-                let log = new LogBuilder()
-                    .CreatedAt(DateTime.Parse(logProps[0]))
-                    .SetLevel(logProps[1])
-                    .SetLogger(logProps[2])
-                    .SetMessage(logProps[3], logProps[4])
-                    .WithAction(logProps[5], logProps[6])
-                    .Build()
-                select log)
+                                let logProps = fileLog.Split("$|")
+                                let log = new LogBuilder()
+                                    .CreatedAt(DateTime.Parse(logProps[0]))
+                                    .SetLevel(logProps[1])
+                                    .SetLogger(logProps[2])
+                                    .SetMessage(logProps[3], logProps[4])
+                                    .WithAction(logProps[5], logProps[6])
+                                    .Build()
+                                select log)
                 await logMongoRepository.Insert(log);
 
             filesManager.Delete(logsFilePath);
@@ -53,17 +52,10 @@ namespace Smile.Infrastructure.Persistence.Logging
 
         public async Task ClearLogs()
         {
-            var logsToDelete = (await logMongoRepository.GetAll())
-                .Where(l => ((l.Level == Constants.INFO || l.Level == Constants.DEBUG) &&
-                             l.Date.AddMonths(Constants.InfoLogLifeTimeInMonths) < DateTime.Now)
-                            || (l.Level == Constants.WARNING &&
-                                l.Date.AddMonths(Constants.WarningLogLifeTimeInMonths) < DateTime.Now)
-                            || (l.Level == Constants.ERROR &&
-                                l.Date.AddMonths(Constants.ErrorLogLifeTimeInMonths) < DateTime.Now))
-                .ToList();
+            var logsToDelete = (await logMongoRepository.GetLogsToDelete()).ToList();
 
             for (int i = 0; i < logsToDelete.Count; i++)
-                await logMongoRepository.Delete(logsToDelete[i].Id.ToString());
+                await logMongoRepository.Delete(logsToDelete[i].Id);
         }
 
         public async Task<PagedList<LogDocument>> GetLogs(LogFiltersParams filters)

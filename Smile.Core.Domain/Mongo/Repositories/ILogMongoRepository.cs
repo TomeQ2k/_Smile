@@ -8,5 +8,6 @@ namespace Smile.Core.Domain.Mongo.Repositories
     public interface ILogMongoRepository : IMongoRepository<LogDocument>
     {
         Task<IEnumerable<LogDocument>> GetFilteredLogs(ILogFiltersParams filters);
+        Task<IEnumerable<LogDocument>> GetLogsToDelete();
     }
 }
