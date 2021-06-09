@@ -8,6 +8,6 @@ namespace Smile.Core.Application.Extensions
             => string.IsNullOrWhiteSpace(value) || value.Contains(" ");
 
         public static bool IsEmailAddress(this string value)
-            => Regex.Match(value, @"(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)").Success;
+            => !string.IsNullOrEmpty(value) && Regex.Match(value, @"(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)").Success;
     }
 }
