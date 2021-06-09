@@ -1,5 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
-using Smile.Core.Application.Logic.Responses;
+using Smile.Core.Application.Features.Responses;
 
 namespace Smile.Core.Application.Extensions
 {

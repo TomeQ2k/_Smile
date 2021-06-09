@@ -3,7 +3,7 @@ using Smile.Core.Common.Helpers;
 
 namespace Smile.Core.Application.Exceptions
 {
-    public class EntityNotFoundException : Exception
+    public class EntityNotFoundException : ApplicationException
     {
         public string ErrorCode { get; }
 

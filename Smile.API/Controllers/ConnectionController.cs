@@ -3,8 +3,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using Smile.Core.Application.Extensions;
+using Smile.Core.Application.Features.Requests.Command.Signalr;
 using Smile.Core.Application.Logging;
-using Smile.Core.Application.Logic.Requests.Command.Signalr;
 
 namespace Smile.API.Controllers
 {

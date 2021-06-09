@@ -1,5 +1,5 @@
 using System.Threading.Tasks;
-using Smile.Core.Application.Logic.Requests.Command.GroupManager;
+using Smile.Core.Application.Features.Requests.Command.GroupManager;
 using Smile.Core.Application.Results;
 using Smile.Core.Application.Services.ReadOnly;
 using Smile.Core.Domain.Entities.Group;

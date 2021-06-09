@@ -3,7 +3,7 @@ using Smile.Core.Common.Helpers;
 
 namespace Smile.Core.Application.Exceptions
 {
-    public class AdminActionException : Exception
+    public class AdminActionException : ApplicationException
     {
         public string ErrorCode { get; }
 

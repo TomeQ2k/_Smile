@@ -3,7 +3,7 @@ using Smile.Core.Common.Helpers;
 
 namespace Smile.Core.Application.Exceptions
 {
-    public class HubConnectionException : Exception
+    public class HubConnectionException : ApplicationException
     {
         public string ErrorCode { get; }
 

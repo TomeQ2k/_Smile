@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.Extensions.DependencyInjection;
 using Smile.Core.Application.Filters;
-using Smile.Core.Application.Validators;
+using Smile.Core.Application.Validation;
 
 namespace Smile.API.AppConfigs
 {

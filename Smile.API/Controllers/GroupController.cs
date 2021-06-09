@@ -2,9 +2,9 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using Smile.Core.Application.Extensions;
+using Smile.Core.Application.Features.Requests.Command.Group;
+using Smile.Core.Application.Features.Requests.Query.Group;
 using Smile.Core.Application.Logging;
-using Smile.Core.Application.Logic.Requests.Command.Group;
-using Smile.Core.Application.Logic.Requests.Query.Group;
 
 namespace Smile.API.Controllers
 {

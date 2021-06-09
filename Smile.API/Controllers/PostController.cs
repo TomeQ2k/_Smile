@@ -3,9 +3,9 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using Smile.Core.Application.Extensions;
+using Smile.Core.Application.Features.Requests.Command.Post;
+using Smile.Core.Application.Features.Requests.Query.Post;
 using Smile.Core.Application.Logging;
-using Smile.Core.Application.Logic.Requests.Command.Post;
-using Smile.Core.Application.Logic.Requests.Query.Post;
 
 namespace Smile.API.Controllers
 {

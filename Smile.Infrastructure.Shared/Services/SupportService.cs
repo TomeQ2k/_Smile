@@ -2,7 +2,7 @@ using Smile.Core.Common.Helpers;
 using Smile.Core.Domain.Data;
 using System.Threading.Tasks;
 using Smile.Core.Application.Exceptions;
-using Smile.Core.Application.Logic.Requests.Query.Support;
+using Smile.Core.Application.Features.Requests.Query.Support;
 using Smile.Core.Application.Services;
 using Smile.Core.Application.Services.ReadOnly;
 using Smile.Core.Domain.Entities.Support;

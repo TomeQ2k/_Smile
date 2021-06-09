@@ -4,9 +4,9 @@ using Microsoft.AspNetCore.Mvc;
 using Smile.Core.Common.Helpers;
 using System.Threading.Tasks;
 using Smile.Core.Application.Extensions;
+using Smile.Core.Application.Features.Requests.Command.Support;
+using Smile.Core.Application.Features.Requests.Query.Support;
 using Smile.Core.Application.Logging;
-using Smile.Core.Application.Logic.Requests.Command.Support;
-using Smile.Core.Application.Logic.Requests.Query.Support;
 
 namespace Smile.API.Controllers
 {

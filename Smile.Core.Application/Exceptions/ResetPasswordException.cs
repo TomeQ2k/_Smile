@@ -3,7 +3,7 @@ using Smile.Core.Common.Helpers;
 
 namespace Smile.Core.Application.Exceptions
 {
-    public class ResetPasswordException : Exception
+    public class ResetPasswordException : ApplicationException
     {
         public string ErrorCode { get; }
 

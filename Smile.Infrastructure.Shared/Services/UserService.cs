@@ -1,7 +1,7 @@
 using Smile.Core.Domain.Data;
 using System.Threading.Tasks;
 using Smile.Core.Application.Exceptions;
-using Smile.Core.Application.Logic.Requests.Query.User;
+using Smile.Core.Application.Features.Requests.Query.User;
 using Smile.Core.Application.Services;
 using Smile.Core.Application.Services.ReadOnly;
 using Smile.Core.Application.SmartEnums;

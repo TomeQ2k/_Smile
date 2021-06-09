@@ -1,5 +1,5 @@
 using System.Threading.Tasks;
-using Smile.Core.Application.Logic.Requests.Query.Group;
+using Smile.Core.Application.Features.Requests.Query.Group;
 using Smile.Core.Application.Results;
 using Smile.Core.Domain.Data.Models;
 using Smile.Core.Domain.Entities.Group;

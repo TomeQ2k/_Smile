@@ -3,7 +3,7 @@ using Smile.Core.Common.Helpers;
 
 namespace Smile.Core.Application.Exceptions
 {
-    public class DeleteFileException : Exception
+    public class DeleteFileException : ApplicationException
     {
         public string ErrorCode { get; }
 

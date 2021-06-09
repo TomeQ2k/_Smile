@@ -4,9 +4,9 @@ using Microsoft.AspNetCore.Mvc;
 using Smile.Core.Common.Enums;
 using System.Threading.Tasks;
 using Smile.Core.Application.Extensions;
+using Smile.Core.Application.Features.Requests.Command.Auth;
+using Smile.Core.Application.Features.Requests.Query.Auth;
 using Smile.Core.Application.Logging;
-using Smile.Core.Application.Logic.Requests.Command.Auth;
-using Smile.Core.Application.Logic.Requests.Query.Auth;
 
 namespace Smile.API.Controllers
 {

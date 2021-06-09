@@ -1,5 +1,5 @@
 using System.Threading.Tasks;
-using Smile.Core.Application.Logic.Requests.Query.Messenger;
+using Smile.Core.Application.Features.Requests.Query.Messenger;
 using Smile.Core.Application.Models.Conversation;
 using Smile.Core.Application.Models.Pagination;
 using Smile.Core.Domain.Data.Models;

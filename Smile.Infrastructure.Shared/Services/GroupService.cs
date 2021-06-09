@@ -5,7 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Smile.Core.Application.Builders;
 using Smile.Core.Application.Exceptions;
-using Smile.Core.Application.Logic.Requests.Query.Group;
+using Smile.Core.Application.Features.Requests.Query.Group;
 using Smile.Core.Application.Results;
 using Smile.Core.Application.Services;
 using Smile.Core.Application.Services.ReadOnly;

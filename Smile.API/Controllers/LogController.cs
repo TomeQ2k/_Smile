@@ -3,8 +3,8 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Smile.Core.Application.Extensions;
+using Smile.Core.Application.Features.Requests.Query.LogRequests;
 using Smile.Core.Application.Logging;
-using Smile.Core.Application.Logic.Requests.Query.LogRequests;
 using Smile.Core.Common.Helpers;
 
 namespace Smile.API.Controllers

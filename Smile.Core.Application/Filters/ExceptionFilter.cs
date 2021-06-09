@@ -7,8 +7,8 @@ using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.DependencyInjection;
 using Smile.Core.Application.Exceptions;
 using Smile.Core.Application.Extensions;
+using Smile.Core.Application.Features.Responses;
 using Smile.Core.Application.Logging;
-using Smile.Core.Application.Logic.Responses;
 using Smile.Core.Application.Models.Error;
 using Smile.Core.Common.Helpers;
 
