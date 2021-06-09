@@ -7,12 +7,12 @@ using Smile.Core.Common.Helpers;
 
 namespace Smile.Core.Application.Validators
 {
-    public class MainValidator : ActionFilterAttribute
+    public class ValidatorBehavior : ActionFilterAttribute
     {
         public override void OnActionExecuting(ActionExecutingContext context)
         {
             if (!context.ModelState.IsValid)
-                context.Result = new ValidationFailedResult(context.ModelState, Error.Build(ErrorCodes.ValidationError, ValidatorMessages.MainValidatorMessage,
+                context.Result = new ValidationFailedResult(context.ModelState, Error.Build(ErrorCodes.ValidationError, ValidatorMessages.DefaultValidatorMessage,
                     HttpStatusCode.UnprocessableEntity));
         }
     }

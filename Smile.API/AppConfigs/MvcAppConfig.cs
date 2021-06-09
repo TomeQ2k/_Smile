@@ -18,7 +18,7 @@ namespace Smile.API.AppConfigs
 
                 options.Filters.Add(new AuthorizeFilter(policy));
                 options.Filters.Add(typeof(ExceptionFilter));
-                options.Filters.Add(typeof(MainValidator));
+                options.Filters.Add(typeof(ValidatorBehavior));
                 options.Filters.Add(typeof(BlockFilter));
             })
             .SetCompatibilityVersion(CompatibilityVersion.Latest)
