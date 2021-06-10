@@ -8,12 +8,13 @@ using Smile.API.BackgroundServices.Interfaces;
 using Smile.Core.Common.Helpers;
 using Smile.Infrastructure.Persistence.Database;
 using System;
+using System.Threading.Tasks;
 
 namespace Smile.API
 {
     public class Program
     {
-        public static void Main(string[] args)
+        public static async Task Main(string[] args)
         {
             var host = CreateHostBuilder(args).Build();
 
@@ -30,7 +31,8 @@ namespace Smile.API
 
                     dataContext.Database.Migrate();
 
-                    databaseManager.Seed();
+                    await databaseManager.Seed();
+                    logger.Info("Database seed completed");
 
                     logger.Debug("Application initialized...");
 

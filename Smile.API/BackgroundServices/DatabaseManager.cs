@@ -1,7 +1,7 @@
 using Smile.API.BackgroundServices.Interfaces;
 using Smile.Core.Common.Helpers;
-using System.Linq;
 using Smile.Core.Application.Services;
+using System.Threading.Tasks;
 
 namespace Smile.API.BackgroundServices
 {
@@ -14,19 +14,17 @@ namespace Smile.API.BackgroundServices
             this.rolesService = rolesService;
         }
 
-        public void Seed()
+        public async Task Seed()
         {
-            InsertRoles();
+            await InsertRoles();
         }
 
         #region private
 
-        private void InsertRoles()
+        private async Task InsertRoles()
         {
-            Constants.RolesToSeed.ToList().ForEach((roleName) =>
-            {
-                rolesService.CreateRole(roleName).Wait();
-            });
+            foreach (var roleName in Constants.RolesToSeed)
+                await rolesService.CreateRole(roleName);
         }
 
         #endregion
