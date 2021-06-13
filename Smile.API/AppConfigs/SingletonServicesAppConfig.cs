@@ -11,10 +11,10 @@ namespace Smile.API.AppConfigs
     {
         public static IServiceCollection ConfigureSingletonServices(this IServiceCollection services)
         {
+            services.AddSingleton<INLogger, NLogger>();
             services.AddSingleton<IEmailSender, EmailSender>();
             services.AddSingleton<IFilesManager, FilesManager>();
             services.AddSingleton<IHashGenerator, HashGenerator>();
-            services.AddSingleton<INLogger, NLogger>();
             services.AddSingleton<IHttpContextService, HttpContextService>();
             services.AddSingleton<IHttpContextWriter, HttpContextService>();
             services.AddSingleton<IHttpContextReader, HttpContextService>();

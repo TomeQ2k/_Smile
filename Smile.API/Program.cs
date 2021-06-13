@@ -26,21 +26,23 @@ namespace Smile.API
 
                 try
                 {
+                    logger.Info("Application started...");
+
                     var dataContext = services.GetRequiredService<DataContext>();
                     var databaseManager = services.GetRequiredService<IDatabaseManager>();
 
-                    dataContext.Database.Migrate();
+                    await dataContext.Database.MigrateAsync();
+                    logger.Info("Database migration completed");
 
                     await databaseManager.Seed();
-                    logger.Info("Database seed completed");
 
-                    logger.Debug("Application initialized...");
+                    logger.Info("Application initialized");
 
                     host.Run();
                 }
                 catch (Exception ex)
                 {
-                    logger.Error(ex.Message, "Program stopped because of exception");
+                    logger.Error(ex.Message, "Application terminated unexpectedly...");
                     throw;
                 }
                 finally
