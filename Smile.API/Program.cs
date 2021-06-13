@@ -42,7 +42,7 @@ namespace Smile.API
                 }
                 catch (Exception ex)
                 {
-                    logger.Error(ex.Message, "Application terminated unexpectedly...");
+                    logger.Fatal(ex.Message, "Application terminated unexpectedly...");
                     throw;
                 }
                 finally
