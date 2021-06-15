@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using MongoDB.Driver;
 using MongoDB.Driver.Linq;
+using Smile.Core.Application.Extensions;
 using Smile.Core.Application.Settings;
 using Smile.Core.Application.SmartEnums;
 using Smile.Core.Common.Helpers;
+using Smile.Core.Domain.Data.Models;
 using Smile.Core.Domain.Entities.LogEntity;
 using Smile.Core.Domain.Mongo.Repositories;
 using Smile.Core.Domain.Mongo.Repositories.Params;
@@ -18,7 +20,8 @@ namespace Smile.Infrastructure.Persistence.Mongo.Repositories
         {
         }
 
-        public async Task<IEnumerable<LogDocument>> GetFilteredLogs(ILogFiltersParams filters)
+        public async Task<IPagedList<LogDocument>> GetFilteredLogs(ILogFiltersParams filters,
+            (int PageNumber, int PageSize) pagination)
         {
             var logs = collection.AsQueryable();
 
@@ -37,9 +40,9 @@ namespace Smile.Infrastructure.Persistence.Mongo.Repositories
             if (!string.IsNullOrEmpty(filters.Action))
                 logs = logs.Where(l => l.Action.ToLower().Contains(filters.Action.ToLower()));
 
-            logs = LogSortTypeSmartEnum.FromValue((int)filters.SortType).Sort(logs);
+            logs = LogSortTypeSmartEnum.FromValue((int) filters.SortType).Sort(logs);
 
-            return await logs.ToListAsync();
+            return await logs.ToPagedList(pagination.PageNumber, pagination.PageSize);
         }
 
         public async Task<IEnumerable<LogDocument>> GetLogsToDelete()

@@ -3,11 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Smile.Core.Application.Builders;
-using Smile.Core.Application.Extensions;
 using Smile.Core.Application.Features.Requests.Query.Params;
 using Smile.Core.Application.Logging;
-using Smile.Core.Application.Models.Pagination;
 using Smile.Core.Application.Services;
+using Smile.Core.Domain.Data.Models;
 using Smile.Core.Domain.Entities.LogEntity;
 using Smile.Core.Domain.Mongo.Repositories;
 
@@ -34,15 +33,15 @@ namespace Smile.Infrastructure.Persistence.Logging
             var allLogs = await LoadLogsFromFile(logsFilePath);
 
             foreach (var log in from fileLog in allLogs
-                                let logProps = fileLog.Split("$|")
-                                let log = new LogBuilder()
-                                    .CreatedAt(DateTime.Parse(logProps[0]))
-                                    .SetLevel(logProps[1])
-                                    .SetLogger(logProps[2])
-                                    .SetMessage(logProps[3], logProps[4])
-                                    .WithAction(logProps[5], logProps[6])
-                                    .Build()
-                                select log)
+                let logProps = fileLog.Split("$|")
+                let log = new LogBuilder()
+                    .CreatedAt(DateTime.Parse(logProps[0]))
+                    .SetLevel(logProps[1])
+                    .SetLogger(logProps[2])
+                    .SetMessage(logProps[3], logProps[4])
+                    .WithAction(logProps[5], logProps[6])
+                    .Build()
+                select log)
                 await logMongoRepository.Insert(log);
 
             filesManager.Delete(logsFilePath);
@@ -58,8 +57,8 @@ namespace Smile.Infrastructure.Persistence.Logging
                 await logMongoRepository.Delete(logsToDelete[i].Id);
         }
 
-        public async Task<PagedList<LogDocument>> GetLogs(LogFiltersParams filters)
-            => (await logMongoRepository.GetFilteredLogs(filters)).ToPagedList(filters.PageNumber, filters.PageSize);
+        public async Task<IPagedList<LogDocument>> GetLogs(LogFiltersParams filters)
+            => await logMongoRepository.GetFilteredLogs(filters, (filters.PageNumber, filters.PageSize));
 
         #region private
 
