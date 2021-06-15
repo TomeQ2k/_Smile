@@ -24,14 +24,6 @@ namespace Smile.Core.Application.Models.Pagination
             this.AddRange(items);
         }
 
-        public static MongoPagedList<T> Create(IEnumerable<T> source, int pageNumber, int pageSize)
-        {
-            int count = source.Count();
-            var items = source.Skip((pageNumber - 1) * pageSize).Take(pageSize).ToList();
-
-            return new MongoPagedList<T>(items, count, pageNumber, pageSize);
-        }
-
         public static async Task<MongoPagedList<T>> CreateAsync(IMongoQueryable<T> source, int pageNumber, int pageSize)
         {
             int count = await source.CountAsync();
