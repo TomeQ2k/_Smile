@@ -25,7 +25,7 @@ namespace Smile.Infrastructure.Shared.Services
 
         public async Task<bool> ResetPassword(string userId, string token, string newPassword)
         {
-            var user = await database.UserRepository.Get(userId) ?? throw new EntityNotFoundException("Account does not exist", ErrorCodes.EntityNotFound);
+            var user = await database.UserRepository.FindById(userId) ?? throw new EntityNotFoundException("Account does not exist", ErrorCodes.EntityNotFound);
 
             if (UserBlockedSpecification.Create().IsSatisfied(user))
                 throw new BlockException("Your account is blocked");
@@ -72,7 +72,7 @@ namespace Smile.Infrastructure.Shared.Services
 
         public async Task<bool> VerifyResetPasswordToken(string userId, string token)
         {
-            var user = await database.UserRepository.Get(userId) ?? throw new EntityNotFoundException("Account does not exist", ErrorCodes.EntityNotFound);
+            var user = await database.UserRepository.FindById(userId) ?? throw new EntityNotFoundException("Account does not exist", ErrorCodes.EntityNotFound);
 
             if (UserBlockedSpecification.Create().IsSatisfied(user))
                 throw new BlockException("Your account is blocked");

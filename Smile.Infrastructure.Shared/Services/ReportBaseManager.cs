@@ -69,7 +69,7 @@ namespace Smile.Infrastructure.Shared.Services
 
         #region protected
 
-        protected async Task<Report> GetReport(string reportId) => await database.ReportRepository.Get(reportId)
+        protected async Task<Report> GetReport(string reportId) => await database.ReportRepository.FindById(reportId)
             ?? throw new EntityNotFoundException("Report not found");
 
         #endregion

@@ -7,11 +7,11 @@ namespace Smile.Core.Domain.Data
 {
     public interface IRepository<T> where T : class, new()
     {
-        Task<T> Get(string id);
-        Task<T> Find(Expression<Func<T, bool>> predicate);
+        Task<T> FindById(string id);
+        Task<T> Find(Expression<Func<T, bool>> predicate, params string[] includes);
 
-        Task<IEnumerable<T>> GetAll();
-        Task<IEnumerable<T>> GetWhere(Expression<Func<T, bool>> predicate);
+        Task<IEnumerable<T>> GetAll(params string[] includes);
+        Task<IEnumerable<T>> GetWhere(Expression<Func<T, bool>> predicate, params string[] includes);
 
         void Add(T entity);
         void AddRange(IEnumerable<T> entities);

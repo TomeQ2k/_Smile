@@ -8,9 +8,9 @@ namespace Smile.Core.Domain.Mongo
 {
     public interface IMongoRepository<TDocument> where TDocument : IDocument
     {
-        Task<TDocument> Get(string id);
+        Task<TDocument> FindById(string id);
         Task<IEnumerable<TDocument>> GetAll();
-        Task<IEnumerable<TDocument>> FilterBy(Expression<Func<TDocument, bool>> predicate);
+        Task<IEnumerable<TDocument>> GetWhere(Expression<Func<TDocument, bool>> predicate);
 
         Task Insert(TDocument document);
         Task<bool> Update(TDocument document);

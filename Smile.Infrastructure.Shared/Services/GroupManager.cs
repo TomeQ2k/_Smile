@@ -36,7 +36,7 @@ namespace Smile.Infrastructure.Shared.Services
         public async Task<InviteMemberResult> InviteMember(string groupId, string userId)
         {
             var currentUser = await profileService.GetCurrentUser();
-            var group = await database.GroupRepository.Get(groupId) ??
+            var group = await database.GroupRepository.FindById(groupId) ??
                         throw new EntityNotFoundException("Group not found");
 
             if (currentUser.Id == userId)
@@ -69,7 +69,7 @@ namespace Smile.Infrastructure.Shared.Services
         public async Task<GroupMember> AcceptMember(string groupId, string userId, bool accept = true)
         {
             var currentUser = await profileService.GetCurrentUser();
-            var group = await database.GroupRepository.Get(groupId) ??
+            var group = await database.GroupRepository.FindById(groupId) ??
                         throw new EntityNotFoundException("Group not found");
 
             return await AcceptMemberInvite(userId, accept, currentUser.Id, group);
@@ -78,7 +78,7 @@ namespace Smile.Infrastructure.Shared.Services
         public async Task<bool> KickMember(string groupId, string userId)
         {
             var currentUser = await profileService.GetCurrentUser();
-            var group = await database.GroupRepository.Get(groupId) ??
+            var group = await database.GroupRepository.FindById(groupId) ??
                         throw new EntityNotFoundException("Group not found");
 
             if (currentUser.Id == userId)
@@ -109,7 +109,7 @@ namespace Smile.Infrastructure.Shared.Services
         public async Task<bool> LeaveGroup(string groupId)
         {
             var currentUser = await profileService.GetCurrentUser();
-            var group = await database.GroupRepository.Get(groupId) ??
+            var group = await database.GroupRepository.FindById(groupId) ??
                         throw new EntityNotFoundException("Group not found");
 
             if (currentUser.Id == group.AdminId)
@@ -128,7 +128,7 @@ namespace Smile.Infrastructure.Shared.Services
         public async Task<Group> UpdateGroup(string groupId, UpdateGroupRequest request)
         {
             var currentUser = await profileService.GetCurrentUser();
-            var group = await database.GroupRepository.Get(groupId) ??
+            var group = await database.GroupRepository.FindById(groupId) ??
                         throw new EntityNotFoundException("Group not found");
 
             if (currentUser.Id != group.AdminId)
@@ -162,7 +162,7 @@ namespace Smile.Infrastructure.Shared.Services
         public async Task<bool> DeleteGroup(string groupId)
         {
             var currentUser = await profileService.GetCurrentUser();
-            var group = await database.GroupRepository.Get(groupId) ??
+            var group = await database.GroupRepository.FindById(groupId) ??
                         throw new EntityNotFoundException("Group not found");
 
             if (!DeleteGroupSpecification.Create(currentUser).IsSatisfied(group))
@@ -181,7 +181,7 @@ namespace Smile.Infrastructure.Shared.Services
         public async Task<bool> SetModerator(string groupId, string userId, bool isModerator = true)
         {
             var currentUser = await profileService.GetCurrentUser();
-            var group = await database.GroupRepository.Get(groupId) ??
+            var group = await database.GroupRepository.FindById(groupId) ??
                         throw new EntityNotFoundException("Group not found");
 
             if (currentUser.Id != group.AdminId)

@@ -21,7 +21,7 @@ namespace Smile.Infrastructure.Persistence.Mongo
             this.collection = database.GetCollection<TDocument>(GetCollectionName(typeof(TDocument)));
         }
 
-        public async Task<TDocument> Get(string id)
+        public async Task<TDocument> FindById(string id)
             => await collection
                 .Find(x => x.Id == id)
                 .FirstOrDefaultAsync();
@@ -31,7 +31,7 @@ namespace Smile.Infrastructure.Persistence.Mongo
                 .Find(x => true)
                 .ToListAsync();
 
-        public virtual async Task<IEnumerable<TDocument>> FilterBy(Expression<Func<TDocument, bool>> predicate)
+        public virtual async Task<IEnumerable<TDocument>> GetWhere(Expression<Func<TDocument, bool>> predicate)
             => await collection
                 .Find(predicate)
                 .ToListAsync();

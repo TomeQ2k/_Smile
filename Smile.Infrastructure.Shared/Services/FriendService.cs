@@ -37,7 +37,7 @@ namespace Smile.Infrastructure.Shared.Services
             if (await GetFriend(user.Id, recipientId) != null)
                 throw new DuplicateException("You are already friends");
 
-            var recipient = await database.UserRepository.Get(recipientId) ??
+            var recipient = await database.UserRepository.FindById(recipientId) ??
                             throw new EntityNotFoundException("Recipient not found");
 
             var friend = Friend.Create(user.Id, recipientId);

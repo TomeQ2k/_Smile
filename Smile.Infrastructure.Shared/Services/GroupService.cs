@@ -30,7 +30,7 @@ namespace Smile.Infrastructure.Shared.Services
 
         public async Task<Group> GetGroup(string groupId)
         {
-            var group = await database.GroupRepository.Get(groupId) ??
+            var group = await database.GroupRepository.FindById(groupId) ??
                         throw new EntityNotFoundException("Group not found");
 
             var currentUser = await profileService.GetCurrentUser();
@@ -78,7 +78,7 @@ namespace Smile.Infrastructure.Shared.Services
 
         public async Task<GroupMember> JoinGroup(string groupId, string joinCode = null)
         {
-            var group = await database.GroupRepository.Get(groupId) ??
+            var group = await database.GroupRepository.FindById(groupId) ??
                         throw new EntityNotFoundException("Group not found");
             var currentUser = await profileService.GetCurrentUser();
 

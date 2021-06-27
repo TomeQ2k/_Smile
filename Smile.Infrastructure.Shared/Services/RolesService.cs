@@ -57,7 +57,7 @@ namespace Smile.Infrastructure.Shared.Services
             => user.UserRoles.Any(ur => roleNames.Contains(Enum.Parse<RoleName>(ur.Role.Name)));
 
         public async Task<bool> IsPermitted(string userId, params RoleName[] roleNames)
-            => (await database.UserRepository.Get(userId)).UserRoles.Any(ur => roleNames.Contains(Enum.Parse<RoleName>(ur.Role.Name)));
+            => (await database.UserRepository.FindById(userId)).UserRoles.Any(ur => roleNames.Contains(Enum.Parse<RoleName>(ur.Role.Name)));
 
         public async Task<bool> RoleExists(RoleName roleName) => await GetRoleId(roleName) != null;
 

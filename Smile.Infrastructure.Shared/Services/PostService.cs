@@ -96,7 +96,7 @@ namespace Smile.Infrastructure.Shared.Services
         public async Task<bool> DeletePost(string postId)
         {
             var user = await profileService.GetCurrentUser();
-            var post = user.Posts.FirstOrDefault(p => p.Id == postId) ?? await database.PostRepository.Get(postId)
+            var post = user.Posts.FirstOrDefault(p => p.Id == postId) ?? await database.PostRepository.FindById(postId)
                 ?? throw new EntityNotFoundException("Post not found");
 
             if (!DeletePostSpecification.Create(user).IsSatisfied(post))

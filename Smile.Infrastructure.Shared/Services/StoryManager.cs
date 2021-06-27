@@ -58,7 +58,7 @@ namespace Smile.Infrastructure.Shared.Services
 
         public async Task<bool> WatchStory(string storyId, string userId)
         {
-            var story = await database.StoryRepository.Get(storyId) ??
+            var story = await database.StoryRepository.FindById(storyId) ??
                         throw new EntityNotFoundException("Story not found");
 
             if (story.UserStories.Any(us => us.UserId == userId))

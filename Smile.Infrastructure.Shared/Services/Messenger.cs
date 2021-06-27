@@ -137,7 +137,7 @@ namespace Smile.Infrastructure.Shared.Services
 
         public async Task<bool> ReadMessage(string messageId)
         {
-            var messageToRead = await database.MessageRepository.Get(messageId) ?? throw new EntityNotFoundException("Message not found");
+            var messageToRead = await database.MessageRepository.FindById(messageId) ?? throw new EntityNotFoundException("Message not found");
 
             messageToRead.MarkAsRead();
 
@@ -146,7 +146,7 @@ namespace Smile.Infrastructure.Shared.Services
             return await database.Complete();
         }
 
-        public async Task<User> GetRecipient(string recipientId) => await database.UserRepository.Get(recipientId) ?? throw new EntityNotFoundException("Recipient not found");
+        public async Task<User> GetRecipient(string recipientId) => await database.UserRepository.FindById(recipientId) ?? throw new EntityNotFoundException("Recipient not found");
 
         public async Task<int> CountUnreadMessages()
             => await database.MessageRepository.CountUnreadMessages(httpContextReader.CurrentUserId);

@@ -66,7 +66,7 @@ namespace Smile.Infrastructure.Shared.Services
 
         public async Task<bool> Remove(string notificationId)
         {
-            var notification = await database.NotificationRepository.Get(notificationId) ??
+            var notification = await database.NotificationRepository.FindById(notificationId) ??
                                throw new EntityNotFoundException("Notification not found");
 
             database.NotificationRepository.Delete(notification);

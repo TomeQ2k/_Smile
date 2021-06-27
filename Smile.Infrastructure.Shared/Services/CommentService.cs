@@ -23,7 +23,7 @@ namespace Smile.Infrastructure.Shared.Services
         public async Task<Comment> CreateComment(string content, string postId)
         {
             var user = await profileService.GetCurrentUser();
-            var post = await database.PostRepository.Get(postId) ?? throw new EntityNotFoundException("Post not found");
+            var post = await database.PostRepository.FindById(postId) ?? throw new EntityNotFoundException("Post not found");
 
             var comment = Comment.Create(content);
 
@@ -51,7 +51,7 @@ namespace Smile.Infrastructure.Shared.Services
         public async Task<bool> DeleteComment(string commentId)
         {
             var user = await profileService.GetCurrentUser();
-            var comment = user.Comments.FirstOrDefault(c => c.Id == commentId) ?? await database.CommentRepository.Get(commentId)
+            var comment = user.Comments.FirstOrDefault(c => c.Id == commentId) ?? await database.CommentRepository.FindById(commentId)
                 ?? throw new EntityNotFoundException("Comment not found");
 
             if (!UpdateOrDeleteCommentSpecification.Create(user).IsSatisfied(comment))

@@ -29,7 +29,7 @@ namespace Smile.Infrastructure.Shared.Services
         }
 
         public async Task<User> GetCurrentUser()
-            => await database.UserRepository.Get(httpContextReader.CurrentUserId) ??
+            => await database.UserRepository.FindById(httpContextReader.CurrentUserId) ??
                throw new EntityNotFoundException("User not found");
 
         public async Task<bool> ChangeUsername(string newUsername)
