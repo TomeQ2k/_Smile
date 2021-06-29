@@ -19,16 +19,7 @@ namespace Smile.Infrastructure.Shared.Services
         }
 
         public async Task<bool> AdmitRole(RoleName roleName, User user)
-        {
-            var roleId = await GetRoleId(roleName);
-
-            if (user.UserRoles.Any(ur => ur.RoleId == roleId))
-                return false;
-
-            user.UserRoles.Add(UserRole.Create(user.Id, roleId));
-
-            return true;
-        }
+            => AdmitRole(await GetRoleId(roleName), user);
 
         public bool AdmitRole(string roleId, User user)
         {
@@ -41,21 +32,7 @@ namespace Smile.Infrastructure.Shared.Services
         }
 
         public async Task<bool> RevokeRole(RoleName roleName, User user)
-        {
-            var roleId = await GetRoleId(roleName);
-
-            var userRole = user.UserRoles.FirstOrDefault(ur => ur.RoleId == roleId);
-
-            if (userRole == null)
-                return false;
-
-            if (userRole.Role.Name == Utils.EnumToString<RoleName>(RoleName.User))
-                return false;
-
-            user.UserRoles.Remove(userRole);
-
-            return true;
-        }
+            => RevokeRole(await GetRoleId(roleName), user);
 
         public bool RevokeRole(string roleId, User user)
         {
