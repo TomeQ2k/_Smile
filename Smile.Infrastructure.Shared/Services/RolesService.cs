@@ -18,12 +18,41 @@ namespace Smile.Infrastructure.Shared.Services
             this.database = database;
         }
 
+        public async Task<bool> AdmitRole(RoleName roleName, User user)
+        {
+            var roleId = await GetRoleId(roleName);
+
+            if (user.UserRoles.Any(ur => ur.RoleId == roleId))
+                return false;
+
+            user.UserRoles.Add(UserRole.Create(user.Id, roleId));
+
+            return true;
+        }
+
         public bool AdmitRole(string roleId, User user)
         {
             if (user.UserRoles.Any(ur => ur.RoleId == roleId))
                 return false;
 
             user.UserRoles.Add(UserRole.Create(user.Id, roleId));
+
+            return true;
+        }
+
+        public async Task<bool> RevokeRole(RoleName roleName, User user)
+        {
+            var roleId = await GetRoleId(roleName);
+
+            var userRole = user.UserRoles.FirstOrDefault(ur => ur.RoleId == roleId);
+
+            if (userRole == null)
+                return false;
+
+            if (userRole.Role.Name == Utils.EnumToString<RoleName>(RoleName.User))
+                return false;
+
+            user.UserRoles.Remove(userRole);
 
             return true;
         }
@@ -62,6 +91,6 @@ namespace Smile.Infrastructure.Shared.Services
         public async Task<bool> RoleExists(RoleName roleName) => await GetRoleId(roleName) != null;
 
         public async Task<string> GetRoleId(RoleName roleName)
-			=> (await database.RoleRepository.Find(r => r.Name.ToLower() == Utils.EnumToString<RoleName>(roleName).ToLower()))?.Id;
+            => (await database.RoleRepository.Find(r => r.Name.ToLower() == Utils.EnumToString<RoleName>(roleName).ToLower()))?.Id;
     }
 }

@@ -68,7 +68,7 @@ namespace Smile.Infrastructure.Shared.Services
 
                 user.Tokens.Add(registerToken);
 
-                if (rolesService.AdmitRole(await rolesService.GetRoleId(RoleName.User), user))
+                if (await rolesService.AdmitRole(RoleName.User, user))
                     return await database.Complete() ? new AuthResult(registerToken.Code, user) : null;
 
                 return null;
