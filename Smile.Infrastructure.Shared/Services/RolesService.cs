@@ -62,6 +62,6 @@ namespace Smile.Infrastructure.Shared.Services
         public async Task<bool> RoleExists(RoleName roleName) => await GetRoleId(roleName) != null;
 
         public async Task<string> GetRoleId(RoleName roleName)
-        => (await database.RoleRepository.Find(r => r.Name.ToLower() == Utils.EnumToString<RoleName>(roleName).ToLower()))?.Id;
+			=> (await database.RoleRepository.Find(r => r.Name.ToLower() == Utils.EnumToString<RoleName>(roleName).ToLower()))?.Id;
     }
 }
