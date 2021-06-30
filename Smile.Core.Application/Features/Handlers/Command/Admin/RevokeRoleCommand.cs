@@ -26,7 +26,7 @@ namespace Smile.Core.Application.Features.Handlers.Command.Admin
 
         public async Task<RevokeRoleResponse> Handle(RevokeRoleRequest request, CancellationToken cancellationToken)
         {
-            if (await adminService.RevokeRole(request.UserId, request.RoleId))
+            if (await adminService.RevokeRole(request.UserId, request.Role))
             {
                 await notifier.Push(NotificationMessages.AdminRevokedNotification, request.UserId, NotificationType.AdminRevoked);
 

@@ -73,7 +73,7 @@ export class AuthService {
   }
 
   public confirmAccount(userId: string, token: string) {
-    return this.httpClient.get(this.authApiUrl + 'account/confirm', { params: { userId: userId.toString(), token }, responseType: 'text' });
+    return this.httpClient.get(this.authApiUrl + 'account/confirm', { params: { userId: userId, token }, responseType: 'text' });
   }
 
   public resetPassword(request: any) {

@@ -26,7 +26,7 @@ namespace Smile.Core.Application.Features.Handlers.Command.Admin
 
         public async Task<AdmitRoleResponse> Handle(AdmitRoleRequest request, CancellationToken cancellationToken)
         {
-            if (await adminService.AdmitRole(request.UserId, request.RoleId))
+            if (await adminService.AdmitRole(request.UserId, request.Role))
             {
                 await notifier.Push(NotificationMessages.AdminGrantedNotification, request.UserId, NotificationType.AdminGranted);
 

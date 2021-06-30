@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Smile.Core.Application.Extensions;
 using Smile.Core.Application.Features.Requests.Command.Admin;
 using Smile.Core.Application.Logging;
+using Smile.Core.Common.Enums;
 
 namespace Smile.API.Controllers
 {
@@ -22,7 +23,7 @@ namespace Smile.API.Controllers
             var response = await mediator.Send(request);
 
             logger.LogResponse(
-                $"Admin #{HttpContext.GetCurrentUserId()} admitted role #{request.RoleId} to user #{request.UserId}",
+                $"Admin #{HttpContext.GetCurrentUserId()} admitted role {(Utils.EnumToString<RoleName>(request.Role))} to user #{request.UserId}",
                 response.Error);
 
             return this.CreateResponse(response);
@@ -34,7 +35,7 @@ namespace Smile.API.Controllers
             var response = await mediator.Send(request);
 
             logger.LogResponse(
-                $"Admin #{HttpContext.GetCurrentUserId()} revoked role #{request.RoleId} from user #{request.UserId}",
+                $"Admin #{HttpContext.GetCurrentUserId()} revoked role {(Utils.EnumToString<RoleName>(request.Role))} from user #{request.UserId}",
                 response.Error);
 
             return this.CreateResponse(response);

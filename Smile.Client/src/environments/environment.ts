@@ -43,8 +43,6 @@ export const roles = {
   adminRoles: ['Admin', 'HeadAdmin']
 };
 
-export const adminRoleId = 'F8C34B1ABDD44941';
-
 export const customNotifierOptions: NotifierOptions = {
   position: {
     horizontal: {

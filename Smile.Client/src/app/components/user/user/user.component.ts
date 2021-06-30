@@ -1,5 +1,6 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { RoleName } from 'src/app/enums/role-name.enum';
 import { User } from 'src/app/models/domain/user/user';
 import { UserAdmin } from 'src/app/models/domain/user/user-admin';
 import { DeleteEmitter } from 'src/app/models/helpers/emitters/delete-emitter';
@@ -8,7 +9,7 @@ import { AdminService } from 'src/app/services/admin.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { FriendService } from 'src/app/services/friend.service';
 import { Notifier } from 'src/app/services/notifier.service';
-import { adminRoleId, roles } from 'src/environments/environment';
+import { roles } from 'src/environments/environment';
 
 @Component({
   selector: 'app-user',
@@ -30,14 +31,14 @@ export class UserComponent implements OnInit {
 
   public changeRole() {
     if (!this.user.isAdmin) {
-      this.adminService.admitRole(this.user.id, adminRoleId).subscribe(() => {
+      this.adminService.admitRole(RoleName.Admin, this.user.id).subscribe(() => {
         this.notifier.push('Admin role admitted', 'info');
         this.user.isAdmin = true;
       }, error => {
         this.notifier.push(error, 'error');
       });
     } else {
-      this.adminService.revokeRole(this.user.id, adminRoleId).subscribe(() => {
+      this.adminService.revokeRole(RoleName.Admin, this.user.id).subscribe(() => {
         this.notifier.push('Admin role revoked', 'info');
         this.user.isAdmin = false;
       }, error => {

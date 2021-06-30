@@ -5,6 +5,7 @@ using Smile.Core.Application.Services;
 using Smile.Core.Application.Services.ReadOnly;
 using Smile.Core.Domain.Entities.Auth;
 using Smile.Infrastructure.Shared.Specifications;
+using Smile.Core.Common.Enums;
 
 namespace Smile.Infrastructure.Shared.Services
 {
@@ -23,22 +24,22 @@ namespace Smile.Infrastructure.Shared.Services
             this.userService = userService;
         }
 
-        public async Task<bool> AdmitRole(string userId, string roleId)
+        public async Task<bool> AdmitRole(string userId, RoleName role)
         {
             var currentAdmin = await GetCurrentAdmin(userId);
 
             var user = await GetUserToManage(userId);
 
-            return rolesService.AdmitRole(roleId, user) ? await database.Complete() : false;
+            return await rolesService.AdmitRole(role, user) ? await database.Complete() : false;
         }
 
-        public async Task<bool> RevokeRole(string userId, string roleId)
+        public async Task<bool> RevokeRole(string userId, RoleName role)
         {
             var currentAdmin = await GetCurrentAdmin(userId);
 
             var user = await GetUserToManage(userId);
 
-            return rolesService.RevokeRole(roleId, user) ? await database.Complete() : false;
+            return await rolesService.RevokeRole(role, user) ? await database.Complete() : false;
         }
 
         public async Task<bool> DeleteUser(string userId)
